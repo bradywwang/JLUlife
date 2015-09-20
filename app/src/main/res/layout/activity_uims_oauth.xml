@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.brady.jlulife.UimsOauthActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/drcom_loginpage_margin_top"
+    android:layout_marginLeft="@dimen/drcom_loginpage_margin_left"
+    android:layout_marginRight="@dimen/drcom_loginpage_margin_left"
+    >
+    <EditText
+        android:id="@+id/uims_uname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_uname"
+        android:textSize="@dimen/hint_txt_size"
+        android:layout_margin="@dimen/edittext_margin"
+        />
+    <EditText
+        android:id="@+id/uims_pwd"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/hint_txt_size"
+        android:layout_margin="@dimen/edittext_margin"
+        android:hint="@string/hint_pwd"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="25dp">
+        <CheckBox
+            android:id="@+id/uims_remember_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_remember_pwd"
+            android:textSize="@dimen/small_txt_size"
+            android:layout_margin="@dimen/checkbox_margin"/>
+        <CheckBox
+            android:id="@+id/uims_auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_auto_login"
+            android:textSize="@dimen/small_txt_size"
+            android:layout_margin="@dimen/checkbox_margin"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_uims_login"
+        android:layout_marginTop="@dimen/btn_margintop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_login"
+        android:background="@drawable/selector"
+        android:textSize="@dimen/btn_txtsize"
+        android:textColor="@color/btn_txtcolor"
+        />
+</LinearLayout>
+</LinearLayout>

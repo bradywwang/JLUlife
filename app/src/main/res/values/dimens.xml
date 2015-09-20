@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="drcom_loginpage_margin_top">30dp</dimen>
+    <dimen name="drcom_loginpage_margin_left">25dp</dimen>
+    <dimen name="hint_txt_size">20sp</dimen>
+    <dimen name="small_txt_size">15sp</dimen>
+    <dimen name="checkbox_margin">5dp</dimen>
+    <dimen name="edittext_margin">15dp</dimen>
+    <color name="color_main">#3399ff</color>
+    <color name="btn_txtcolor">#ffffff</color>
+    <dimen name="btn_txtsize">20sp</dimen>
+    <dimen name="btn_margintop">25dp</dimen>
+    <dimen name="large_font_size">40sp</dimen>
+    <dimen name="mid_font_size">25sp</dimen>
+
+
+
+</resources>

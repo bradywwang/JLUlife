@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">JLU life</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_drcom_login">校园网登陆</string>
+    <string name="hint_uname">用户名</string>
+    <string name="hint_pwd">密码</string>
+    <string name="label_remember_pwd">记住密码</string>
+    <string name="label_auto_login">自动登陆</string>
+    <string name="btn_login">登陆</string>
+    <string name="btn_logout">注销</string>
+    <string name="label_login_success">登陆成功</string>
+    <string name="label_login_success_information">您可以尽情的使用网络了</string>
+    <string name="label_login_time">登陆时长</string>
+    <string name="label_flow_used">已使用流量</string>
+    <string name="conform">确定</string>
+    <string name="err_wrong_pwd">密码错啦,你一定是手残党,再试一次吧</string>
+    <string name="err_wrong_uname">我走过千山万水,还是没有找到你的用户名,快点好好检查一下</string>
+    <string name="err_use_nat">胆大包天,竟然敢用路由器上网,小心向警察叔叔告发你,我是不会让你得逞的</string>
+    <string name="err_is_login">你已经能上网了,还登陆,是不是看上蜀黍了</string>
+    <string name="err_network_unavailable">网络连接超时,费了好大劲也没有挤进去</string>
+    <string name="err_default">我也不造什么错误,但是还是登陆不上,你好好检查一下网络配置吧</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment"> blank fragment</string>
+    <string name="title_activity_login_success">LoginSuccessActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_uims_oauth">UimsOauthActivity</string>
+</resources>
