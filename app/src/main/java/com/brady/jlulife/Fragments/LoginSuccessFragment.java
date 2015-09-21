@@ -1,4 +1,4 @@
-package com.brady.jlulife;
+package com.brady.jlulife.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
 import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
 

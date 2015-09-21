@@ -1,4 +1,4 @@
-package com.brady.jlulife;
+package com.brady.jlulife.Utils;
 
 /**
  * Created by brady on 15-9-19.

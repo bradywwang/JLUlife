@@ -19,17 +19,17 @@
         <activity
             android:name=".DrcomLoginActivity"
             android:label="@string/title_activity_drcom_login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
             android:name=".UimsOauthActivity"
             android:label="@string/title_activity_uims_oauth" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

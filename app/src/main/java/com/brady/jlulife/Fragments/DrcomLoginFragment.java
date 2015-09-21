@@ -1,4 +1,4 @@
-package com.brady.jlulife;
+package com.brady.jlulife.Fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -18,10 +18,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.brady.jlulife.Utils.ConstValue;
+import com.brady.jlulife.DrcomLoginActivity;
+import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Jni;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
 import com.drcom.Android.DrCOMWS.listener.OnclientLoginListener;
-import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
 
 
 /**

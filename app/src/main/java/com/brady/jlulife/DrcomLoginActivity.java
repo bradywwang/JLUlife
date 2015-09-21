@@ -9,15 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.brady.jlulife.Fragments.DrcomLoginFragment;
+import com.brady.jlulife.Fragments.LoginSuccessFragment;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.ResponseHandlerInterface;
-
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-
-import java.io.IOException;
-import java.net.URI;
 
 public class DrcomLoginActivity extends ActionBarActivity {
     DrCOMWSManagement management;
