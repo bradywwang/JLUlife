@@ -9,6 +9,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -44,105 +45,16 @@ public class UIMSModel {
         RequestParams params = new RequestParams();
         params.put("j_username", uname);
         params.put("j_password", convertPwd);
-        client.post(ConstValue.SECURITY_CHECK, params, new ResponseHandlerInterface() {
+        client.post(ConstValue.SECURITY_CHECK, new TextHttpResponseHandler() {
             @Override
-            public void sendResponseMessage(HttpResponse httpResponse) throws IOException {
-
+            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
+                Log.i(getClass().getSimpleName(),"login failure");
             }
 
             @Override
-            public void sendStartMessage() {
-
-            }
-
-            @Override
-            public void sendFinishMessage() {
-
-            }
-
-            @Override
-            public void sendProgressMessage(long l, long l1) {
-
-            }
-
-            @Override
-            public void sendCancelMessage() {
-
-            }
-
-            @Override
-            public void sendSuccessMessage(int i, Header[] headers, byte[] bytes) {
-
-            }
-
-            @Override
-            public void sendFailureMessage(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
-            }
-
-            @Override
-            public void sendRetryMessage(int i) {
-
-            }
-
-            @Override
-            public URI getRequestURI() {
-                return null;
-            }
-
-            @Override
-            public Header[] getRequestHeaders() {
-                return new Header[0];
-            }
-
-            @Override
-            public void setRequestURI(URI uri) {
-
-            }
-
-            @Override
-            public void setRequestHeaders(Header[] headers) {
-
-            }
-
-            @Override
-            public void setUseSynchronousMode(boolean b) {
-
-            }
-
-            @Override
-            public boolean getUseSynchronousMode() {
-                return false;
-            }
-
-            @Override
-            public void setUsePoolThread(boolean b) {
-
-            }
-
-            @Override
-            public boolean getUsePoolThread() {
-                return false;
-            }
-
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
-
-            }
-
-            @Override
-            public void setTag(Object o) {
-
-            }
-
-            @Override
-            public Object getTag() {
-                return null;
+            public void onSuccess(int i, Header[] headers, String s) {
+                Log.i(getClass().getSimpleName(),"login success");
+                Log.i(getClass().getSimpleName(),s);
             }
         });
 

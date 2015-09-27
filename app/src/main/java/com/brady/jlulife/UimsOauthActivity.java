@@ -48,7 +48,7 @@ public class UimsOauthActivity extends AppCompatActivity {
                 String pwd = metpwd.getText().toString();
                 if(uimsModel!=null) {
                     uimsModel.login(uname, pwd);
-                    uimsModel.getCurrentInfo(getApplicationContext());
+//                    uimsModel.getCurrentInfo(getApplicationContext());
                 }else {
                     Log.i(getClass().getSimpleName(),"null 1");
                 }

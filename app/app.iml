@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="android-support-v7-recyclerview" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.7" level="project" />
     <orderEntry type="library" exported="" name="apache-httpcomponents-httpcore" level="project" />
+    <orderEntry type="library" exported="" name="jsoup-1.8.1" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.2.4" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.8" level="project" />

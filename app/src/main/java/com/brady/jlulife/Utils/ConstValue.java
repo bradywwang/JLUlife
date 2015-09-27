@@ -8,4 +8,5 @@ public class ConstValue {
     public static final String USER_INFO = "http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do";
     public static final String RESOURCES_URI = "http://uims.jlu.edu.cn/ntms/service/res.do";
     public static final String SHARED_DRCOM_INFO  = "com.brady.jlulife.drcom.sharedinfo";
+    public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
 }

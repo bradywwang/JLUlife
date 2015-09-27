@@ -25,4 +25,5 @@
     <string name="title_activity_login_success">LoginSuccessActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_uims_oauth">UimsOauthActivity</string>
+    <string name="title_activity_jwquery">JWQueryActivity</string>
 </resources>
