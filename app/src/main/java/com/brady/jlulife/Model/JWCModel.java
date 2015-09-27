@@ -5,8 +5,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.brady.jlulife.Entities.News;
+import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.LogInterface;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -15,6 +18,7 @@ import org.apache.http.HttpResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,145 +30,107 @@ import java.util.List;
  * Created by wang on 2015/9/27.
  */
 public class JWCModel {
-    public static List<News> getNewsBaseInfo(final int pageNum, final Context context){
-        List<News> newsList = new ArrayList<>();
+    News news;
+
+
+    private static JWCModel model;
+    private JWCModel(){
+
+    }
+
+    public static JWCModel getInstance() {
+        if(model ==null)
+            model = new JWCModel();
+        return model;
+    }
+    public static List<NewsBaseInfo> getNewsBaseInfo(final int pageNum, final Context context){
+        List<NewsBaseInfo> newsList = null;
         AsyncHttpClient client = new AsyncHttpClient();
-        /*client.get(ConstValue.JWC_BASIC_INFO+"&page="+pageNum, new TextHttpResponseHandler() {
+        client.get(ConstValue.JWC_BASIC_INFO + "&page=" + pageNum, new AsyncHttpResponseHandler() {
             @Override
-            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
-
-            }
-
-            @Override
-            public void onSuccess(int i, Header[] headers, String s) {
-                Log.i(getClass().getSimpleName(),ConstValue.JWC_BASIC_INFO+"&page="+pageNum);
-                Log.i(getClass().getSimpleName(), s);
-//                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                Document doc = Jsoup.parse(s);
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                List<NewsBaseInfo> newsList = new ArrayList<>();
+                String parseString = "";
+                try {
+                    parseString = new String(bytes,"gbk");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Document doc = Jsoup.parse(parseString);
                 Element element = doc.getElementById("content");
-                for (Header header :headers){
-                    Log.i("abc",header.getName()+":"+header.getValue());
-                }
+                Elements elements = element.getElementsByTag("li");
+                for(Element ele:elements){
+                    NewsBaseInfo baseInfo = new NewsBaseInfo();
+                    Elements eles1 = ele.getElementsByTag("a");
+                    Element ele0 = eles1.get(0);
+                    String title = ele0.text();
+                    String href = ele0.attr("href");
+                    String date = ele.getElementsByClass("right").text();
+                    String dep = eles1.get(1).text();
+                    Log.i("title:",title);
+                    Log.i("href:",href);
+                    Log.i("date:",date);
+                    Log.i("dep:",dep);
+                    baseInfo.setTitle(title);
+                    baseInfo.setDate(date);
+                    baseInfo.setDep(dep);
+                    baseInfo.setHref(href);
+                    newsList.add(baseInfo);
 
-
-
-                String result = "";
-                try {
-                    result = new String(element.text().getBytes("gbk"),"gb2312");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Log.i("aaaaa", result);
-
-            }
-        });*/
-        client.get(ConstValue.RESOURCES_URI, new ResponseHandlerInterface() {
-            @Override
-            public void sendResponseMessage(HttpResponse httpResponse) throws IOException {
-
-            }
-
-            @Override
-            public void sendStartMessage() {
-
-            }
-
-            @Override
-            public void sendFinishMessage() {
-
-            }
-
-            @Override
-            public void sendProgressMessage(long l, long l1) {
-
-            }
-
-            @Override
-            public void sendCancelMessage() {
-
-            }
-
-            @Override
-            public void sendSuccessMessage(int i, Header[] headers, byte[] bytes) {
-                try {
-                    String string = new String(bytes,"gbk");
-                    Log.i("success string",string);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
             }
 
             @Override
-            public void sendFailureMessage(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.i("success string","failure");
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
-            }
-
-            @Override
-            public void sendRetryMessage(int i) {
-
-            }
-
-            @Override
-            public URI getRequestURI() {
-                return null;
-            }
-
-            @Override
-            public Header[] getRequestHeaders() {
-                return new Header[0];
-            }
-
-            @Override
-            public void setRequestURI(URI uri) {
-
-            }
-
-            @Override
-            public void setRequestHeaders(Header[] headers) {
-
-            }
-
-            @Override
-            public void setUseSynchronousMode(boolean b) {
-
-            }
-
-            @Override
-            public boolean getUseSynchronousMode() {
-                return false;
-            }
-
-            @Override
-            public void setUsePoolThread(boolean b) {
-
-            }
-
-            @Override
-            public boolean getUsePoolThread() {
-                return false;
-            }
-
-            @Override
-            public void onPreProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
-
-            }
-
-            @Override
-            public void onPostProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
-
-            }
-
-            @Override
-            public void setTag(Object o) {
-
-            }
-
-            @Override
-            public Object getTag() {
-                return null;
             }
         });
         return newsList;
+    }
+    public News getNewsContent(String href){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(ConstValue.JWC_HOST + href, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                String parseString = "";
+                news = new News();
+
+                try {
+                    parseString = new String(bytes,"gbk");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Log.i("parsestring",parseString);
+                Document doc = Jsoup.parse(parseString);
+                Elements contents = doc.getElementsByClass("content");
+                Element content = contents.get(0);
+                String title = content.getElementsByTag("h4").text();
+                String info = content.getElementsByClass("info").text();
+                StringBuilder builder = new StringBuilder();
+                Elements elements = content.getElementsByTag("span");
+                for(Element element:elements){
+                    builder.append(element.text());
+                    builder.append("\n");
+                }
+                String contentText = builder.toString();
+                Log.i("title", title);
+                Log.i("info",info);
+                Log.i("content",contentText);
+                String[] arr = info.split(" 发表于");
+                String dep = arr[0];
+                String date = arr[1].substring(0,19);
+                Log.i("dep",dep);
+                Log.i("date",date);
+                news.setTitle(title);
+                news.setContent(contentText);
+                news.setSubmitDepartment(dep);
+                news.setSubmitTime(date);
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+            }
+        });
+        return news;
     }
 }

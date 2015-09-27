@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Model.JWCModel;
 import com.brady.jlulife.R;
 
@@ -38,7 +39,11 @@ public class JWQueryActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 tvContent.setText("clicked");
-                JWCModel.getNewsBaseInfo(1,getActivity().getApplicationContext());
+                News news = JWCModel.getInstance().getNewsContent("?file=info&act=view&id=6621");
+                if(news !=null) {
+                    tvTitle.setText(news.getTitle());
+                    tvContent.setText(news.getContent());
+                }
             }
         });
     }
