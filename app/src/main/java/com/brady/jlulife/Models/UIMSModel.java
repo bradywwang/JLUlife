@@ -1,4 +1,4 @@
-package com.brady.jlulife.Model;
+package com.brady.jlulife.Models;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,19 +8,14 @@ import com.brady.jlulife.Utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.ResponseHandlerInterface;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 
 /**
  * Created by brady on 15-9-20.

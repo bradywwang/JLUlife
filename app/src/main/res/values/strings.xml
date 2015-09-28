@@ -19,11 +19,12 @@
     <string name="err_is_login">你已经能上网了,还登陆,是不是看上蜀黍了</string>
     <string name="err_network_unavailable">网络连接超时,费了好大劲也没有挤进去</string>
     <string name="err_default">我也不造什么错误,但是还是登陆不上,你好好检查一下网络配置吧</string>
+    <string name="last_page">上一页</string>
+    <string name="next_page">下一页</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment"> blank fragment</string>
-    <string name="title_activity_login_success">LoginSuccessActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_uims_oauth">UimsOauthActivity</string>
-    <string name="title_activity_jwquery">JWQueryActivity</string>
+    <string name="title_activity_login_success">登陆成功</string>
+    <string name="title_activity_uims_oauth">教务查询</string>
+    <string name="title_activity_jwquery">教务通知</string>
 </resources>

@@ -8,34 +8,33 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.brady.jlulife.Fragments.JWQueryActivityFragment">
-
-    <Button
-        android:id="@+id/btnsubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="submit" />
-
-    <ScrollView
+    <ListView
+        android:id="@+id/jwc_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="title"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="content" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_last"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:textSize="@dimen/btn_txtsize"
+            android:textColor="#ffffff"
+            android:text="@string/last_page"
+            android:layout_margin="@dimen/simple_btn_margin"/>
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:textSize="@dimen/btn_txtsize"
+            android:textColor="#ffffff"
+            android:text="@string/next_page"
+            android:layout_margin="@dimen/simple_btn_margin"/>
+    </LinearLayout>
 </LinearLayout>

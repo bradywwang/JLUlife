@@ -1,28 +1,25 @@
-package com.brady.jlulife.Model;
+package com.brady.jlulife.Models;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
+import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.LogInterface;
-import com.loopj.android.http.ResponseHandlerInterface;
-import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +27,43 @@ import java.util.List;
  * Created by wang on 2015/9/27.
  */
 public class JWCModel {
-    News news;
-
-
+    private News news;
+    private OnListinfoGetListener mOnListinfoGetListener;
+    private OnNewsDetailinfoGetListener mOnNewsDetailinfoGetListener;
     private static JWCModel model;
+    private static final int MSG_GET_NEWSLIST_SUCCESS = 100001;
+    private static final int MSG_GET_NEWSDETAIL_SUECCESS = 100002;
+    private static final int MSG_GET_NEWSLIST_FAIL = 100003;
+    private static final int MSG_GET_NEWSDETAIL_FAIL = 100004;
+
+
+
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_GET_NEWSLIST_SUCCESS:{
+                    mOnListinfoGetListener.onGetInfoSuccess((List) msg.obj);
+                    break;
+                }
+                case MSG_GET_NEWSLIST_FAIL:{
+                    mOnListinfoGetListener.onGetInfoFail();
+                    break;
+                }
+                case MSG_GET_NEWSDETAIL_SUECCESS:{
+                    mOnNewsDetailinfoGetListener.onGetInfoSuccess((News) msg.obj);
+                    break;
+                }
+
+                case MSG_GET_NEWSDETAIL_FAIL:{
+                    mOnNewsDetailinfoGetListener.onGetInfoFail();
+                    break;
+                }
+            }
+        }
+    };
+
+
     private JWCModel(){
 
     }
@@ -43,9 +73,11 @@ public class JWCModel {
             model = new JWCModel();
         return model;
     }
-    public static List<NewsBaseInfo> getNewsBaseInfo(final int pageNum, final Context context){
+    public void getNewsBaseInfo(final int pageNum,OnListinfoGetListener listinfoGetListener){
         List<NewsBaseInfo> newsList = null;
         AsyncHttpClient client = new AsyncHttpClient();
+        mOnListinfoGetListener = listinfoGetListener;
+
         client.get(ConstValue.JWC_BASIC_INFO + "&page=" + pageNum, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -76,18 +108,21 @@ public class JWCModel {
                     baseInfo.setDep(dep);
                     baseInfo.setHref(href);
                     newsList.add(baseInfo);
-
                 }
+                Message message = new Message();
+                message.what = MSG_GET_NEWSLIST_SUCCESS;
+                message.obj = newsList;
+                mhandler.sendMessage(message);
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
+                mhandler.sendEmptyMessage(MSG_GET_NEWSLIST_FAIL);
             }
         });
-        return newsList;
     }
-    public News getNewsContent(String href){
+    public void getNewsContent(String href,OnNewsDetailinfoGetListener listener){
+        mOnNewsDetailinfoGetListener = listener;
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ConstValue.JWC_HOST + href, new AsyncHttpResponseHandler() {
             @Override
@@ -120,17 +155,21 @@ public class JWCModel {
                 String dep = arr[0];
                 String date = arr[1].substring(0,19);
                 Log.i("dep",dep);
-                Log.i("date",date);
+                Log.i("date", date);
                 news.setTitle(title);
                 news.setContent(contentText);
                 news.setSubmitDepartment(dep);
                 news.setSubmitTime(date);
+                Message msg = new Message();
+                msg.what = MSG_GET_NEWSDETAIL_SUECCESS;
+                msg.obj = news;
+                mhandler.sendMessage(msg);
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                mhandler.sendEmptyMessage(MSG_GET_NEWSDETAIL_FAIL);
             }
         });
-        return news;
     }
 }
