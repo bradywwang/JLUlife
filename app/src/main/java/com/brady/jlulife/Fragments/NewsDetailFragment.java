@@ -4,6 +4,7 @@ package com.brady.jlulife.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,25 +33,16 @@ public class NewsDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
-        String href = bundle.getString("title");
-        Log.i("hrefaaaa",href);
-        Log.i("hrefaaaa","test");
         initComponents(view);
-        JWCModel.getInstance().getNewsContent(href, new OnNewsDetailinfoGetListener() {
-            @Override
-            public void onGetInfoSuccess(News news) {
-                tvTitle.setText(news.getTitle());
-                tvContent.setText(news.getContent());
-                tvSubmitDate.setText(news.getSubmitTime());
-                tvSubmitDep.setText(news.getSubmitDepartment());
-            }
-
-            @Override
-            public void onGetInfoFail() {
-
-            }
-        });
+        Bundle bundle = getArguments();
+        String title = bundle.getString("title");
+        String dep = bundle.getString("dep");
+        String date = bundle.getString("date");
+        String content = bundle.getString("content");
+        tvTitle.setText(title);
+        tvSubmitDate.setText(date);
+        tvContent.setText(content);
+        tvSubmitDep.setText(dep);
 
     }
     private void initComponents(View view){

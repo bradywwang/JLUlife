@@ -142,12 +142,31 @@ public class JWCModel {
                 String title = content.getElementsByTag("h4").text();
                 String info = content.getElementsByClass("info").text();
                 StringBuilder builder = new StringBuilder();
-                Elements elements = content.getElementsByTag("span");
-                for(Element element:elements){
-                    builder.append(element.text());
+//                Element ele = content.getElementsByTag("div").get(1);
+                Elements elements = content.getElementsByTag("div");
+                for(int j=0;j<elements.size();j++){
+                    if(j==0)
+                        continue;
+                    Element element = elements.get(j);
+                    String text = element.text();
+                    text.replace("\n","");
+                    builder.append(text);
+                    builder.append("\n");
+                }
+                Elements eles = content.getElementsByTag("p");
+                for(int j=0;j<eles.size();j++){
+                    if (j==0)
+                        continue;
+                    Element element = eles.get(j);
+                    String text = element.text();
+                    text.replace("\n","");
+                    text.replace("     ","  ");
+                    builder.append(text);
                     builder.append("\n");
                 }
                 String contentText = builder.toString();
+//                String cont = elements.html();
+//                String contentText = cont.replace("\n","</p>");
                 Log.i("title", title);
                 Log.i("info",info);
                 Log.i("content",contentText);

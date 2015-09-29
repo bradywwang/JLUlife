@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_drcom_login_success"/>
+            android:src="@mipmap/ic__success"/>
     <TextView
         android:paddingTop="@dimen/drcom_loginpage_margin_top"
         android:layout_width="wrap_content"

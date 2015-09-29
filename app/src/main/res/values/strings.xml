@@ -8,7 +8,10 @@
     <string name="label_auto_login">自动登陆</string>
     <string name="btn_login">登陆</string>
     <string name="btn_logout">注销</string>
+    <string name="btn_refesh">刷新</string>
     <string name="label_login_success">登陆成功</string>
+    <string name="label_load_fail">加载失败</string>
+    <string name="label_load_fail_information">请检查您的网络配置</string>
     <string name="label_login_success_information">您可以尽情的使用网络了</string>
     <string name="label_login_time">登陆时长</string>
     <string name="label_flow_used">已使用流量</string>

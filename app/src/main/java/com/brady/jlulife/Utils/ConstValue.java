@@ -10,4 +10,7 @@ public class ConstValue {
     public static final String SHARED_DRCOM_INFO  = "com.brady.jlulife.drcom.sharedinfo";
     public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
     public static final String JWC_HOST = "http://jwc.jlu.edu.cn/";
+
+    public static final String JWC_SOURCE  = "com.brady.jlulife.jwclist";
+    public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";
 }

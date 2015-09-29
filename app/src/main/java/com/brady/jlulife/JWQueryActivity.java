@@ -2,12 +2,12 @@ package com.brady.jlulife;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 
-import com.brady.jlulife.Fragments.JWQueryActivityFragment;
+import com.brady.jlulife.Fragments.JWQueryFragment;
 
 public class JWQueryActivity extends AppCompatActivity {
 
@@ -15,9 +15,11 @@ public class JWQueryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jwquery);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.jwquery_container,new JWQueryActivityFragment());
+        transaction.replace(R.id.jwquery_container,new JWQueryFragment());
         transaction.commit();
     }
 
