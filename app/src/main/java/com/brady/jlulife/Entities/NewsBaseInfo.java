@@ -40,4 +40,14 @@ public class NewsBaseInfo {
     public void setDep(String dep) {
         this.dep = dep;
     }
+
+    @Override
+    public String toString() {
+        return "NewsBaseInfo{" +
+                "title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", href='" + href + '\'' +
+                ", dep='" + dep + '\'' +
+                '}';
+    }
 }

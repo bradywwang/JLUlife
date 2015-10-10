@@ -12,9 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
 import com.brady.jlulife.DrcomLoginActivity;
 import com.brady.jlulife.JWQueryActivity;
+import com.brady.jlulife.Models.JLUNewsModel;
+import com.brady.jlulife.NewsActivity;
 import com.brady.jlulife.R;
+
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -52,6 +57,13 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), JWQueryActivity.class);
+                startActivity(intent);
+            }
+        });
+        ((Button)view.findViewById(R.id.main_xntz)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),NewsActivity.class);
                 startActivity(intent);
             }
         });

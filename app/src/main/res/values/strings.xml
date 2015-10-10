@@ -30,4 +30,6 @@
     <string name="title_activity_login_success">登陆成功</string>
     <string name="title_activity_uims_oauth">教务查询</string>
     <string name="title_activity_jwquery">教务通知</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="hello_world">Hello world!</string>
 </resources>
