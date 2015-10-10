@@ -33,4 +33,5 @@ dependencies {
     compile files('libs/httpcore-4.2.4.jar')
     compile files('libs/commons-codec-1.7.jar')
     compile files('libs/jsoup-1.8.1.jar')
+    compile project(':library')
 }

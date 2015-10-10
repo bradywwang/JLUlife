@@ -22,6 +22,7 @@ public class JWCAdapter extends ArrayAdapter<NewsBaseInfo> {
     private Context mcontext;
     private int resourceId;
 
+
     public JWCAdapter(Context context, int resource, int textViewResourceId, List<NewsBaseInfo> objects) {
         super(context, resource, textViewResourceId, objects);
         newsList = objects;
@@ -29,6 +30,9 @@ public class JWCAdapter extends ArrayAdapter<NewsBaseInfo> {
         resourceId = resource;
     }
 
+    public void setNewsList(List list){
+        newsList = list;
+    }
     @Override
     public int getCount() {
         return newsList.size();

@@ -8,33 +8,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.brady.jlulife.Fragments.JWQueryFragment">
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/jwc_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_last"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector"
-            android:textSize="@dimen/btn_txtsize"
-            android:textColor="#ffffff"
-            android:text="@string/last_page"
-            android:layout_margin="@dimen/simple_btn_margin"/>
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector"
-            android:textSize="@dimen/btn_txtsize"
-            android:textColor="#ffffff"
-            android:text="@string/next_page"
-            android:layout_margin="@dimen/simple_btn_margin"/>
-    </LinearLayout>
+
 </LinearLayout>

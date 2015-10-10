@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.JWCModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +34,12 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class JWQueryFragment extends Fragment {
-    private int pageNum;
-    private Button btnNext;
-    private Button btnLast;
-    private ListView JWCView;
+    private PullToRefreshListView refreshListView;
     private ProgressDialog dialog;
     Fragment fragment = null;
+    JWCAdapter mAdapter = null;
+    List mList = null;
+    int mPageNum = 1;
 
     public JWQueryFragment() {
     }
@@ -51,8 +54,9 @@ public class JWQueryFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initComponents(view);
+        mPageNum = 1;
         LoadInfo();
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        /*btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -70,31 +74,56 @@ public class JWQueryFragment extends Fragment {
                     btnLast.setEnabled(false);
                 LoadInfo();
             }
-        });
+        });*/
     }
 
     private void initComponents(View view){
-        pageNum = 1;
-        btnLast = (Button) view.findViewById(R.id.btn_last);
-        btnNext = (Button) view.findViewById(R.id.btn_next);
-        JWCView = (ListView) view.findViewById(R.id.jwc_listview);
-        btnLast.setEnabled(false);
+        refreshListView = (PullToRefreshListView) view.findViewById(R.id.jwc_listview);
         dialog = new ProgressDialog(view.getContext());
         dialog.setMessage("加载中，请稍后");
+        mList = new ArrayList();
+        mAdapter = new JWCAdapter(getActivity(), R.layout.item_jwc, R.layout.item_jwc, mList);
+        refreshListView.setAdapter(mAdapter);
+        refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        refreshListView.getLoadingLayoutProxy(false,true).setPullLabel(getString(R.string.pull_to_load));
+        refreshListView.getLoadingLayoutProxy(false,true).setRefreshingLabel(getString(R.string.loading));
+        refreshListView.getLoadingLayoutProxy(false,true).setReleaseLabel(getString(R.string.release_to_load));
+        refreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                String label = DateUtils.formatDateTime(getView().getContext().getApplicationContext(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                if(refreshListView.isHeaderShown()){
+                    mPageNum = 1;
+                    LoadInfo();
+                }else{
+                    mPageNum++;
+                    LoadInfo();
+                }
+            }
+        });
+        dialog.show();
+
     }
     private void LoadInfo(){
-        dialog.show();
-        JWCModel.getInstance().getNewsBaseInfo(pageNum, new OnListinfoGetListener() {
+        JWCModel.getInstance().getNewsBaseInfo(mPageNum, new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(final List list) {
-                JWCAdapter jwcAdapter = new JWCAdapter(getActivity(), R.layout.item_jwc, R.layout.item_jwc, list);
-                JWCView.setAdapter(jwcAdapter);
-                JWCView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                if(mPageNum ==1){
+                    mList = list;
+                    mAdapter.setNewsList(list);
+                }else{
+                    mList.addAll(list);
+                }
+
+                mAdapter.notifyDataSetChanged();
+                refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        final NewsBaseInfo baseInfo = (NewsBaseInfo) list.get(position);
-                        final Bundle bundle = new Bundle();
                         dialog.show();
+                        final NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position-1);
+                        final Bundle bundle = new Bundle();
                         JWCModel.getInstance().getNewsContent(baseInfo.getHref(), new OnNewsDetailinfoGetListener() {
                             @Override
                             public void onGetInfoSuccess(News news) {
@@ -130,6 +159,8 @@ public class JWQueryFragment extends Fragment {
                     }
                 });
                 dialog.dismiss();
+                refreshListView.onRefreshComplete();
+
             }
 
             @Override
