@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.brady.jlulife.Fragments.JWQueryFragment;
 import com.brady.jlulife.Fragments.NewsActivityFragment;
 import com.brady.jlulife.Fragments.NewsDetailFragment;
+import com.umeng.analytics.MobclickAgent;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -19,7 +20,9 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.jlunews_container, new NewsActivityFragment());
@@ -47,5 +50,13 @@ public class NewsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

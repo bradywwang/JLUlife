@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -50,6 +54,17 @@
             android:name=".NewsActivity"
             android:label="@string/title_activity_news" >
         </activity>
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <meta-data android:value="561f51dde0f55ad3b20012a6" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="test" android:name="UMENG_CHANNEL"/>
     </application>
+
 
 </manifest>

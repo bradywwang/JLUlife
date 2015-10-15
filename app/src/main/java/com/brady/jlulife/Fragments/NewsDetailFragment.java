@@ -30,8 +30,7 @@ public class NewsDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_detail, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_news_detail, container, false);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class NewsDetailFragment extends Fragment {
         tvTitle.setText(title);
         tvSubmitDate.setText(date);
         tvSubmitDep.setText(dep);
-        if(!cAttach.equals("")){
+        if(cAttach!=null&&!cAttach.equals("")){
             StringBuilder builder = new StringBuilder();
             SpannedString string = new SpannedString(content);
             builder.append(Html.toHtml(string));

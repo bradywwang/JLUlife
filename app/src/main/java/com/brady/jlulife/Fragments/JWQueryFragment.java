@@ -2,6 +2,7 @@ package com.brady.jlulife.Fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -47,6 +48,8 @@ public class JWQueryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mPageNum = 1;
+        LoadInfo();
         return inflater.inflate(R.layout.fragment_jwquery, container, false);
     }
 
@@ -54,27 +57,12 @@ public class JWQueryFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initComponents(view);
-        mPageNum = 1;
-        LoadInfo();
-        /*btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
-                pageNum++;
-                if(pageNum>1)
-                btnLast.setEnabled(true);
-                LoadInfo();
-            }
-        });
-        btnLast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pageNum --;
-                if(pageNum<=1)
-                    btnLast.setEnabled(false);
-                LoadInfo();
-            }
-        });*/
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
     }
 
     private void initComponents(View view){

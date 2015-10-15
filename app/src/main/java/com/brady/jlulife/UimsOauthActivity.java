@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.brady.jlulife.Models.UIMSModel;
 import com.loopj.android.http.AsyncHttpClient;
+import com.umeng.analytics.MobclickAgent;
 
 public class UimsOauthActivity extends AppCompatActivity {
     EditText metuname;
@@ -29,7 +30,9 @@ public class UimsOauthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_uims_oauth);
         initComponents();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +63,15 @@ public class UimsOauthActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_uims_login);
         client = new AsyncHttpClient();
         uimsModel = UIMSModel.getInstance();
-        Log.i(getClass().getSimpleName(),"null 2");
+        Log.i(getClass().getSimpleName(), "null 2");
 
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

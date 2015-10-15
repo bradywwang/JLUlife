@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.brady.jlulife.Fragments.JWQueryFragment;
+import com.umeng.analytics.MobclickAgent;
 
 public class JWQueryActivity extends AppCompatActivity {
 
@@ -16,7 +17,9 @@ public class JWQueryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jwquery);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.jwquery_container,new JWQueryFragment());
@@ -29,6 +32,14 @@ public class JWQueryActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_jwquery, menu);
         return true;
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

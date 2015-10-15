@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.brady.jlulife.Fragments.DrcomLoginFragment;
 import com.brady.jlulife.Fragments.LoginSuccessFragment;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
+import com.umeng.analytics.MobclickAgent;
 
 public class DrcomLoginActivity extends ActionBarActivity {
     DrCOMWSManagement management;
@@ -24,7 +25,9 @@ public class DrcomLoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drcom_login);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         management = new DrCOMWSManagement(this);
         FragmentManager manager = getSupportFragmentManager();
         final FragmentTransaction transaction = manager.beginTransaction();
@@ -55,5 +58,13 @@ public class DrcomLoginActivity extends ActionBarActivity {
 
     public Fragment getLoginFragemnt(){
         return loginFragment;
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
