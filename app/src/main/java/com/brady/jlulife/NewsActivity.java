@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brady.jlulife.Fragments.JWQueryFragment;
+import com.brady.jlulife.Fragments.NewsActivityFragment;
 import com.brady.jlulife.Fragments.NewsDetailFragment;
 
 public class NewsActivity extends AppCompatActivity {
@@ -16,12 +17,12 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jwquery);
+        setContentView(R.layout.activity_news);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.jlunews_container, new NewsDetailFragment());
+        transaction.replace(R.id.jlunews_container, new NewsActivityFragment());
         transaction.commit();
     }
 

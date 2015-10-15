@@ -17,6 +17,7 @@ import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
 import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
+import com.brady.jlulife.Models.JLUNewsModel;
 import com.brady.jlulife.Models.JWCModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
@@ -44,7 +45,7 @@ public class NewsActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_jwquery, container, false);
+        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override
@@ -53,25 +54,6 @@ public class NewsActivityFragment extends Fragment {
         initComponents(view);
         mPageNum = 1;
         LoadInfo();
-        /*btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                pageNum++;
-                if(pageNum>1)
-                btnLast.setEnabled(true);
-                LoadInfo();
-            }
-        });
-        btnLast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pageNum --;
-                if(pageNum<=1)
-                    btnLast.setEnabled(false);
-                LoadInfo();
-            }
-        });*/
     }
 
     private void initComponents(View view){
@@ -104,7 +86,7 @@ public class NewsActivityFragment extends Fragment {
 
     }
     private void LoadInfo() {
-        JWCModel.getInstance().getNewsBaseInfo(mPageNum, new OnListinfoGetListener() {
+        JLUNewsModel.getInstance().getNewsList(mPageNum, new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(final List list) {
                 if (mPageNum == 1) {
@@ -121,19 +103,22 @@ public class NewsActivityFragment extends Fragment {
                         dialog.show();
                         final NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position - 1);
                         final Bundle bundle = new Bundle();
-                        JWCModel.getInstance().getNewsContent(baseInfo.getHref(), new OnNewsDetailinfoGetListener() {
+                        JLUNewsModel.getInstance().getNewsDetail(baseInfo.getHref(), new OnNewsDetailinfoGetListener() {
                             @Override
                             public void onGetInfoSuccess(News news) {
                                 bundle.putString("title", news.getTitle());
                                 bundle.putString("dep", news.getSubmitDepartment());
                                 bundle.putString("date", news.getSubmitTime());
                                 bundle.putString("content", news.getContent());
+                                bundle.putString("cAttach", news.getcAttach());
+                                bundle.putString("cAttachName",news.getcAttachName());
+                                bundle.putString("cId",news.getId());
                                 fragment = new NewsDetailFragment();
                                 fragment.setArguments(bundle);
                                 dialog.dismiss();
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jwquery_container, fragment);
+                                transaction.replace(R.id.jlunews_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -141,13 +126,13 @@ public class NewsActivityFragment extends Fragment {
                             @Override
                             public void onGetInfoFail() {
                                 dialog.dismiss();
-                                bundle.putString("source", ConstValue.JWC_DETAIL_SOURCE);
+                                bundle.putString("source", ConstValue.NEWS_SOURCE_DETAIL);
                                 bundle.putString("href", baseInfo.getHref());
                                 fragment = new LoadFailFragment();
                                 fragment.setArguments(bundle);
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jwquery_container, fragment);
+                                transaction.replace(R.id.jlunews_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -166,10 +151,10 @@ public class NewsActivityFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 Bundle bundle = new Bundle();
-                bundle.putString("source", ConstValue.JWC_SOURCE);
+                bundle.putString("source", ConstValue.NEWS_SOURCE);
                 LoadFailFragment failFragment = new LoadFailFragment();
                 failFragment.setArguments(bundle);
-                transaction.replace(R.id.jwquery_container, failFragment);
+                transaction.replace(R.id.jlunews_container, failFragment);
                 transaction.commit();
             }
         });

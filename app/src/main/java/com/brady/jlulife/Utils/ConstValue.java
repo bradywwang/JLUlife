@@ -11,7 +11,11 @@ public class ConstValue {
     public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
     public static final String JWC_HOST = "http://jwc.jlu.edu.cn/";
     public static final String NEWS_HOST = "http://m.app3.jlu.edu.cn/GetNoticeList.php";
+    public static final String NEWS_MORE = "http://m.app3.jlu.edu.cn/GetConMore.php";
+    public static final String NEWS_DOWNLOAD = "http://m.app3.jlu.edu.cn/GetFileDown.php";
 
     public static final String JWC_SOURCE  = "com.brady.jlulife.jwclist";
     public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";
+    public static final String NEWS_SOURCE = "com.brady.jlulife.newslist";
+    public static final String NEWS_SOURCE_DETAIL = "com.brady.jlulife.newsdetail";
 }

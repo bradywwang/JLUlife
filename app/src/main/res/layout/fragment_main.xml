@@ -33,7 +33,7 @@
         android:id="@+id/main_xntz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="校内通知（未完成）"/>
+        android:text="校内通知"/>
     <Button
         android:id="@+id/main_jdjy"
         android:text="吉大就业（未完成）"

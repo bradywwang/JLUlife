@@ -40,17 +40,25 @@ public class LoadFailFragment extends Fragment {
                 switch (argument){
                     case ConstValue.JWC_SOURCE:{
                         fragment = new JWQueryFragment();
+                        transaction.replace(R.id.jwquery_container,fragment);
                         break;
                     }
                     case ConstValue.JWC_DETAIL_SOURCE:{
                         fragment = new NewsDetailFragment();
+                        transaction.replace(R.id.jwquery_container,fragment);
                         break;
                     }
+                    case ConstValue.NEWS_SOURCE:{
+                        fragment = new NewsActivityFragment();
+                        transaction.replace(R.id.jlunews_container,fragment);
+                        break;
+                    }
+                    case ConstValue.NEWS_SOURCE_DETAIL:{
+                        fragment = new NewsDetailFragment();
+                        transaction.replace(R.id.jlunews_container,fragment);
+                    }
                 }
-                if(fragment!=null){
-                    transaction.replace(R.id.jwquery_container,fragment);
                     transaction.commit();
-                }
             }
         });
     }

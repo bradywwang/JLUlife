@@ -164,12 +164,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int pull_to_refresh_header_vertical=0x7f030001;
     }
     public static final class string {
+        public static int loading=0x7f050006;
+        public static int pull_to_load=0x7f050007;
         public static int pull_to_refresh_from_bottom_pull_label=0x7f050003;
         public static int pull_to_refresh_from_bottom_refreshing_label=0x7f050004;
         public static int pull_to_refresh_from_bottom_release_label=0x7f050005;
         public static int pull_to_refresh_pull_label=0x7f050000;
         public static int pull_to_refresh_refreshing_label=0x7f050001;
         public static int pull_to_refresh_release_label=0x7f050002;
+        public static int release_to_load=0x7f050008;
     }
     public static final class styleable {
         /** Attributes that can be used with a PullToRefresh.
