@@ -31,4 +31,7 @@
     <string name="title_activity_uims_oauth">教务查询</string>
     <string name="title_activity_jwquery">教务通知</string>
     <string name="title_activity_news">校内通知</string>
+    <string name="title_activity_course">CourseActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

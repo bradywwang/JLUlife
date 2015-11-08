@@ -1,5 +1,6 @@
 package com.brady.jlulife;
 
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.brady.jlulife.Models.Listener.LoginListener;
 import com.brady.jlulife.Models.UIMSModel;
 import com.loopj.android.http.AsyncHttpClient;
 import com.umeng.analytics.MobclickAgent;
@@ -23,10 +25,12 @@ public class UimsOauthActivity extends AppCompatActivity {
     Button btnLogin;
     AsyncHttpClient client;
     UIMSModel uimsModel;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this.getApplicationContext();
         setContentView(R.layout.activity_uims_oauth);
         initComponents();
         ActionBar actionBar = getSupportActionBar();
@@ -39,8 +43,18 @@ public class UimsOauthActivity extends AppCompatActivity {
                 String uname = metuname.getText().toString();
                 String pwd = metpwd.getText().toString();
                 if(uimsModel!=null) {
-                    uimsModel.login(uname, pwd);
-//                    uimsModel.getCurrentInfo(getApplicationContext());
+                    uimsModel.login(uname, pwd, new LoginListener() {
+                        @Override
+                        public void onLoginSuccess() {
+                            uimsModel.getSemesters(mContext);
+                            uimsModel.getCurrentInfo(mContext);
+                        }
+
+                        @Override
+                        public void onLoginFailure(String failReason) {
+                            Log.i("fail",failReason);
+                        }
+                    });
                 }else {
                     Log.i(getClass().getSimpleName(),"null 1");
                 }

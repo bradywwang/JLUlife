@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/F:/Projects/JLUlifeNew/JLUlife/library/src/main/res/values-zh/pull_refresh_strings.xml -->
+    <!-- From: file:/home/brady/StudioProjects/JLUlife/library/src/main/res/values-zh/pull_refresh_strings.xml -->
     <eat-comment/>
     <string name="loading">加载中</string>
     <string name="pull_to_load">上拉加载</string>

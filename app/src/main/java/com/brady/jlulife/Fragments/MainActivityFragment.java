@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
+import com.brady.jlulife.CourseActivity;
 import com.brady.jlulife.DrcomLoginActivity;
 import com.brady.jlulife.JWQueryActivity;
 import com.brady.jlulife.Models.JLUNewsModel;
 import com.brady.jlulife.NewsActivity;
 import com.brady.jlulife.R;
+import com.brady.jlulife.UimsOauthActivity;
 
 import java.util.List;
 
@@ -41,35 +43,44 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Intent intent;
 //        initComponents(view);
 //        RecyclerView.LayoutManager manager = new GridLayoutManager(getActivity().getApplicationContext(),4);
 //        mRecyclerView.setLayoutManager(manager);
-        ((Button)view.findViewById(R.id.main_drcom_login)).setOnClickListener(new View.OnClickListener() {
+                ((Button) view.findViewById(R.id.main_drcom_login)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DrcomLoginActivity.class);
                 startActivity(intent);
             }
         });
-        ((Button)view.findViewById(R.id.main_jwQuery)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.main_jwQuery)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), JWQueryActivity.class);
                 startActivity(intent);
             }
         });
-        ((Button)view.findViewById(R.id.main_xntz)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.main_xntz)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),NewsActivity.class);
+                final Intent intent = new Intent(getActivity(), NewsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        ((Button) view.findViewById(R.id.main_my_lesson_list)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void initComponents(View view){
+    public void initComponents(View view) {
 //        mViewPager = (ViewPager) view.findViewById(R.id.main_viewpager);
 //        mRecyclerView = (RecyclerView) view.findViewById(R.id.main_recyclerView);
     }

@@ -19,4 +19,4 @@
     android:duration="@android:integer/config_longAnimTime"
     android:fromYDelta="0"
     android:toYDelta="100%p" />
-<!-- From: file:/F:/Projects/JLUlifeNew/JLUlife/library/src/main/res/anim/slide_out_to_bottom.xml -->
+<!-- From: file:/home/brady/StudioProjects/JLUlife/library/src/main/res/anim/slide_out_to_bottom.xml -->

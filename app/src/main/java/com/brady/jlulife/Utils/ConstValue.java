@@ -18,4 +18,8 @@ public class ConstValue {
     public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";
     public static final String NEWS_SOURCE = "com.brady.jlulife.newslist";
     public static final String NEWS_SOURCE_DETAIL = "com.brady.jlulife.newsdetail";
+
+
+
+    public static final int lessonsQuery = 1;
 }

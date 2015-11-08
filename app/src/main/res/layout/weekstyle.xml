@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/course_week_item_width"
+    android:layout_height="@dimen/course_week_height"
+    android:textSize="13sp"
+    android:textColor="@color/graydeep"
+    android:background="#EFEBE7"
+    android:gravity="center">
+</TextView>
