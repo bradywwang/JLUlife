@@ -6,12 +6,18 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.parser.Feature;
+import com.brady.jlulife.Entities.CourseSpec;
+import com.brady.jlulife.Entities.LessonSchedule.LessonSchedules;
+import com.brady.jlulife.Entities.LessonSchedule.LessonTeachers;
 import com.brady.jlulife.Entities.LessonSchedule.LessonValue;
 import com.brady.jlulife.Entities.LessonSchedule.ScheduleRequestSpec;
+import com.brady.jlulife.Entities.LessonSchedule.TeachClassMaster;
+import com.brady.jlulife.Entities.LessonSchedule.Teacher;
 import com.brady.jlulife.Entities.RequestBody;
 import com.brady.jlulife.Entities.ResponseBody;
 import com.brady.jlulife.Entities.TermList;
 import com.brady.jlulife.Models.Listener.LoginListener;
+import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.Utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -40,15 +46,18 @@ public class UIMSModel {
     private LoginListener mLoginListener;
     private int mStudId = 0;
     private String mStudName;
+    List<LessonValue> lessonList =null;
+    private static DBManager dbManager;
 
     private UIMSModel() {
         client = new AsyncHttpClient();
     }
 
-    public static UIMSModel getInstance() {
+    public static UIMSModel getInstance(Context context) {
         if (model == null) {
             model = new UIMSModel();
         }
+        dbManager = new DBManager(context);
         return model;
     }
 
@@ -108,11 +117,13 @@ public class UIMSModel {
                 for(TermList term:list){
                     Log.i("TermList",term.getTermId()+term.getTermName());
                 }
-                getLessonSchedule(129, context);
+//                syncCourses(129,context);
+
+                getLessonSchedule(128, context);
             }
         });
     }
-    public void getLessonSchedule(int semesterId,Context context){
+    public void getLessonSchedule(int semesterId, final Context context){
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
@@ -138,9 +149,10 @@ public class UIMSModel {
                 try {
                     if(response.getInt("status")==0){
                         ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
-                        ArrayList<LessonValue> list = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<LessonValue>>() {
+                        lessonList = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<LessonValue>>() {
                         });
-                        for (LessonValue value:list) {
+                        syncCourses();
+                        for (LessonValue value:lessonList) {
                             Log.i("LessonValue", value.getTeachClassMaster().getLessonSegment().getFullName());
                         }
                     }else{
@@ -154,6 +166,58 @@ public class UIMSModel {
 
             }
         });
+    }
+
+    public void syncCourses(){
+        dbManager.deleteAllItems();
+        List<CourseSpec> specs= new ArrayList<CourseSpec>();
+        for(LessonValue value:lessonList){
+            Log.i("result",value.toString());
+            TeachClassMaster master = value.getTeachClassMaster();
+            for(LessonSchedules schedule:master.getLessonSchedules()){
+                CourseSpec spec = new CourseSpec();
+                spec.setWeek(schedule.getTimeBlock().getDayOfWeek());
+                StringBuilder builder = new StringBuilder();
+                boolean isBegin = true;
+                for (LessonTeachers teacher:master.getLessonTeachers()){
+                    if(!isBegin){
+                        builder.append(",");
+                        isBegin = false;
+                    }
+                    builder.append(teacher.getTeacher().getName());
+                }
+                String blockName = schedule.getTimeBlock().getName();
+                String[] times = blockName.split("节");
+                if(times.length==2){
+                    String[] times2 = times[0].split("第");
+                    if(times2.length ==2){
+                        String[] timeFinal = times2[1].split(",");
+                        spec.setStartTime(Integer.parseInt(timeFinal[0]));
+                        spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length-1]));
+                    }
+                }
+                spec.setTeacherName(builder.toString());
+                if(blockName.contains("单周")){
+                    spec.setIsSingleWeek(1);
+                }else {
+                    spec.setIsSingleWeek(0);
+                }
+                if(blockName.contains("双周")){
+                    spec.setIsDoubleWeek(1);
+                }else {
+                    spec.setIsDoubleWeek(0);
+                }
+                spec.setBeginWeek(schedule.getTimeBlock().getBeginWeek());
+                spec.setEndWeek(schedule.getTimeBlock().getEndWeek());
+                spec.setClassRoom(schedule.getClassroom().getFullName());
+                spec.setCourseName(master.getLessonSegment().getLesson().getCourseInfo().getCourName());
+                specs.add(spec);
+            }
+        }
+        for(CourseSpec spec:specs){
+            Log.i("result",spec.toString());
+        }
+        dbManager.addAllCourses(specs);
     }
     public void getCurrentInfo(Context context) {
         client.get("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do", new JsonHttpResponseHandler() {
@@ -178,6 +242,7 @@ public class UIMSModel {
         mLoginListener.onLoginFailure(txt);
         Log.i("errMsg", txt);
     }
+
 
     private void handleErrMsg(JSONObject response){
 

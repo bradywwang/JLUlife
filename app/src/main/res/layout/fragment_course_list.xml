@@ -52,8 +52,8 @@
                 </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/relativeCourseContent"
-                    android:layout_width="@dimen/course_week_width"
-                    android:layout_height="@dimen/course_num_height" >
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
                 </RelativeLayout>
             </FrameLayout>
         </HorizontalScrollView>

@@ -48,6 +48,7 @@ public class UimsOauthActivity extends AppCompatActivity {
                         public void onLoginSuccess() {
                             uimsModel.getSemesters(mContext);
                             uimsModel.getCurrentInfo(mContext);
+//                            uimsModel.syncCourses(129,mContext);
                         }
 
                         @Override
@@ -76,7 +77,7 @@ public class UimsOauthActivity extends AppCompatActivity {
         mcboxRemember = (CheckBox) findViewById(R.id.uims_remember_pwd);
         btnLogin = (Button) findViewById(R.id.btn_uims_login);
         client = new AsyncHttpClient();
-        uimsModel = UIMSModel.getInstance();
+        uimsModel = UIMSModel.getInstance(getApplicationContext());
         Log.i(getClass().getSimpleName(), "null 2");
 
     }

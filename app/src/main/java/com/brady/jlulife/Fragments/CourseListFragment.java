@@ -14,14 +14,20 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 
 import com.brady.jlulife.Entities.CourseSpec;
+import com.brady.jlulife.Models.db.DBHelper;
+import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CourseListFragment extends Fragment {
 
-    private RelativeLayout courseContent;
+    private RelativeLayout mCourseContent;
+    private DBManager dbManager;
 
 
     public CourseListFragment() {
@@ -40,6 +46,12 @@ public class CourseListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initBaseComponents(view);
+        dbManager = new DBManager(getActivity());
+//        initTestData();
+        List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
+        showCourses(courseSpecs);
+
+
     }
     private void initBaseComponents(View view){
         view.scrollTo(0, 0);
@@ -57,8 +69,8 @@ public class CourseListFragment extends Fragment {
                 R.layout.coursenumstyle, courseNums);
         courseNum.setAdapter(leftAdap);
 
-        courseContent = (RelativeLayout) view.findViewById(R.id.relativeCourseContent);
-        addCourse(new CourseSpec("毛概","f9","张三",3,3,4,1,8,false));
+        mCourseContent = (RelativeLayout) view.findViewById(R.id.relativeCourseContent);
+//        addCourse(new CourseSpec("毛概","f9","张三",3,3,4,1,8,false));
     }
     private void addCourse(CourseSpec spec){
         int leftMargin = 0;
@@ -95,9 +107,24 @@ public class CourseListFragment extends Fragment {
         course.setWidth(courseWidth);
         course.setHeight(courseLength);
         course.setBackgroundColor(getResources().getColor(R.color.courseColor));
+        course.setPadding(8,8,8,8);
         course.setText(spec.toString());
         course.setTextSize(15);
         course.setTextColor(Color.WHITE);
-        courseContent.addView(course);
+        mCourseContent.addView(course);
+    }
+
+//    public CourseSpec(String courseName, String classRoom, String teacherName, int week, int startTime, int endTime, int beginWeek, int endWeek, int isSingleWeek, int isDoubleWeek) {
+    private void initTestData(){
+        List<CourseSpec> list = new ArrayList<CourseSpec>();
+        list.add(new CourseSpec("毛概","f9","张三",3,3,4,1,8,0,0));
+        list.add(new CourseSpec("毛111概","f9","张三",4,3,4,1,8,0,0));
+        dbManager.addAllCourses(list);
+    }
+
+    public void showCourses(List<CourseSpec>courseSpecList){
+        for (CourseSpec spec :courseSpecList){
+            addCourse(new CourseSpec(spec.getCourseName(),spec.getClassRoom(),spec.getTeacherName(),spec.getWeek(),spec.getStartTime(),spec.getEndTime(),spec.getBeginWeek(),spec.getEndWeek(),spec.getIsSingleWeek(),spec.getIsDoubleWeek()));
+        }
     }
 }

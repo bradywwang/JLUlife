@@ -1,5 +1,6 @@
 package com.brady.jlulife;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,9 @@ public class CourseActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_upgrade) {
+            Intent intent = new Intent(this,UimsOauthActivity.class);
+            startActivity(intent);
             return true;
         }
 

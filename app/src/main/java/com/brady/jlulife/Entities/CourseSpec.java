@@ -12,9 +12,10 @@ public class CourseSpec {
     private int endTime;
     private int beginWeek;
     private int endWeek;
-    private boolean isSingleWeek;
+    private int isSingleWeek;
+    private int isDoubleWeek;
 
-    public CourseSpec(String courseName, String classRoom, String teacherName, int week, int startTime, int endTime, int beginWeek, int endWeek, boolean isSingleWeek) {
+    public CourseSpec(String courseName, String classRoom, String teacherName, int week, int startTime, int endTime, int beginWeek, int endWeek, int isSingleWeek, int isDoubleWeek) {
         this.courseName = courseName;
         this.classRoom = classRoom;
         this.teacherName = teacherName;
@@ -24,6 +25,7 @@ public class CourseSpec {
         this.beginWeek = beginWeek;
         this.endWeek = endWeek;
         this.isSingleWeek = isSingleWeek;
+        this.isDoubleWeek = isDoubleWeek;
     }
 
     @Override
@@ -95,11 +97,22 @@ public class CourseSpec {
         this.endWeek = endWeek;
     }
 
-    public boolean isSingleWeek() {
+    public int getIsSingleWeek() {
         return isSingleWeek;
     }
 
-    public void setIsSingleWeek(boolean isSingleWeek) {
+    public void setIsSingleWeek(int isSingleWeek) {
         this.isSingleWeek = isSingleWeek;
+    }
+
+    public int getIsDoubleWeek() {
+        return isDoubleWeek;
+    }
+
+    public void setIsDoubleWeek(int isDoubleWeek) {
+        this.isDoubleWeek = isDoubleWeek;
+    }
+
+    public CourseSpec() {
     }
 }

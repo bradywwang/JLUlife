@@ -31,4 +31,13 @@ public class LessonValue {
     public void setDateAccept(String dateAccept) {
         this.dateAccept = dateAccept;
     }
+
+    @Override
+    public String toString() {
+        return "LessonValue{" +
+                "teachClassMaster=" + teachClassMaster +
+                ", tcsId=" + tcsId +
+                ", dateAccept='" + dateAccept + '\'' +
+                '}';
+    }
 }
