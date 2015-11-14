@@ -3,25 +3,16 @@ package com.brady.jlulife.Fragments;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
 import com.brady.jlulife.CourseActivity;
 import com.brady.jlulife.DrcomLoginActivity;
 import com.brady.jlulife.JWQueryActivity;
-import com.brady.jlulife.Models.JLUNewsModel;
 import com.brady.jlulife.NewsActivity;
 import com.brady.jlulife.R;
-import com.brady.jlulife.UimsOauthActivity;
-
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.

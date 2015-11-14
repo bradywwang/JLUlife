@@ -1,6 +1,5 @@
 package com.brady.jlulife.Fragments;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -8,18 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.brady.jlulife.Adapters.JWCAdapter;
-import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
-import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.JWCModel;

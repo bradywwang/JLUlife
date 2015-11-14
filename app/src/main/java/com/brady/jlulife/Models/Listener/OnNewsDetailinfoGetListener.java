@@ -1,4 +1,4 @@
-package com.brady.jlulife.CallbackListeners;
+package com.brady.jlulife.Models.Listener;
 
 import com.brady.jlulife.Entities.News;
 

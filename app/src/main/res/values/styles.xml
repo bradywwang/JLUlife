@@ -12,4 +12,7 @@
         <item name="android:background">#00ff00</item>
         <item name="android:colorBackground">#00ff00</item>
     </style>
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+
+    </style>
 </resources>

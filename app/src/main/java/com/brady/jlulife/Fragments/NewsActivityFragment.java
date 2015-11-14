@@ -14,12 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.brady.jlulife.Adapters.JWCAdapter;
-import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
-import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.JLUNewsModel;
-import com.brady.jlulife.Models.JWCModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;

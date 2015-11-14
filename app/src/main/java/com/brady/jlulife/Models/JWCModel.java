@@ -1,12 +1,11 @@
 package com.brady.jlulife.Models;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
-import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Utils.ConstValue;

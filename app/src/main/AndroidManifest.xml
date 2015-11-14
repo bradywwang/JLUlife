@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".UimsOauthActivity"
-            android:label="@string/title_activity_uims_oauth" >
+            android:label="@string/title_activity_uims_oauth">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

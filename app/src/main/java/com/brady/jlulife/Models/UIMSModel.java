@@ -5,14 +5,13 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.alibaba.fastjson.parser.Feature;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Entities.LessonSchedule.LessonSchedules;
 import com.brady.jlulife.Entities.LessonSchedule.LessonTeachers;
 import com.brady.jlulife.Entities.LessonSchedule.LessonValue;
 import com.brady.jlulife.Entities.LessonSchedule.ScheduleRequestSpec;
 import com.brady.jlulife.Entities.LessonSchedule.TeachClassMaster;
-import com.brady.jlulife.Entities.LessonSchedule.Teacher;
 import com.brady.jlulife.Entities.RequestBody;
 import com.brady.jlulife.Entities.ResponseBody;
 import com.brady.jlulife.Entities.TermList;
@@ -48,6 +47,7 @@ public class UIMSModel {
     private String mStudName;
     List<LessonValue> lessonList =null;
     private static DBManager dbManager;
+    private static Context sContext;
 
     private UIMSModel() {
         client = new AsyncHttpClient();
@@ -57,6 +57,7 @@ public class UIMSModel {
         if (model == null) {
             model = new UIMSModel();
         }
+        sContext = context;
         dbManager = new DBManager(context);
         return model;
     }
@@ -92,7 +93,7 @@ public class UIMSModel {
 
     }
 
-    public void getSemesters(final Context context) {
+    public void getSemesters(final OnListinfoGetListener listener) {
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         body.setBranch("default");
@@ -107,19 +108,20 @@ public class UIMSModel {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
+        client.post(sContext, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.i(getClass().getSimpleName(), response.toString());
                 ResponseBody body = JSON.parseObject(response.toString(),ResponseBody.class);
                 ArrayList<TermList> list = JSON.parseObject(body.getValue(),new TypeReference<ArrayList<TermList>>(){});
-                for(TermList term:list){
-                    Log.i("TermList",term.getTermId()+term.getTermName());
-                }
-//                syncCourses(129,context);
+                listener.onGetInfoSuccess(list);
+            }
 
-                getLessonSchedule(128, context);
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                listener.onGetInfoFail();
             }
         });
     }
@@ -193,7 +195,7 @@ public class UIMSModel {
                     if(times2.length ==2){
                         String[] timeFinal = times2[1].split(",");
                         spec.setStartTime(Integer.parseInt(timeFinal[0]));
-                        spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length-1]));
+                        spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length - 1]));
                     }
                 }
                 spec.setTeacherName(builder.toString());

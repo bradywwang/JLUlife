@@ -1,18 +1,16 @@
 package com.brady.jlulife.Models;
 
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.brady.jlulife.CallbackListeners.OnListinfoGetListener;
-import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
+import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.xmlpull.v1.XmlPullParser;
@@ -22,7 +20,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

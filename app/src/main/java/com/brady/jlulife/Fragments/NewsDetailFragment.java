@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -14,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.brady.jlulife.CallbackListeners.OnNewsDetailinfoGetListener;
-import com.brady.jlulife.Entities.News;
-import com.brady.jlulife.Models.JWCModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
 
