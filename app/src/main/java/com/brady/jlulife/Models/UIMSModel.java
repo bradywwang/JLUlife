@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Entities.LessonSchedule.LessonSchedules;
@@ -20,6 +21,7 @@ import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.Utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -48,6 +50,8 @@ public class UIMSModel {
     List<LessonValue> lessonList =null;
     private static DBManager dbManager;
     private static Context sContext;
+    private OnAsyncLoadListener mSyncListener;
+    public boolean isLogin = false;
 
     private UIMSModel() {
         client = new AsyncHttpClient();
@@ -83,6 +87,7 @@ public class UIMSModel {
                 } else {
                     Log.i(getClass().getSimpleName(), "Log success");
                     mLoginListener.onLoginSuccess();
+                    isLogin = true;
                 }
             }
         });
@@ -125,7 +130,8 @@ public class UIMSModel {
             }
         });
     }
-    public void getLessonSchedule(int semesterId, final Context context){
+    public void syncLessonSchedule(int semesterId, final Context context, final OnAsyncLoadListener listener){
+        mSyncListener = listener;
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
@@ -153,12 +159,13 @@ public class UIMSModel {
                         ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
                         lessonList = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<LessonValue>>() {
                         });
-                        syncCourses();
+                        saveCoursesToDb();
                         for (LessonValue value:lessonList) {
                             Log.i("LessonValue", value.getTeachClassMaster().getLessonSegment().getFullName());
                         }
                     }else{
                         handleErrMsg(response);
+                        mSyncListener.onGetInfoFail();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -167,10 +174,16 @@ public class UIMSModel {
 
 
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                mSyncListener.onGetInfoFail();
+            }
         });
     }
 
-    public void syncCourses(){
+    public void saveCoursesToDb(){
         dbManager.deleteAllItems();
         List<CourseSpec> specs= new ArrayList<CourseSpec>();
         for(LessonValue value:lessonList){
@@ -178,6 +191,11 @@ public class UIMSModel {
             TeachClassMaster master = value.getTeachClassMaster();
             for(LessonSchedules schedule:master.getLessonSchedules()){
                 CourseSpec spec = new CourseSpec();
+                spec.setBeginWeek(schedule.getTimeBlock().getBeginWeek());
+                spec.setEndWeek(schedule.getTimeBlock().getEndWeek());
+                spec.setClassRoom(schedule.getClassroom().getFullName());
+                spec.setCourseName(master.getLessonSegment().getLesson().getCourseInfo().getCourName());
+
                 spec.setWeek(schedule.getTimeBlock().getDayOfWeek());
                 StringBuilder builder = new StringBuilder();
                 boolean isBegin = true;
@@ -190,7 +208,7 @@ public class UIMSModel {
                 }
                 String blockName = schedule.getTimeBlock().getName();
                 String[] times = blockName.split("节");
-                if(times.length==2){
+                if(times.length==2||times.length==1){
                     String[] times2 = times[0].split("第");
                     if(times2.length ==2){
                         String[] timeFinal = times2[1].split(",");
@@ -198,6 +216,7 @@ public class UIMSModel {
                         spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length - 1]));
                     }
                 }
+                    Log.e("blockName",spec.getCourseName()+spec.getStartTime()+""+spec.getEndTime());
                 spec.setTeacherName(builder.toString());
                 if(blockName.contains("单周")){
                     spec.setIsSingleWeek(1);
@@ -209,10 +228,6 @@ public class UIMSModel {
                 }else {
                     spec.setIsDoubleWeek(0);
                 }
-                spec.setBeginWeek(schedule.getTimeBlock().getBeginWeek());
-                spec.setEndWeek(schedule.getTimeBlock().getEndWeek());
-                spec.setClassRoom(schedule.getClassroom().getFullName());
-                spec.setCourseName(master.getLessonSegment().getLesson().getCourseInfo().getCourName());
                 specs.add(spec);
             }
         }
@@ -220,6 +235,7 @@ public class UIMSModel {
             Log.i("result",spec.toString());
         }
         dbManager.addAllCourses(specs);
+        mSyncListener.onGetInfoSuccess();
     }
     public void getCurrentInfo(Context context) {
         client.get("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do", new JsonHttpResponseHandler() {
@@ -248,5 +264,8 @@ public class UIMSModel {
 
     private void handleErrMsg(JSONObject response){
 
+    }
+    public boolean isLoginIn(){
+        return isLogin;
     }
 }

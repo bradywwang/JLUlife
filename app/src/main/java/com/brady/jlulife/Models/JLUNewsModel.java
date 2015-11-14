@@ -5,9 +5,9 @@ import android.os.Message;
 import android.util.Log;
 
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -33,7 +33,7 @@ public class JLUNewsModel {
     private static final int MSG_GET_NEWSDETAIL_FAIL = 100004;
 
     OnListinfoGetListener mListinfoGetListener;
-    OnNewsDetailinfoGetListener mNewsDetailinfoGetListener;
+    OnObjectGetListener mNewsDetailinfoGetListener;
     AsyncHttpClient mClient;
     private JLUNewsModel(){
         mClient = new AsyncHttpClient();
@@ -66,7 +66,7 @@ public class JLUNewsModel {
             }
         }
     };
-    public void getNewsDetail(String newsId,OnNewsDetailinfoGetListener newsDetailinfoGetListener){
+    public void getNewsDetail(String newsId,OnObjectGetListener newsDetailinfoGetListener){
         mNewsDetailinfoGetListener = newsDetailinfoGetListener;
         String parseURI = ConstValue.NEWS_MORE+"?id="+newsId;
         mClient.get(parseURI, new AsyncHttpResponseHandler() {

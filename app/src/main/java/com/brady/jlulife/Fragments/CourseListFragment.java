@@ -48,11 +48,16 @@ public class CourseListFragment extends Fragment {
         initBaseComponents(view);
         dbManager = new DBManager(getActivity());
 //        initTestData();
+//        showCourses(courseSpecs);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
         showCourses(courseSpecs);
-
-
     }
+
     private void initBaseComponents(View view){
         view.scrollTo(0, 0);
         GridView head = (GridView) view.findViewById(R.id.gridWeek);

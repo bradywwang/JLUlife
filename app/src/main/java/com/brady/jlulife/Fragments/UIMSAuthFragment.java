@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.brady.jlulife.Models.Listener.LoginListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
@@ -19,7 +20,6 @@ import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.R;
 import com.loopj.android.http.AsyncHttpClient;
 
-import java.util.List;
 
 
 public class UIMSAuthFragment extends Fragment {
@@ -71,7 +71,6 @@ public class UIMSAuthFragment extends Fragment {
         btnLogin = (Button) view.findViewById(R.id.btn_uims_login);
         client = new AsyncHttpClient();
         uimsModel = UIMSModel.getInstance(mContext);
-//        Log.i(getClass().getSimpleName(), "null 2");
 
     }
 
@@ -80,11 +79,11 @@ public class UIMSAuthFragment extends Fragment {
             uimsModel.login(uname, pwd, new LoginListener() {
                 @Override
                 public void onLoginSuccess() {
-                    getSemesters();
+                    showSemSelFrag();
                 }
                 @Override
                 public void onLoginFailure(String failReason) {
-                    Log.i("fail",failReason);
+                    Toast.makeText(mContext,failReason,Toast.LENGTH_SHORT).show();
                 }
             });
         }else {
@@ -92,25 +91,12 @@ public class UIMSAuthFragment extends Fragment {
         }
     }
 
-    public void getSemesters(){
-        uimsModel.getSemesters(new OnListinfoGetListener() {
-            @Override
-            public void onGetInfoSuccess(List list) {
 
-            }
-
-            @Override
-            public void onGetInfoFail() {
-
-            }
-        });
-//        uimsModel.getCurrentInfo(mContext);
-
-    }
     public void showSemSelFrag(){
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-
+        transaction.replace(R.id.auth_container,new SemSelectFragment());
+        transaction.commit();
     }
 
 }

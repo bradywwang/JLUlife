@@ -20,8 +20,8 @@
     <dimen name="course_week_height">20dp</dimen>
     <dimen name="course_week_item_width">80dp</dimen>
     <dimen name="course_num_width">20dp</dimen>
-    <dimen name="course_num_height">660dp</dimen>
-    <dimen name="course_num_item_height">60dp</dimen>
+    <dimen name="course_num_height">880dp</dimen>
+    <dimen name="course_num_item_height">80dp</dimen>
 
 
     <dimen name="spacing">1px</dimen>

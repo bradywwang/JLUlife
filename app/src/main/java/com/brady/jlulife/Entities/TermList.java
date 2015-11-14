@@ -103,4 +103,9 @@ public class TermList {
     public void setEgrade(String egrade) {
         this.egrade = egrade;
     }
+
+    @Override
+    public String toString() {
+        return termName;
+    }
 }

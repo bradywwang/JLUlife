@@ -2,11 +2,14 @@ package com.brady.jlulife.Adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.brady.jlulife.Entities.TermList;
+import com.brady.jlulife.R;
 
 import java.util.List;
 
@@ -25,10 +28,9 @@ public class SemesterAdapter extends ArrayAdapter {
         mList = objects;
         mResourse = resource;
     }
-
     @Override
     public Object getItem(int position) {
-        return mList.get(position).getTermName();
+        return mList.get(position);
     }
 
     @Override
@@ -36,7 +38,9 @@ public class SemesterAdapter extends ArrayAdapter {
         View view;
         if(convertView == null) {
             Log.i("resId",String.valueOf(mResourse));
-            view = View.inflate(mContext, mResourse, null);
+            view = LayoutInflater.from(mContext).inflate(mResourse,null);
+            TextView textView = (TextView) view.findViewById(R.id.tv_spinner_item);
+            textView.setText(mList.get(position).getTermName());
         }else {
             view = convertView;
         }

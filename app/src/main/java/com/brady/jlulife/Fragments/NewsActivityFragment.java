@@ -15,10 +15,10 @@ import android.widget.ListView;
 
 import com.brady.jlulife.Adapters.JWCAdapter;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.JLUNewsModel;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -109,9 +109,10 @@ public class NewsActivityFragment extends Fragment {
                         dialog.show();
                         final NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position - 1);
                         final Bundle bundle = new Bundle();
-                        JLUNewsModel.getInstance().getNewsDetail(baseInfo.getHref(), new OnNewsDetailinfoGetListener() {
+                        JLUNewsModel.getInstance().getNewsDetail(baseInfo.getHref(), new OnObjectGetListener() {
                             @Override
-                            public void onGetInfoSuccess(News news) {
+                            public void onGetInfoSuccess(Object object) {
+                                News news = (News) object;
                                 bundle.putString("title", news.getTitle());
                                 bundle.putString("dep", news.getSubmitDepartment());
                                 bundle.putString("date", news.getSubmitTime());

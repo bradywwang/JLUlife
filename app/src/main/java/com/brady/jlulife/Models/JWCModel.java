@@ -5,9 +5,9 @@ import android.os.Message;
 import android.util.Log;
 
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Models.Listener.OnNewsDetailinfoGetListener;
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,7 +28,7 @@ import java.util.List;
 public class JWCModel {
     private News news;
     private OnListinfoGetListener mOnListinfoGetListener;
-    private OnNewsDetailinfoGetListener mOnNewsDetailinfoGetListener;
+    private OnObjectGetListener mOnNewsDetailinfoGetListener;
     private static JWCModel model;
     private static final int MSG_GET_NEWSLIST_SUCCESS = 100001;
     private static final int MSG_GET_NEWSDETAIL_SUECCESS = 100002;
@@ -120,7 +120,7 @@ public class JWCModel {
             }
         });
     }
-    public void getNewsContent(String href,OnNewsDetailinfoGetListener listener){
+    public void getNewsContent(String href,OnObjectGetListener listener){
         mOnNewsDetailinfoGetListener = listener;
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ConstValue.JWC_HOST + href, new AsyncHttpResponseHandler() {

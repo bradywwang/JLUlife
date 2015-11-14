@@ -1,10 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.brady.jlulife.Fragments.SemSelectFragment">
+    tools:context="com.brady.jlulife.Fragments.SemSelectFragment"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/mid_font_size"
+        android:text="@string/label_update_lesson_select" />
+    <Spinner
+        android:id="@+id/sem_sel_spinner"
+        android:layout_marginLeft="@dimen/drcom_loginpage_margin_left"
+        android:layout_marginRight="@dimen/drcom_loginpage_margin_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
-</FrameLayout>
+    </Spinner>
+    <Button
+        android:id="@+id/btn_sem_sync"
+        android:layout_marginLeft="@dimen/drcom_loginpage_margin_left"
+        android:layout_marginRight="@dimen/drcom_loginpage_margin_left"
+        android:layout_marginTop="@dimen/btn_margintop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_sync"
+        android:background="@drawable/selector"
+        android:textSize="@dimen/btn_txtsize"
+        android:textColor="@color/btn_txtcolor"
+        />
+</LinearLayout>
