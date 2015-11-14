@@ -27,10 +27,24 @@ public class CourseSpec {
         this.isSingleWeek = isSingleWeek;
         this.isDoubleWeek = isDoubleWeek;
     }
-
     @Override
     public String toString() {
         return courseName + '@'+classRoom + '@'+ teacherName ;
+    }
+
+    public String getString() {
+        return "CourseSpec{" +
+                "courseName='" + courseName + '\'' +
+                ", classRoom='" + classRoom + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", week=" + week +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", beginWeek=" + beginWeek +
+                ", endWeek=" + endWeek +
+                ", isSingleWeek=" + isSingleWeek +
+                ", isDoubleWeek=" + isDoubleWeek +
+                '}';
     }
 
     public String getCourseName() {

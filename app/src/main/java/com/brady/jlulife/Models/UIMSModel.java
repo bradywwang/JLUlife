@@ -160,19 +160,15 @@ public class UIMSModel {
                         lessonList = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<LessonValue>>() {
                         });
                         saveCoursesToDb();
-                        for (LessonValue value:lessonList) {
-                            Log.i("LessonValue", value.getTeachClassMaster().getLessonSegment().getFullName());
-                        }
                     }else{
                         handleErrMsg(response);
                         mSyncListener.onGetInfoFail();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    mSyncListener.onGetInfoFail();
                 }
                 Log.i(getClass().getSimpleName(), response.toString());
-
-
             }
 
             @Override
@@ -195,7 +191,6 @@ public class UIMSModel {
                 spec.setEndWeek(schedule.getTimeBlock().getEndWeek());
                 spec.setClassRoom(schedule.getClassroom().getFullName());
                 spec.setCourseName(master.getLessonSegment().getLesson().getCourseInfo().getCourName());
-
                 spec.setWeek(schedule.getTimeBlock().getDayOfWeek());
                 StringBuilder builder = new StringBuilder();
                 boolean isBegin = true;
@@ -207,6 +202,7 @@ public class UIMSModel {
                     builder.append(teacher.getTeacher().getName());
                 }
                 String blockName = schedule.getTimeBlock().getName();
+                Log.i("blockname",spec.getCourseName()+blockName);
                 String[] times = blockName.split("节");
                 if(times.length==2||times.length==1){
                     String[] times2 = times[0].split("第");
