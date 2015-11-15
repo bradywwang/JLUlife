@@ -305,7 +305,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			setState(State.RESET);
 		}
 	}
-
+	@Override
+	public void onRefreshStart() {
+		if (!isRefreshing()) {
+			setState(State.REFRESHING,true);
+		}
+	}
 	@Override
 	public final boolean onTouchEvent(MotionEvent event) {
 

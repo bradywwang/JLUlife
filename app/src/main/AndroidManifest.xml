@@ -19,35 +19,6 @@
             android:label="@string/app_name" >
 
         </activity>
-        <activity
-            android:name=".DrcomLoginActivity"
-            android:label="@string/title_activity_drcom_login"
-            android:parentActivityName=".MainActivity" >
-
-            <!--
-                <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-            -->
-        </activity>
-        <activity
-            android:name=".UimsOauthActivity"
-            android:label="@string/title_activity_uims_oauth">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".JWQueryActivity"
-            android:label="@string/title_activity_jwquery" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".NewsActivity"
-            android:label="@string/title_activity_news" >
-        </activity>
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
@@ -68,7 +39,7 @@
 
         <activity
             android:name=".SlidingMenuMainActivity"
-            android:label="@string/title_activity_course" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

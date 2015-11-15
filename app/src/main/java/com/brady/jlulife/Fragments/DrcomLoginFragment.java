@@ -20,7 +20,6 @@ import android.widget.EditText;
 
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Utils.ConstValue;
-import com.brady.jlulife.DrcomLoginActivity;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Jni;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.brady.jlulife.Fragments.CourseListFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
+import com.brady.jlulife.Fragments.UIMSAuthFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class SlidingMenuMainActivity extends AppCompatActivity {
@@ -45,8 +46,10 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upgrade) {
-            Intent intent = new Intent(this,UimsOauthActivity.class);
-            startActivity(intent);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.main_container,new UIMSAuthFragment());
+            transaction.commit();
             return true;
         }
 
@@ -57,8 +60,8 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu.setShadowWidth(200);
-        menu.setBehindOffset(200);
-        menu.setFadeDegree(0.35f);
+        menu.setBehindOffset(500);
+        menu.setFadeDegree(0.5f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.menu_container);
         FragmentManager manager = getSupportFragmentManager();

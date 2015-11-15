@@ -74,6 +74,8 @@ public class PullToRefreshHorizontalScrollView extends PullToRefreshBase<Horizon
 		return false;
 	}
 
+
+
 	@TargetApi(9)
 	final class InternalHorizontalScrollViewSDK9 extends HorizontalScrollView {
 

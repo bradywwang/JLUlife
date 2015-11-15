@@ -21,5 +21,7 @@ public class ConstValue {
 
 
 
-    public static final int lessonsQuery = 1;
+    public static final int LESSON_QUERY = 1;
+    public static final String FUNCTION_JWCX = "jwcx";
+    public static final String FUNCTION_JLUNEWS = "jlunews";
 }

@@ -151,6 +151,7 @@ public interface IPullToRefresh<T extends View> {
 	 * Refreshing View
 	 */
 	public void onRefreshComplete();
+	public void onRefreshStart();
 
 	/**
 	 * Set the Touch Events to be filtered or not. If set to true, then the View
@@ -242,5 +243,7 @@ public interface IPullToRefresh<T extends View> {
 	 * @param showView
 	 */
 	public void setShowViewWhileRefreshing(boolean showView);
+
+
 
 }

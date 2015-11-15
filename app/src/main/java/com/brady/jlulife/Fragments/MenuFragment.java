@@ -1,6 +1,5 @@
 package com.brady.jlulife.Fragments;
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.brady.jlulife.SlidingMenuMainActivity;
-import com.brady.jlulife.JWQueryActivity;
-import com.brady.jlulife.NewsActivity;
 import com.brady.jlulife.R;
+import com.brady.jlulife.Utils.ConstValue;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -31,7 +29,6 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
         return view;
     }
 
@@ -52,8 +49,12 @@ public class MenuFragment extends Fragment {
         ((Button) view.findViewById(R.id.main_jwQuery)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NewsListFragment fragment = new NewsListFragment();
+                Bundle argument = new Bundle();
+                argument.putString("action", ConstValue.FUNCTION_JWCX);
+                fragment.setArguments(argument);
                 FragmentTransaction transaction= manager.beginTransaction();
-                transaction.replace(R.id.main_container, new JWQueryFragment());
+                transaction.replace(R.id.main_container,fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 closeMenu();
@@ -63,11 +64,15 @@ public class MenuFragment extends Fragment {
         ((Button) view.findViewById(R.id.main_xntz)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeMenu();
+                NewsListFragment fragment = new NewsListFragment();
+                Bundle argument = new Bundle();
+                argument.putString("action", ConstValue.FUNCTION_JLUNEWS);
+                fragment.setArguments(argument);
                 FragmentTransaction transaction= manager.beginTransaction();
-                transaction.replace(R.id.main_container, new NewsActivityFragment());
+                transaction.replace(R.id.main_container,fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+                closeMenu();
             }
         });
     }

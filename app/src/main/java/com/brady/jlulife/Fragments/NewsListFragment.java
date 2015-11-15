@@ -1,6 +1,5 @@
 package com.brady.jlulife.Fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,12 +14,9 @@ import android.widget.ListView;
 
 import com.brady.jlulife.Adapters.JWCAdapter;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
-import com.brady.jlulife.Models.JWCModel;
-import com.brady.jlulife.Models.Listener.OnObjectGetListener;
+import com.brady.jlulife.Models.NewsModel;
 import com.brady.jlulife.R;
-import com.brady.jlulife.Utils.ConstValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -30,22 +26,21 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class JWQueryFragment extends Fragment {
+public class NewsListFragment extends Fragment {
     private PullToRefreshListView refreshListView;
-    private ProgressDialog dialog;
     Fragment fragment = null;
     JWCAdapter mAdapter = null;
     List mList = null;
     int mPageNum = 1;
+    private String mAction;
 
-    public JWQueryFragment() {
+    public NewsListFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mPageNum = 1;
-        LoadInfo();
         return inflater.inflate(R.layout.fragment_jwquery, container, false);
     }
 
@@ -53,6 +48,11 @@ public class JWQueryFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initComponents(view);
+        Bundle bundle = getArguments();
+        String action = bundle.getString("action");
+        mAction = action;
+        refreshListView.onRefreshStart();
+        LoadInfo();
     }
 
     @Override
@@ -63,8 +63,6 @@ public class JWQueryFragment extends Fragment {
 
     private void initComponents(View view){
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.jwc_listview);
-        dialog = new ProgressDialog(view.getContext());
-        dialog.setMessage("加载中，请稍后");
         mList = new ArrayList();
         mAdapter = new JWCAdapter(getActivity(), R.layout.item_jwc, R.layout.item_jwc, mList);
         refreshListView.setAdapter(mAdapter);
@@ -78,26 +76,24 @@ public class JWQueryFragment extends Fragment {
                 String label = DateUtils.formatDateTime(getView().getContext().getApplicationContext(), System.currentTimeMillis(),
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-                if(refreshListView.isHeaderShown()){
+                if (refreshListView.isHeaderShown()) {
                     mPageNum = 1;
                     LoadInfo();
-                }else{
+                } else {
                     mPageNum++;
                     LoadInfo();
                 }
             }
         });
-        dialog.show();
-
     }
     private void LoadInfo(){
-        JWCModel.getInstance().getNewsBaseInfo(mPageNum, new OnListinfoGetListener() {
+        NewsModel.getInstance().getNewsList(mAction,mPageNum, new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(final List list) {
-                if(mPageNum ==1){
+                if (mPageNum == 1) {
                     mList = list;
                     mAdapter.setNewsList(list);
-                }else{
+                } else {
                     mList.addAll(list);
                 }
 
@@ -105,60 +101,25 @@ public class JWQueryFragment extends Fragment {
                 refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        dialog.show();
-                        final NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position-1);
-                        final Bundle bundle = new Bundle();
-                        JWCModel.getInstance().getNewsContent(baseInfo.getHref(), new OnObjectGetListener() {
-                            @Override
-                            public void onGetInfoSuccess(Object object) {
-                                News news = (News) object;
-                                bundle.putString("title", news.getTitle());
-                                bundle.putString("dep", news.getSubmitDepartment());
-                                bundle.putString("date", news.getSubmitTime());
-                                bundle.putString("content", news.getContent());
-                                fragment = new NewsDetailFragment();
-                                fragment.setArguments(bundle);
-                                dialog.dismiss();
-                                FragmentManager manager = getFragmentManager();
-                                FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.main_container, fragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                            }
-
-                            @Override
-                            public void onGetInfoFail() {
-                                dialog.dismiss();
-                                bundle.putString("source", ConstValue.JWC_DETAIL_SOURCE);
-                                bundle.putString("href", baseInfo.getHref());
-                                fragment = new LoadFailFragment();
-                                fragment.setArguments(bundle);
-                                FragmentManager manager = getFragmentManager();
-                                FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.main_container, fragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                            }
-                        });
-
+                        NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position - 1);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("action",mAction);
+                        bundle.putString("href", baseInfo.getHref());
+                        NewsDetailFragment fragment = new NewsDetailFragment();
+                        fragment.setArguments(bundle);
+                        FragmentManager manager = getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.replace(R.id.main_container,fragment);
+                        transaction.commit();
                     }
                 });
-                dialog.dismiss();
                 refreshListView.onRefreshComplete();
 
             }
 
             @Override
             public void onGetInfoFail() {
-                dialog.dismiss();
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction= manager.beginTransaction();
-                Bundle bundle = new Bundle();
-                bundle.putString("source", ConstValue.JWC_SOURCE);
-                LoadFailFragment failFragment = new LoadFailFragment();
-                failFragment.setArguments(bundle);
-                transaction.replace(R.id.main_container,failFragment);
-                transaction.commit();
+
             }
         });
     }
