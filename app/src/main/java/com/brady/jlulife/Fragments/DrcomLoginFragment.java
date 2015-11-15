@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.DrcomLoginActivity;
 import com.brady.jlulife.R;
@@ -100,8 +101,8 @@ public class DrcomLoginFragment extends Fragment {
                     public void clientLoginSuccess(boolean paramBoolean) {
                         FragmentManager manager = getFragmentManager();
                         FragmentTransaction transaction = manager.beginTransaction();
-                        DrcomLoginActivity activity = (DrcomLoginActivity) getActivity();
-                        transaction.replace(R.id.drcom_login_status, activity.getLoginSuccessFragment());
+                        SlidingMenuMainActivity activity = (SlidingMenuMainActivity) getActivity();
+                        transaction.replace(R.id.main_container, new LoginSuccessFragment());
                         transaction.addToBackStack(null);
                         transaction.commit();
                         mProgressDialog.dismiss();

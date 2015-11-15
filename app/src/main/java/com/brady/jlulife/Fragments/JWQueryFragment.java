@@ -121,7 +121,7 @@ public class JWQueryFragment extends Fragment {
                                 dialog.dismiss();
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jwquery_container, fragment);
+                                transaction.replace(R.id.main_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -135,7 +135,7 @@ public class JWQueryFragment extends Fragment {
                                 fragment.setArguments(bundle);
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jwquery_container, fragment);
+                                transaction.replace(R.id.main_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -157,7 +157,7 @@ public class JWQueryFragment extends Fragment {
                 bundle.putString("source", ConstValue.JWC_SOURCE);
                 LoadFailFragment failFragment = new LoadFailFragment();
                 failFragment.setArguments(bundle);
-                transaction.replace(R.id.jwquery_container,failFragment);
+                transaction.replace(R.id.main_container,failFragment);
                 transaction.commit();
             }
         });

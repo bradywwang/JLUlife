@@ -17,11 +17,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DrcomLoginActivity"
@@ -71,8 +67,13 @@
             android:value="test" />
 
         <activity
-            android:name=".CourseActivity"
+            android:name=".SlidingMenuMainActivity"
             android:label="@string/title_activity_course" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

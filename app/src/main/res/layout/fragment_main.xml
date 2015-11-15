@@ -40,11 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_my_lesson_list"
-        android:text="我的课表（未完成）"/>
-    <Button
         android:text="我的成绩（未完成）"
         android:id="@+id/main_my_scores"
         android:layout_width="wrap_content"

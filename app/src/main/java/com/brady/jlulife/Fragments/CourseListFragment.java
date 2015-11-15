@@ -10,21 +10,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
+import android.widget.ScrollView;
 import android.widget.SpinnerAdapter;
 
+import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Entities.CourseSpec;
-import com.brady.jlulife.Models.db.DBHelper;
 import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class CourseListFragment extends Fragment {
     private RelativeLayout mCourseContent;
     private DBManager dbManager;
     private Context mContext;
+    private HorizontalScrollView horizontalScrollView;
+    private ScrollView scrollView;
+    private float x_tmp1;
+    private float x_tmp2;
 
 
     public CourseListFragment() {
@@ -50,12 +55,40 @@ public class CourseListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
+        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
+        scrollView = (ScrollView) view.findViewById(R.id.scrollview);
+        scrollView.scrollTo(0,0);
+        horizontalScrollView.scrollTo(0,0);
+        horizontalScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //获取当前坐标
+                float x = event.getRawX();
+                float y = event.getRawY();
+
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN: {
+                        x_tmp1 = x;
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        x_tmp2 = x;
+                        if (((x_tmp1-x_tmp2)<8)&&horizontalScrollView.getScrollX()==0) {
+                            ((SlidingMenuMainActivity)getActivity()).getMenu().showMenu();
+                        }
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
         initBaseComponents(view);
         dbManager = new DBManager(getActivity());
         initActionBar();
+
     }
 
     @Override
@@ -117,13 +150,13 @@ public class CourseListFragment extends Fragment {
         RelativeLayout.LayoutParams marginParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        marginParams.setMargins(leftMargin,topMargin,0,0);
+        marginParams.setMargins(leftMargin, topMargin, 0, 0);
         course.setLayoutParams(marginParams);
         course.setGravity(Gravity.CENTER);
         course.setWidth(courseWidth);
         course.setHeight(courseLength);
         course.setBackgroundColor(getResources().getColor(R.color.courseColor));
-        course.setPadding(8,8,8,8);
+        course.setPadding(8, 8, 8, 8);
         course.setText(spec.toString());
         course.setTextSize(15);
         course.setTextColor(Color.WHITE);

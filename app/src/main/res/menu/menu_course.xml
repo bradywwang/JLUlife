@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.brady.jlulife.CourseActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.brady.jlulife.SlidingMenuMainActivity">
     <item android:id="@+id/action_upgrade" android:title="@string/action_update"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

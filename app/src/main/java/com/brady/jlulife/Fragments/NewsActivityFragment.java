@@ -125,7 +125,7 @@ public class NewsActivityFragment extends Fragment {
                                 dialog.dismiss();
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jlunews_container, fragment);
+                                transaction.replace(R.id.main_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -139,7 +139,7 @@ public class NewsActivityFragment extends Fragment {
                                 fragment.setArguments(bundle);
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction transaction = manager.beginTransaction();
-                                transaction.replace(R.id.jlunews_container, fragment);
+                                transaction.replace(R.id.main_container, fragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -161,7 +161,7 @@ public class NewsActivityFragment extends Fragment {
                 bundle.putString("source", ConstValue.NEWS_SOURCE);
                 LoadFailFragment failFragment = new LoadFailFragment();
                 failFragment.setArguments(bundle);
-                transaction.replace(R.id.jlunews_container, failFragment);
+                transaction.replace(R.id.main_container, failFragment);
                 transaction.commit();
             }
         });
