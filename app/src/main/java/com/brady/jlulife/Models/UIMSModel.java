@@ -85,7 +85,17 @@ public class UIMSModel {
                 if (s.contains("error_message")) {
                     processErrMsg(s);
                 } else {
-                    Log.i(getClass().getSimpleName(), "Log success");
+                    getCurrentInfo(new OnAsyncLoadListener(){
+                        @Override
+                        public void onGetInfoSuccess() {
+                            listener.onLoginSuccess();
+                        }
+
+                        @Override
+                        public void onGetInfoFail() {
+                            listener.onLoginFailure("获取用户信息失败，请重试");
+                        }
+                    });
                     mLoginListener.onLoginSuccess();
                     isLogin = true;
                 }
@@ -135,12 +145,8 @@ public class UIMSModel {
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
+        spec.setStudId(mStudId);
         spec.setTermId(semesterId);
-        if(mStudId==0){
-            getCurrentInfo(context);
-        }else {
-            spec.setStudId(mStudId);
-        }
         body.setParams(spec);
         body.setBranch("default");
         body.setTag("teachClassStud@schedule");
@@ -233,7 +239,7 @@ public class UIMSModel {
         dbManager.addAllCourses(specs);
         mSyncListener.onGetInfoSuccess();
     }
-    public void getCurrentInfo(Context context) {
+    public void getCurrentInfo(final OnAsyncLoadListener listener) {
         client.get("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -241,9 +247,17 @@ public class UIMSModel {
                 try {
                     mStudId = response.getInt("userId");
                     mStudName = response.getString("nickName");
+                    listener.onGetInfoSuccess();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    listener.onGetInfoFail();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                listener.onGetInfoFail();
             }
         });
     }

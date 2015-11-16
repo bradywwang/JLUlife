@@ -31,9 +31,16 @@ public class UIMSAuthFragment extends BaseFragment {
     AsyncHttpClient client;
     UIMSModel uimsModel;
     Context mContext;
+    private static UIMSAuthFragment instance;
 
     public UIMSAuthFragment() {
-        // Required empty public constructor
+        instance = this;
+    }
+
+    public static UIMSAuthFragment getInstance(){
+        if(instance == null)
+            instance = new UIMSAuthFragment();
+        return instance;
     }
 
     @Override

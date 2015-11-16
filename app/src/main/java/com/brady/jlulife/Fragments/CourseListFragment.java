@@ -40,12 +40,18 @@ public class CourseListFragment extends BaseFragment {
     private ScrollView scrollView;
     private float x_tmp1;
     private float x_tmp2;
+    private static CourseListFragment mfragment;
 
 
     public CourseListFragment() {
-        // Required empty public constructor
+        mfragment = this;
     }
 
+    public static CourseListFragment getInstance(){
+        if(mfragment==null)
+            mfragment = new CourseListFragment();
+        return mfragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

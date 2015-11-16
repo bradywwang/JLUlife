@@ -25,9 +25,16 @@ public class SemSelectFragment extends BaseFragment {
     private List mSemList;
     private Spinner mSpinner;
     private Button btnSync;
+    private static SemSelectFragment instance;
 
     public SemSelectFragment() {
+        instance = this;
+    }
 
+    public static SemSelectFragment getInstance(){
+        if(instance==null)
+            instance = new SemSelectFragment();
+        return instance;
     }
 
     @Override
@@ -87,6 +94,7 @@ public class SemSelectFragment extends BaseFragment {
             @Override
             public void onGetInfoSuccess() {
                 Toast.makeText(mContext,"同步成功",Toast.LENGTH_SHORT).show();
+                repleceFragment(R.id.main_container,CourseListFragment.getInstance());
             }
 
             @Override

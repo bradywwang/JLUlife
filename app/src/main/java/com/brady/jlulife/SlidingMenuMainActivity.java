@@ -11,7 +11,9 @@ import android.view.MenuItem;
 
 import com.brady.jlulife.Fragments.CourseListFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
+import com.brady.jlulife.Fragments.SemSelectFragment;
 import com.brady.jlulife.Fragments.UIMSAuthFragment;
+import com.brady.jlulife.Models.UIMSModel;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class SlidingMenuMainActivity extends AppCompatActivity {
@@ -46,11 +48,18 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upgrade) {
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.main_container,new UIMSAuthFragment());
-            transaction.commit();
-            menu.showContent();
+            if(UIMSModel.getInstance(this).isLoginIn()){
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.main_container, SemSelectFragment.getInstance());
+                transaction.commit();
+            }else {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.main_container, UIMSAuthFragment.getInstance());
+                transaction.commit();
+                menu.showContent();
+            }
             return true;
         }
 
