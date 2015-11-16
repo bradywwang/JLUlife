@@ -32,10 +32,16 @@ public class NewsListFragment extends BaseFragment {
     int mPageNum = 1;
     private String mAction;
     private boolean isLoaded;
-    private Fragment mFragment;
+    private static NewsListFragment mFragment;
 
     public NewsListFragment() {
         mFragment = this;
+    }
+
+    public static NewsListFragment getInstance(){
+        if(mFragment==null||mFragment.isAdded())
+            mFragment = new NewsListFragment();
+        return mFragment;
     }
 
     @Override
@@ -105,7 +111,7 @@ public class NewsListFragment extends BaseFragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position - 1);
                         Bundle bundle = new Bundle();
-                        bundle.putString("action",mAction);
+                        bundle.putString("action", mAction);
                         bundle.putString("href", baseInfo.getHref());
                         NewsDetailFragment fragment = new NewsDetailFragment();
                         fragment.setArguments(bundle);

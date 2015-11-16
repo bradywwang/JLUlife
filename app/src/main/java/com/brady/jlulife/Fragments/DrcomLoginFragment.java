@@ -41,8 +41,16 @@ public class DrcomLoginFragment extends BaseFragment {
     Button btnLogin;
     ProgressDialog mProgressDialog;
     DrCOMWSManagement management;
+    static DrcomLoginFragment mfragment;
 
     public DrcomLoginFragment() {
+        mfragment = this;
+    }
+
+    public static DrcomLoginFragment getInstance(){
+        if(mfragment==null)
+            mfragment = new DrcomLoginFragment();
+        return mfragment;
     }
 
     @Override

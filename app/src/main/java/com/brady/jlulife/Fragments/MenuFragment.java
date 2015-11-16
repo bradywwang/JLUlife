@@ -1,11 +1,16 @@
 package com.brady.jlulife.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.R;
@@ -16,9 +21,8 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
  * A placeholder fragment containing a simple view.
  */
 public class MenuFragment extends BaseFragment {
-
-//    ViewPager mViewPager;
-//    RecyclerView mRecyclerView;
+    private ListView listView;
+    private Context mContext;
 
     public MenuFragment() {
     }
@@ -33,7 +37,55 @@ public class MenuFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentManager manager = getFragmentManager();
+        mContext = getActivity().getApplicationContext();
+        String[] strings = new String[]{
+                "我的课表","校园网登陆","校内通知","教务通知","成绩查询","图书馆","吉大就业"
+        };
+        listView = (ListView) view.findViewById(R.id.lvfunction);
+        listView.setAdapter(new ArrayAdapter<String>(mContext,R.layout.function_item,strings));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:{
+                        repleceFragment(R.id.main_container,CourseListFragment.getInstance());
+                        closeMenu();
+                        break;
+                    }
+                    case 1:{
+                        repleceFragment(R.id.main_container, DrcomLoginFragment.getInstance());
+                        closeMenu();
+                        break;
+                    }
+                    case 2:{
+                        NewsListFragment fragment = NewsListFragment.getInstance();
+                        Bundle argument = new Bundle();
+                        argument.putString("action", ConstValue.FUNCTION_JLUNEWS);
+                        fragment.setArguments(argument);
+                        repleceFragment(R.id.main_container,fragment);
+                        closeMenu();
+                        break;
+                    }
+                    case 3:{
+                        NewsListFragment fragment = NewsListFragment.getInstance();
+                        Bundle argument = new Bundle();
+                        argument.putString("action", ConstValue.FUNCTION_JWCX);
+                        fragment.setArguments(argument);
+                        repleceFragment(R.id.main_container,fragment);
+                        closeMenu();
+                        break;
+                    }
+                    default:{
+                        Toast.makeText(mContext,"The function is commit soon",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+
+
+
+        /*final FragmentManager manager = getFragmentManager();
                 ((Button) view.findViewById(R.id.main_drcom_login)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +115,7 @@ public class MenuFragment extends BaseFragment {
                 repleceFragment(R.id.main_container,fragment);
                 closeMenu();
             }
-        });
+        });*/
     }
 
     private void closeMenu(){
