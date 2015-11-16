@@ -50,6 +50,7 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_container,new UIMSAuthFragment());
             transaction.commit();
+            menu.showContent();
             return true;
         }
 

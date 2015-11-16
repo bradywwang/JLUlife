@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseListFragment extends Fragment {
+public class CourseListFragment extends BaseFragment {
 
     private RelativeLayout mCourseContent;
     private DBManager dbManager;

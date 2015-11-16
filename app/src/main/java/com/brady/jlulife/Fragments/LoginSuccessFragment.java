@@ -2,10 +2,7 @@ package com.brady.jlulife.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +18,7 @@ import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class LoginSuccessFragment extends Fragment {
+public class LoginSuccessFragment extends BaseFragment {
     TextView flowused;
     TextView timeUsed;
     Button btnLogout;
@@ -67,14 +64,11 @@ public class LoginSuccessFragment extends Fragment {
 
                     @Override
                     public void clientLogoutSuccess(boolean paramBoolean) {
-                        FragmentManager manager = getFragmentManager();
-                        FragmentTransaction transaction = manager.beginTransaction();
                         DrcomLoginFragment fragment = new DrcomLoginFragment();
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("logout", true);
                         fragment.setArguments(bundle);
-                        transaction.replace(R.id.drcom_login_status, fragment);
-                        transaction.commit();
+                        repleceFragment(fragment);
                         mProgressDialog.dismiss();
                     }
                 });

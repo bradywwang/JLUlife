@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * Created by wang on 2015/9/28.
  */
-public class JWCAdapter extends ArrayAdapter<NewsBaseInfo> {
+public class NewsAdapter extends ArrayAdapter<NewsBaseInfo> {
     private List<NewsBaseInfo> newsList;
     private Context mcontext;
     private int resourceId;
 
 
-    public JWCAdapter(Context context, int resource, int textViewResourceId, List<NewsBaseInfo> objects) {
+    public NewsAdapter(Context context, int resource, int textViewResourceId, List<NewsBaseInfo> objects) {
         super(context, resource, textViewResourceId, objects);
         newsList = objects;
         mcontext = context;
@@ -46,9 +46,9 @@ public class JWCAdapter extends ArrayAdapter<NewsBaseInfo> {
         if(view ==null){
             view = LayoutInflater.from(mcontext).inflate(resourceId,null);
             viewHolder = new JWCViewHolder();
-            viewHolder.tvDate = (TextView) view.findViewById(R.id.jwc_date);
-            viewHolder.tvDep = (TextView) view.findViewById(R.id.jwc_dep);
-            viewHolder.tvTitle = (TextView) view.findViewById(R.id.jwc_title);
+            viewHolder.tvDate = (TextView) view.findViewById(R.id.news_date);
+            viewHolder.tvDep = (TextView) view.findViewById(R.id.news_dep);
+            viewHolder.tvTitle = (TextView) view.findViewById(R.id.news_title);
             view.setTag(viewHolder);
         }else{
             viewHolder = (JWCViewHolder) view.getTag();

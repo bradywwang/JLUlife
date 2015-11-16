@@ -1,9 +1,7 @@
 package com.brady.jlulife.Fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MenuFragment extends Fragment {
+public class MenuFragment extends BaseFragment {
 
 //    ViewPager mViewPager;
 //    RecyclerView mRecyclerView;
@@ -39,10 +37,7 @@ public class MenuFragment extends Fragment {
                 ((Button) view.findViewById(R.id.main_drcom_login)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction= manager.beginTransaction();
-                transaction.replace(R.id.main_container, new DrcomLoginFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
+                repleceFragment(R.id.main_container,new DrcomLoginFragment());
                 closeMenu();
             }
         });
@@ -53,10 +48,7 @@ public class MenuFragment extends Fragment {
                 Bundle argument = new Bundle();
                 argument.putString("action", ConstValue.FUNCTION_JWCX);
                 fragment.setArguments(argument);
-                FragmentTransaction transaction= manager.beginTransaction();
-                transaction.replace(R.id.main_container,fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                repleceFragment(R.id.main_container,fragment);
                 closeMenu();
 
             }
@@ -68,10 +60,7 @@ public class MenuFragment extends Fragment {
                 Bundle argument = new Bundle();
                 argument.putString("action", ConstValue.FUNCTION_JLUNEWS);
                 fragment.setArguments(argument);
-                FragmentTransaction transaction= manager.beginTransaction();
-                transaction.replace(R.id.main_container,fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                repleceFragment(R.id.main_container,fragment);
                 closeMenu();
             }
         });

@@ -22,7 +22,7 @@ import com.loopj.android.http.AsyncHttpClient;
 
 
 
-public class UIMSAuthFragment extends Fragment {
+public class UIMSAuthFragment extends BaseFragment {
     EditText metuname;
     EditText metpwd;
     CheckBox mcboxRemember;
@@ -93,10 +93,7 @@ public class UIMSAuthFragment extends Fragment {
 
 
     public void showSemSelFrag(){
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.auth_container,new SemSelectFragment());
-        transaction.commit();
+        repleceFragment(R.id.main_container,new SemSelectFragment());
     }
 
 }

@@ -3,8 +3,6 @@ package com.brady.jlulife.Fragments;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.brady.jlulife.Adapters.JWCAdapter;
+import com.brady.jlulife.Adapters.NewsAdapter;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.NewsModel;
@@ -26,10 +24,10 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NewsListFragment extends Fragment {
+public class NewsListFragment extends BaseFragment {
     private PullToRefreshListView refreshListView;
     Fragment fragment = null;
-    JWCAdapter mAdapter = null;
+    NewsAdapter mAdapter = null;
     List mList = null;
     int mPageNum = 1;
     private String mAction;
@@ -44,13 +42,13 @@ public class NewsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mPageNum = 1;
-        return inflater.inflate(R.layout.fragment_jwquery, container, false);
+        return inflater.inflate(R.layout.fragment_news_list, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initComponents(view);
+        initRefeshView(view);
         Bundle bundle = getArguments();
         String action = bundle.getString("action");
         mAction = action;
@@ -65,10 +63,10 @@ public class NewsListFragment extends Fragment {
 
     }
 
-    private void initComponents(View view){
-        refreshListView = (PullToRefreshListView) view.findViewById(R.id.jwc_listview);
+    private void initRefeshView(View view){
+        refreshListView = (PullToRefreshListView) view.findViewById(R.id.news_listview);
         mList = new ArrayList();
-        mAdapter = new JWCAdapter(getActivity(), R.layout.item_jwc, R.layout.item_jwc, mList);
+        mAdapter = new NewsAdapter(getActivity(), R.layout.item_news, R.layout.item_news, mList);
         refreshListView.setAdapter(mAdapter);
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         refreshListView.getLoadingLayoutProxy(false,true).setPullLabel(getString(R.string.pull_to_load));
@@ -111,12 +109,13 @@ public class NewsListFragment extends Fragment {
                         bundle.putString("href", baseInfo.getHref());
                         NewsDetailFragment fragment = new NewsDetailFragment();
                         fragment.setArguments(bundle);
-                        FragmentManager manager = getFragmentManager();
+                        /*FragmentManager manager = getFragmentManager();
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(mFragment);
                         transaction.add(R.id.main_container, fragment);
                         transaction.addToBackStack(null);
-                        transaction.commit();
+                        transaction.commit();*/
+                        repleceFragment(mFragment,fragment);
                     }
                 });
                 refreshListView.onRefreshComplete();

@@ -19,7 +19,7 @@ import com.brady.jlulife.R;
 
 import java.util.List;
 
-public class SemSelectFragment extends Fragment {
+public class SemSelectFragment extends BaseFragment {
     private UIMSModel uimsModel;
     private Context mContext;
     private List mSemList;
@@ -87,7 +87,6 @@ public class SemSelectFragment extends Fragment {
             @Override
             public void onGetInfoSuccess() {
                 Toast.makeText(mContext,"同步成功",Toast.LENGTH_SHORT).show();
-                getActivity().finish();
             }
 
             @Override

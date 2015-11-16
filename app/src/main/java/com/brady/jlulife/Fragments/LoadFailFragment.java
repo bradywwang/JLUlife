@@ -14,7 +14,7 @@ import com.brady.jlulife.Utils.ConstValue;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class LoadFailFragment extends Fragment {
+public class LoadFailFragment extends BaseFragment {
     Button btnRefresh;
 
     public LoadFailFragment() {

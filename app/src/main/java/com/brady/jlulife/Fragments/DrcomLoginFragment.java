@@ -3,11 +3,8 @@ package com.brady.jlulife.Fragments;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +26,7 @@ import com.drcom.Android.DrCOMWS.listener.OnclientLoginListener;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DrcomLoginFragment extends Fragment {
+public class DrcomLoginFragment extends BaseFragment {
     private static final int LOGIN_SUCCESS = 24;
     private static final int LOGIN_FAILURE = 392;
     private static final String IS_SAVED_PASSWORD = "is_saved_password";
@@ -98,12 +95,7 @@ public class DrcomLoginFragment extends Fragment {
 
                     @Override
                     public void clientLoginSuccess(boolean paramBoolean) {
-                        FragmentManager manager = getFragmentManager();
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        SlidingMenuMainActivity activity = (SlidingMenuMainActivity) getActivity();
-                        transaction.replace(R.id.main_container, new LoginSuccessFragment());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        repleceFragment(new LoginSuccessFragment());
                         mProgressDialog.dismiss();
                     }
                 });
