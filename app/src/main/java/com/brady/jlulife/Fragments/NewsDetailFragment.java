@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.brady.jlulife.Entities.News;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
+import com.brady.jlulife.Models.NewsModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
 
@@ -34,39 +37,42 @@ public class NewsDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initComponents(view);
         Bundle bundle = getArguments();
-        String title = bundle.getString("title");
-        String dep = bundle.getString("dep");
-        String date = bundle.getString("date");
-        String content = bundle.getString("content");
-        String cAttach = bundle.getString("cAttach");
-        String cAttachName = bundle.getString("cAttachName");
-        String cId = bundle.getString("cId");
-        tvTitle.setText(title);
-        tvSubmitDate.setText(date);
-        tvSubmitDep.setText(dep);
-        if(cAttach!=null&&!cAttach.equals("")){
-            StringBuilder builder = new StringBuilder();
-            SpannedString string = new SpannedString(content);
-            builder.append(Html.toHtml(string));
-            builder.append("<p>附件</p>");
-            Log.i(getClass().getSimpleName(), cAttachName);
-            String test = cAttachName.replace("|", "ttttt");
-            Log.i(getClass().getSimpleName(), "ttt"+test);
-            String attechList[] = test.split("ttttt");
-            Log.i(getClass().getSimpleName(), attechList.length+"");
+        String action = bundle.getString("action");
+        String href = bundle.getString("href");
+        NewsModel.getInstance().getNewsDetail(action, href, new OnObjectGetListener() {
+            @Override
+            public void onGetInfoSuccess(Object object) {
+                News news = (News) object;
+                tvTitle.setText(news.getTitle());
+                tvSubmitDate.setText(news.getSubmitTime());
+                tvSubmitDep.setText(news.getSubmitDepartment());
+                String cAttach = news.getcAttach();
+                String cAttachName = news.getcAttachName();
+                String content = news.getContent();
+                if(cAttach!=null&&!cAttach.equals("")){
+                    StringBuilder builder = new StringBuilder();
+                    SpannedString string = new SpannedString(content);
+                    builder.append(Html.toHtml(string));
+                    builder.append("<p>附件</p>");
+                    String test = cAttachName.replace("|", "ttttt");
+                    String attechList[] = test.split("ttttt");
+                    for(int i=0;i<attechList.length;i++){
+                        builder.append("<br><a href='"+ ConstValue.NEWS_DOWNLOAD+"?id="+((News) object).getId()+"&fid="+i+"'>"+attechList[i]+"</a></br>");
+                    }
 
-            for(int i=0;i<attechList.length;i++){
-                builder.append("<br><a href='"+ ConstValue.NEWS_DOWNLOAD+"?id="+cId+"&fid="+i+"'>"+attechList[i]+"</a></br>");
+                    CharSequence con = Html.fromHtml(builder.toString());
+                    tvContent.setText(con);
+                }else {
+                    tvContent.setText(content);
+                }
+                tvContent.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
-            CharSequence con = Html.fromHtml(builder.toString());
-            tvContent.setText(con);
-        }else {
-            tvContent.setText(content);
-        }
-        tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+            @Override
+            public void onGetInfoFail() {
 
-
+            }
+        });
     }
     private void initComponents(View view){
         tvTitle = (TextView) view.findViewById(R.id.news_title);

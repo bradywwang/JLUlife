@@ -51,16 +51,22 @@ public class CourseListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_course_list, container, false);
+        initBaseComponents(view);
+        dbManager = new DBManager(getActivity());
+        int currentWeek = getCurrentWeek();
+        showCourses(currentWeek);
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
+        initActionBar();
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-        scrollView.scrollTo(0,0);
+        scrollView.scrollTo(0, 0);
         horizontalScrollView.scrollTo(0,0);
         horizontalScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -69,15 +75,15 @@ public class CourseListFragment extends Fragment {
                 float x = event.getRawX();
                 float y = event.getRawY();
 
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         x_tmp1 = x;
                         break;
                     }
                     case MotionEvent.ACTION_UP: {
                         x_tmp2 = x;
-                        if (((x_tmp1-x_tmp2)<8)&&horizontalScrollView.getScrollX()==0) {
-                            ((SlidingMenuMainActivity)getActivity()).getMenu().showMenu();
+                        if (((x_tmp1 - x_tmp2) < 8) && horizontalScrollView.getScrollX() == 0) {
+                            ((SlidingMenuMainActivity) getActivity()).getMenu().showMenu();
                         }
                         break;
                     }
@@ -85,17 +91,14 @@ public class CourseListFragment extends Fragment {
                 return false;
             }
         });
-        initBaseComponents(view);
-        dbManager = new DBManager(getActivity());
-        initActionBar();
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        int currentWeek = getCurrentWeek();
-        showCourses(currentWeek);
+
     }
 
     private int getCurrentWeek(){

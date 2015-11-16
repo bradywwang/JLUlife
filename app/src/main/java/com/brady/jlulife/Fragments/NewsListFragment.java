@@ -33,8 +33,11 @@ public class NewsListFragment extends Fragment {
     List mList = null;
     int mPageNum = 1;
     private String mAction;
+    private boolean isLoaded;
+    private Fragment mFragment;
 
     public NewsListFragment() {
+        mFragment = this;
     }
 
     @Override
@@ -51,8 +54,9 @@ public class NewsListFragment extends Fragment {
         Bundle bundle = getArguments();
         String action = bundle.getString("action");
         mAction = action;
-        refreshListView.onRefreshStart();
-        LoadInfo();
+        if(mList.size()==0) {
+            LoadInfo();
+        }
     }
 
     @Override
@@ -109,7 +113,9 @@ public class NewsListFragment extends Fragment {
                         fragment.setArguments(bundle);
                         FragmentManager manager = getFragmentManager();
                         FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.main_container,fragment);
+                        transaction.hide(mFragment);
+                        transaction.add(R.id.main_container, fragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
                 });

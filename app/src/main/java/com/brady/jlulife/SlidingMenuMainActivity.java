@@ -72,4 +72,9 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
     public SlidingMenu getMenu(){
         return menu;
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+    }
 }
