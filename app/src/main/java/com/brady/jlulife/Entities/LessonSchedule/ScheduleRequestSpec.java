@@ -6,6 +6,15 @@ package com.brady.jlulife.Entities.LessonSchedule;
 public class ScheduleRequestSpec {
     private int termId;
     private int studId;
+    private String xh;
+
+    public String getXh() {
+        return xh;
+    }
+
+    public void setXh(String xh) {
+        this.xh = xh;
+    }
 
     public int getTermId() {
         return termId;

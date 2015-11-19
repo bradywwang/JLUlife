@@ -89,7 +89,7 @@ public class SemSelectFragment extends BaseFragment {
         if(term==null)
             return;
         String terId = term.getTermId();
-        uimsModel.syncLessonSchedule(Integer.parseInt(terId), mContext,new OnAsyncLoadListener(){
+        uimsModel.syncLessonSchedule(Integer.parseInt(terId), new OnAsyncLoadListener(){
 
             @Override
             public void onGetInfoSuccess() {

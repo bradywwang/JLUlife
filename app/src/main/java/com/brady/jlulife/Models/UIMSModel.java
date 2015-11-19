@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.brady.jlulife.Entities.Score.OutSchoolScore.OutSideResult;
+import com.brady.jlulife.Entities.Score.ScoreValue;
 import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.CourseSpec;
@@ -52,6 +54,11 @@ public class UIMSModel {
     private static Context sContext;
     private OnAsyncLoadListener mSyncListener;
     public boolean isLogin = false;
+    private String mUId;
+    private int mLoginMethod;
+
+    public static final int LOGIN_NORMAL_MODE = 0;
+    public static final int LOGIN_CJCX_MODE = 1;
 
     private UIMSModel() {
         client = new AsyncHttpClient();
@@ -66,14 +73,26 @@ public class UIMSModel {
         return model;
     }
 
-    public void login(String uname, String pwd, final LoginListener listener) {
+    public void login(int loginMethod,String uname, String pwd, final LoginListener listener) {
         mLoginListener = listener;
+        mUId = uname;
+        mLoginMethod = loginMethod;
         String convertPwd = Utils.getMD5Str("UIMS" + uname + pwd);
         Log.i(getClass().getSimpleName(), "uname" + uname + "pwd:" + convertPwd);
         RequestParams params = new RequestParams();
         params.put("j_username", uname);
         params.put("j_password", convertPwd);
-        client.post(ConstValue.SECURITY_CHECK, params, new TextHttpResponseHandler() {
+        String loginURI = "";
+        switch (loginMethod){
+            case LOGIN_NORMAL_MODE:
+            {
+                loginURI = ConstValue.SECURITY_CHECK;
+                break;
+            }case LOGIN_CJCX_MODE:{
+                loginURI = ConstValue.CJCX_AUTH_URI;
+            }
+        }
+        client.post(loginURI, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
                 Log.i(getClass().getSimpleName(), "login failure");
@@ -110,6 +129,7 @@ public class UIMSModel {
 
     public void getSemesters(final OnListinfoGetListener listener) {
         StringEntity entity = null;
+        String resourceURI = null;
         RequestBody body = new RequestBody();
         body.setBranch("default");
         body.setOrderBy("termName desc");
@@ -123,13 +143,33 @@ public class UIMSModel {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(sContext, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
+        switch (mLoginMethod){
+            case LOGIN_NORMAL_MODE:
+            {
+                resourceURI = ConstValue.RESOURCES_URI;
+                break;
+            }case LOGIN_CJCX_MODE:{
+                resourceURI = ConstValue.CJCX_RESOURCES_URI;
+            }
+        }
+
+        client.post(sContext, resourceURI, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                ArrayList<TermList> list = null;
                 Log.i(getClass().getSimpleName(), response.toString());
-                ResponseBody body = JSON.parseObject(response.toString(),ResponseBody.class);
-                ArrayList<TermList> list = JSON.parseObject(body.getValue(),new TypeReference<ArrayList<TermList>>(){});
+                switch (mLoginMethod){
+                    case LOGIN_NORMAL_MODE:
+                    {
+                        ResponseBody body = JSON.parseObject(response.toString(),ResponseBody.class);
+                        list = JSON.parseObject(body.getValue(),new TypeReference<ArrayList<TermList>>(){});
+                        break;
+                    }case LOGIN_CJCX_MODE:{
+                        OutSideResult body = JSON.parseObject(response.toString(),OutSideResult.class);
+                        list = JSON.parseObject(body.getItems(),new TypeReference<ArrayList<TermList>>(){});
+                    }
+                }
                 listener.onGetInfoSuccess(list);
             }
 
@@ -140,7 +180,7 @@ public class UIMSModel {
             }
         });
     }
-    public void syncLessonSchedule(int semesterId, final Context context, final OnAsyncLoadListener listener){
+    public void syncLessonSchedule(int semesterId, final OnAsyncLoadListener listener){
         mSyncListener = listener;
         StringEntity entity = null;
         RequestBody body = new RequestBody();
@@ -156,17 +196,17 @@ public class UIMSModel {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
+        client.post(sContext, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    if(response.getInt("status")==0){
+                    if (response.getInt("status") == 0) {
                         ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
                         lessonList = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<LessonValue>>() {
                         });
                         saveCoursesToDb();
-                    }else{
+                    } else {
                         handleErrMsg(response);
                         mSyncListener.onGetInfoFail();
                     }
@@ -240,7 +280,7 @@ public class UIMSModel {
         mSyncListener.onGetInfoSuccess();
     }
     public void getCurrentInfo(final OnAsyncLoadListener listener) {
-        client.get("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do", new JsonHttpResponseHandler() {
+        client.get(ConstValue.CURRENT_INFO, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -262,6 +302,95 @@ public class UIMSModel {
         });
     }
 
+    private void queryScores(int termId, final OnListinfoGetListener listener){
+        StringEntity entity = null;
+        RequestBody body = new RequestBody();
+        ScheduleRequestSpec spec = new ScheduleRequestSpec();
+        spec.setStudId(mStudId);
+        spec.setTermId(termId);
+        body.setParams(spec);
+        body.setBranch("byTerm");
+        body.setOrderBy("teachingTerm.termId, course.courName");
+        body.setTag("archiveScore@queryCourseScore");
+        try {
+            entity = new StringEntity(JSON.toJSONString(body));
+            Log.i("body",JSON.toJSONString(body));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(sContext, ConstValue.RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    if (response.getInt("status") == 0) {
+                        ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
+                        List<ScoreValue> scoreValues = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<ScoreValue>>() {
+                        });
+                        listener.onGetInfoSuccess(scoreValues);
+                    } else {
+                        handleErrMsg(response);
+                        listener.onGetInfoFail();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onGetInfoFail();
+                }
+                Log.i(getClass().getSimpleName(), response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                listener.onGetInfoFail();
+            }
+        });
+
+    }
+
+    public void queryScoresOutside(int termId, final OnListinfoGetListener listener){
+        StringEntity entity = null;
+        RequestBody body = new RequestBody();
+        ScheduleRequestSpec spec = new ScheduleRequestSpec();
+        spec.setXh(mUId);
+        spec.setTermId(termId);
+        body.setParams(spec);
+        body.setTag("lessonSelectResult@oldStudScore");
+        try {
+            entity = new StringEntity(JSON.toJSONString(body));
+            Log.i("body",JSON.toJSONString(body));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(sContext, ConstValue.CJCX_RESOURCES_URI, entity, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    if (response.getInt("status") == 0) {
+                        OutSideResult body = JSON.parseObject(response.toString(), OutSideResult.class);
+                        List<OutSideResult> outSideResults = JSON.parseObject(body.getItems(), new TypeReference<ArrayList<OutSideResult>>() {
+                        });
+                        listener.onGetInfoSuccess(outSideResults);
+                    } else {
+                        handleErrMsg(response);
+                        listener.onGetInfoFail();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onGetInfoFail();
+                }
+                Log.i(getClass().getSimpleName(), response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                listener.onGetInfoFail();
+            }
+        });
+    }
+
     private void processErrMsg(String s) {
         Document doc = Jsoup.parse(s);
         Element element = doc.getElementById("error_message");
@@ -278,4 +407,6 @@ public class UIMSModel {
     public boolean isLoginIn(){
         return isLogin;
     }
+
+
 }

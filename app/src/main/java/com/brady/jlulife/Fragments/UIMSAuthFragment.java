@@ -83,7 +83,7 @@ public class UIMSAuthFragment extends BaseFragment {
 
     public void loginOauth(String uname,String pwd){
         if(uimsModel!=null) {
-            uimsModel.login(uname, pwd, new LoginListener() {
+            uimsModel.login(UIMSModel.LOGIN_NORMAL_MODE,uname, pwd, new LoginListener() {
                 @Override
                 public void onLoginSuccess() {
                     showSemSelFrag();
