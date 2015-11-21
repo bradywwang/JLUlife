@@ -2,16 +2,17 @@ package com.brady.jlulife.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.brady.jlulife.Fragments.News.JLUNewsListFragment;
+import com.brady.jlulife.Fragments.News.JWNewsListFragment;
+import com.brady.jlulife.Fragments.News.NewsListFragment;
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
@@ -58,20 +59,12 @@ public class MenuFragment extends BaseFragment {
                         break;
                     }
                     case 2:{
-                        NewsListFragment fragment = NewsListFragment.getInstance();
-                        Bundle argument = new Bundle();
-                        argument.putString("action", ConstValue.FUNCTION_JLUNEWS);
-                        fragment.setArguments(argument);
-                        repleceFragment(R.id.main_container,fragment);
+                        repleceFragment(R.id.main_container, JLUNewsListFragment.getInstance());
                         closeMenu();
                         break;
                     }
                     case 3:{
-                        NewsListFragment fragment = NewsListFragment.getInstance();
-                        Bundle argument = new Bundle();
-                        argument.putString("action", ConstValue.FUNCTION_JWCX);
-                        fragment.setArguments(argument);
-                        repleceFragment(R.id.main_container,fragment);
+                        repleceFragment(R.id.main_container, JWNewsListFragment.getInstance());
                         closeMenu();
                         break;
                     }
@@ -83,39 +76,6 @@ public class MenuFragment extends BaseFragment {
         });
 
 
-
-
-        /*final FragmentManager manager = getFragmentManager();
-                ((Button) view.findViewById(R.id.main_drcom_login)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                repleceFragment(R.id.main_container,new DrcomLoginFragment());
-                closeMenu();
-            }
-        });
-        ((Button) view.findViewById(R.id.main_jwQuery)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewsListFragment fragment = new NewsListFragment();
-                Bundle argument = new Bundle();
-                argument.putString("action", ConstValue.FUNCTION_JWCX);
-                fragment.setArguments(argument);
-                repleceFragment(R.id.main_container,fragment);
-                closeMenu();
-
-            }
-        });
-        ((Button) view.findViewById(R.id.main_xntz)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewsListFragment fragment = new NewsListFragment();
-                Bundle argument = new Bundle();
-                argument.putString("action", ConstValue.FUNCTION_JLUNEWS);
-                fragment.setArguments(argument);
-                repleceFragment(R.id.main_container,fragment);
-                closeMenu();
-            }
-        });*/
     }
 
     private void closeMenu(){

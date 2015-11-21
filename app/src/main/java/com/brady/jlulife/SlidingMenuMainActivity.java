@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.brady.jlulife.Fragments.ClassSyncFragment;
 import com.brady.jlulife.Fragments.CourseListFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
 import com.brady.jlulife.Fragments.SemSelectFragment;
@@ -56,7 +57,7 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
             }else {
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.main_container, UIMSAuthFragment.getInstance());
+                transaction.replace(R.id.main_container, ClassSyncFragment.getInstance());
                 transaction.commit();
                 menu.showContent();
             }

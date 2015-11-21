@@ -22,7 +22,7 @@ import com.loopj.android.http.AsyncHttpClient;
 
 
 
-public class UIMSAuthFragment extends BaseFragment {
+public abstract class UIMSAuthFragment extends BaseFragment {
     EditText metuname;
     EditText metpwd;
     CheckBox mcboxRemember;
@@ -33,15 +33,6 @@ public class UIMSAuthFragment extends BaseFragment {
     Context mContext;
     private static UIMSAuthFragment instance;
 
-    public UIMSAuthFragment() {
-        instance = this;
-    }
-
-    public static UIMSAuthFragment getInstance(){
-        if(instance == null)
-            instance = new UIMSAuthFragment();
-        return instance;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -86,7 +77,7 @@ public class UIMSAuthFragment extends BaseFragment {
             uimsModel.login(UIMSModel.LOGIN_NORMAL_MODE,uname, pwd, new LoginListener() {
                 @Override
                 public void onLoginSuccess() {
-                    showSemSelFrag();
+                    showNextPage();
                 }
                 @Override
                 public void onLoginFailure(String failReason) {
@@ -99,9 +90,7 @@ public class UIMSAuthFragment extends BaseFragment {
     }
 
 
-    public void showSemSelFrag(){
-        repleceFragment(R.id.main_container,new SemSelectFragment());
-    }
+    public abstract void showNextPage();
 
 }
 

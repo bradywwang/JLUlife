@@ -25,6 +25,10 @@
     <string name="err_default">我也不造什么错误,但是还是登陆不上,你好好检查一下网络配置吧</string>
     <string name="last_page">上一页</string>
     <string name="next_page">下一页</string>
+    <string name="label_score">成绩:</string>
+    <string name="label_gpoint">绩点:</string>
+    <string name="label_scorepoint">学分:</string>
+    <string name="label_isreselect">重修:</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment"> blank fragment</string>

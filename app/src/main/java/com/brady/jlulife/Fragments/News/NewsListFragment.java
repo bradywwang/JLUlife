@@ -1,16 +1,21 @@
-package com.brady.jlulife.Fragments;
+package com.brady.jlulife.Fragments.News;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.brady.jlulife.Adapters.NewsAdapter;
+import com.brady.jlulife.Fragments.BaseFragment;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.NewsModel;
@@ -24,15 +29,14 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NewsListFragment extends BaseFragment {
-    private PullToRefreshListView refreshListView;
+public abstract class NewsListFragment extends BaseFragment {
+    protected PullToRefreshListView refreshListView;
     Fragment fragment = null;
     NewsAdapter mAdapter = null;
     List mList = null;
     int mPageNum = 1;
-    private String mAction;
-    private boolean isLoaded;
-    private static NewsListFragment mFragment;
+    View progressBar;
+/*    private static NewsListFragment mFragment;
 
     public NewsListFragment() {
         mFragment = this;
@@ -42,12 +46,13 @@ public class NewsListFragment extends BaseFragment {
         if(mFragment==null||mFragment.isAdded())
             mFragment = new NewsListFragment();
         return mFragment;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mPageNum = 1;
+        fragment = this;
         return inflater.inflate(R.layout.fragment_news_list, container, false);
     }
 
@@ -56,8 +61,6 @@ public class NewsListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initRefeshView(view);
         Bundle bundle = getArguments();
-        String action = bundle.getString("action");
-        mAction = action;
         if(mList.size()==0) {
             LoadInfo();
         }
@@ -94,44 +97,38 @@ public class NewsListFragment extends BaseFragment {
             }
         });
     }
-    private void LoadInfo(){
-        NewsModel.getInstance().getNewsList(mAction,mPageNum, new OnListinfoGetListener() {
+    protected abstract void LoadInfo();
+
+    protected void showNewsList(List list){
+
+        if (mPageNum == 1) {
+            mList = list;
+            mAdapter.setNewsList(list);
+        } else {
+            mList.addAll(list);
+        }
+
+        mAdapter.notifyDataSetChanged();
+        refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onGetInfoSuccess(final List list) {
-                if (mPageNum == 1) {
-                    mList = list;
-                    mAdapter.setNewsList(list);
-                } else {
-                    mList.addAll(list);
-                }
-
-                mAdapter.notifyDataSetChanged();
-                refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        NewsBaseInfo baseInfo = (NewsBaseInfo) mList.get(position - 1);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("action", mAction);
-                        bundle.putString("href", baseInfo.getHref());
-                        NewsDetailFragment fragment = new NewsDetailFragment();
-                        fragment.setArguments(bundle);
-                        /*FragmentManager manager = getFragmentManager();
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.hide(mFragment);
-                        transaction.add(R.id.main_container, fragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();*/
-                        repleceFragment(mFragment,fragment);
-                    }
-                });
-                refreshListView.onRefreshComplete();
-
-            }
-
-            @Override
-            public void onGetInfoFail() {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                processItemClick(position);
             }
         });
+
+
+        refreshListView.onRefreshComplete();
+
+    }
+    public abstract void processItemClick(int position);
+
+    public void replaceFrag(Fragment fragment,Bundle bundle){
+        fragment.setArguments(bundle);
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.hide(this);
+        transaction.add(R.id.main_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -7,11 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.brady.jlulife.Fragments.NewsListFragment">
+    tools:context="com.brady.jlulife.Fragments.News.NewsListFragment">
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/jwc_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
+        android:layout_weight="1"
+        android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/news_list_progress"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
