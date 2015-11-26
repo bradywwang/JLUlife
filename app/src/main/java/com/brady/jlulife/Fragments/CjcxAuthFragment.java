@@ -1,5 +1,8 @@
 package com.brady.jlulife.Fragments;
 
+import android.os.Bundle;
+import android.view.View;
+
 import com.brady.jlulife.R;
 
 /**
@@ -20,6 +23,12 @@ public class CjcxAuthFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-        repleceFragment(R.id.main_container,new SemSelectFragment());
+        repleceFragment(R.id.main_container,ScoreListFragment.getInstance());
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLoginOutside.setVisibility(View.VISIBLE);
     }
 }

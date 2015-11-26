@@ -10,6 +10,7 @@ public class ConstValue {
     public static final String CJCX_AUTH_URI = "http://cjcx.jlu.edu.cn/score/action/security_check.php";
     public static final String CJCX_RESOURCES_URI = "http://cjcx.jlu.edu.cn/score/action/service_res.php";
     public static final String SHARED_DRCOM_INFO  = "com.brady.jlulife.drcom.sharedinfo";
+    public static final String SHARED_UIMS_INFO  = "com.brady.jlulife.uims.sharedinfo";
     public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
     public static final String JWC_HOST = "http://jwc.jlu.edu.cn/";
     public static final String NEWS_HOST = "http://m.app3.jlu.edu.cn/GetNoticeList.php";

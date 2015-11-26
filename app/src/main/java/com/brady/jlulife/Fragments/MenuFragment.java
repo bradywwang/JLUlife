@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.brady.jlulife.Fragments.News.JLUNewsListFragment;
 import com.brady.jlulife.Fragments.News.JWNewsListFragment;
 import com.brady.jlulife.Fragments.News.NewsListFragment;
+import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
@@ -65,6 +66,15 @@ public class MenuFragment extends BaseFragment {
                     }
                     case 3:{
                         repleceFragment(R.id.main_container, JWNewsListFragment.getInstance());
+                        closeMenu();
+                        break;
+                    }
+                    case 4:{
+                        if(UIMSModel.getInstance(mContext).isLoginIn()){
+                            repleceFragment(R.id.main_container, ScoreListFragment.getInstance());
+                        }else {
+                            repleceFragment(R.id.main_container, CjcxAuthFragment.getInstance());
+                        }
                         closeMenu();
                         break;
                     }

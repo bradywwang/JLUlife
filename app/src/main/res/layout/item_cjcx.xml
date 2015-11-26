@@ -7,6 +7,8 @@
     android:paddingLeft="@dimen/score_item_padding_left_right"
     android:paddingRight="@dimen/score_item_padding_left_right">
 <TextView
+    android:textColor="@color/black"
+    android:id="@+id/tv_cour_name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textSize="@dimen/score_name_size" />
@@ -20,12 +22,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
             <TextView
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_score"
                 android:textSize="@dimen/score_spec_size"/>
             <TextView
-                android:id="@+id/label_score"
+                android:textColor="@color/black"
+                android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/score_spec_size"/>
@@ -35,12 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
             <TextView
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_gpoint"
                 android:textSize="@dimen/score_spec_size"/>
             <TextView
-                android:id="@+id/lable_gpoint"
+                android:textColor="@color/black"
+                android:id="@+id/tv_gpoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/score_spec_size"/>
@@ -50,12 +56,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
             <TextView
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_scorepoint"
                 android:textSize="@dimen/score_spec_size"/>
             <TextView
-                android:id="@+id/label_scorepoint"
+                android:textColor="@color/black"
+                android:id="@+id/tv_scorepoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/score_spec_size"/>
@@ -65,11 +73,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
             <TextView
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_isreselect"
                 android:textSize="@dimen/score_spec_size"/>
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/is_reselect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

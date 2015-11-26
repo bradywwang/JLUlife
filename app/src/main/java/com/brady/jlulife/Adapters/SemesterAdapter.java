@@ -49,6 +49,6 @@ public class SemesterAdapter extends ArrayAdapter {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return 12;
     }
 }

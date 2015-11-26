@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.brady.jlulife.Entities.Score.OutSchoolScore.OutSideResult;
+import com.brady.jlulife.Entities.Score.OutSchoolScore.OutsideItem;
 import com.brady.jlulife.Entities.Score.ScoreValue;
 import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
@@ -302,7 +303,18 @@ public class UIMSModel {
         });
     }
 
-    private void queryScores(int termId, final OnListinfoGetListener listener){
+    public void queryScore(int termId,final  OnListinfoGetListener listener){
+        switch (mLoginMethod){
+            case LOGIN_CJCX_MODE:{
+                queryScoresOutside(termId,listener);
+                break;
+            }case LOGIN_NORMAL_MODE:{
+                queryScoreInSchool(termId,listener);
+            }
+        }
+    }
+
+    public void queryScoreInSchool(int termId, final OnListinfoGetListener listener){
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
@@ -327,7 +339,8 @@ public class UIMSModel {
                         ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
                         List<ScoreValue> scoreValues = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<ScoreValue>>() {
                         });
-                        listener.onGetInfoSuccess(scoreValues);
+                        List<OutsideItem> items = translateItem(scoreValues);
+                        listener.onGetInfoSuccess(items);
                     } else {
                         handleErrMsg(response);
                         listener.onGetInfoFail();
@@ -369,9 +382,9 @@ public class UIMSModel {
                 try {
                     if (response.getInt("status") == 0) {
                         OutSideResult body = JSON.parseObject(response.toString(), OutSideResult.class);
-                        List<OutSideResult> outSideResults = JSON.parseObject(body.getItems(), new TypeReference<ArrayList<OutSideResult>>() {
+                        List<OutsideItem> items = JSON.parseObject(body.getItems(), new TypeReference<ArrayList<OutsideItem>>() {
                         });
-                        listener.onGetInfoSuccess(outSideResults);
+                        listener.onGetInfoSuccess(items);
                     } else {
                         handleErrMsg(response);
                         listener.onGetInfoFail();
@@ -407,6 +420,18 @@ public class UIMSModel {
     public boolean isLoginIn(){
         return isLogin;
     }
-
+    private List<OutsideItem> translateItem(List<ScoreValue> list){
+        List<OutsideItem> items = new ArrayList<OutsideItem>();
+        for(ScoreValue scoreValue:list){
+            OutsideItem item = new OutsideItem();
+            item.setCj(scoreValue.getScore());
+            item.setCredit(scoreValue.getCredit());
+            item.setGpoint(scoreValue.getgPoint());
+            item.setIsReselect(scoreValue.getIsReselect());
+            item.setKcmc(scoreValue.getCourse().getCourName());
+            items.add(item);
+        }
+        return items;
+    }
 
 }

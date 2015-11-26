@@ -8,13 +8,13 @@ public class TeachingTerm {
     private String startDate;
     private String termSeq;
     private String examDate;
-    private int termType;
-    private int activeStage;
+    private String termType;
+    private String activeStage;
     private String year;
     private String vacationDate;
-    private int weeks;
-    private int termId;
-    private int egrade;
+    private String weeks;
+    private String termId;
+    private String egrade;
 
     public String getTermName() {
         return termName;
@@ -48,19 +48,19 @@ public class TeachingTerm {
         this.examDate = examDate;
     }
 
-    public int getTermType() {
+    public String getTermType() {
         return termType;
     }
 
-    public void setTermType(int termType) {
+    public void setTermType(String termType) {
         this.termType = termType;
     }
 
-    public int getActiveStage() {
+    public String getActiveStage() {
         return activeStage;
     }
 
-    public void setActiveStage(int activeStage) {
+    public void setActiveStage(String activeStage) {
         this.activeStage = activeStage;
     }
 
@@ -80,27 +80,27 @@ public class TeachingTerm {
         this.vacationDate = vacationDate;
     }
 
-    public int getWeeks() {
+    public String getWeeks() {
         return weeks;
     }
 
-    public void setWeeks(int weeks) {
+    public void setWeeks(String weeks) {
         this.weeks = weeks;
     }
 
-    public int getTermId() {
+    public String getTermId() {
         return termId;
     }
 
-    public void setTermId(int termId) {
+    public void setTermId(String termId) {
         this.termId = termId;
     }
 
-    public int getEgrade() {
+    public String getEgrade() {
         return egrade;
     }
 
-    public void setEgrade(int egrade) {
+    public void setEgrade(String egrade) {
         this.egrade = egrade;
     }
 }

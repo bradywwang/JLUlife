@@ -6,21 +6,21 @@ package com.brady.jlulife.Entities.Score;
 public class ScoreValue {
     private String xkkh;
     private TeachingTerm teachingTerm;
-    private int score;
+    private String score;
     private String dateScore;
     private Object planDeatil;
     private String isPass;
-    private int classHour;
+    private String classHour;
     private Course course;
     private String isReselect;
     private String scoreNum;
     private Student student;
-    private int asId;
-    private int type5;
-    private String gpoint;
+    private String asId;
+    private String type5;
+    private String gPoint;
     private String credit;
     private Object notes;
-    private int selectType;
+    private String selectType;
 
     public String getXkkh() {
         return xkkh;
@@ -38,11 +38,11 @@ public class ScoreValue {
         this.teachingTerm = teachingTerm;
     }
 
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -70,11 +70,11 @@ public class ScoreValue {
         this.isPass = isPass;
     }
 
-    public int getClassHour() {
+    public String getClassHour() {
         return classHour;
     }
 
-    public void setClassHour(int classHour) {
+    public void setClassHour(String classHour) {
         this.classHour = classHour;
     }
 
@@ -110,28 +110,28 @@ public class ScoreValue {
         this.student = student;
     }
 
-    public int getAsId() {
+    public String getAsId() {
         return asId;
     }
 
-    public void setAsId(int asId) {
+    public void setAsId(String asId) {
         this.asId = asId;
     }
 
-    public int getType5() {
+    public String getType5() {
         return type5;
     }
 
-    public void setType5(int type5) {
+    public void setType5(String type5) {
         this.type5 = type5;
     }
 
-    public String getGpoint() {
-        return gpoint;
+    public String getgPoint() {
+        return gPoint;
     }
 
-    public void setGpoint(String gpoint) {
-        this.gpoint = gpoint;
+    public void setGpoint(String Gpoint) {
+        this.gPoint = Gpoint;
     }
 
     public String getCredit() {
@@ -150,11 +150,11 @@ public class ScoreValue {
         this.notes = notes;
     }
 
-    public int getSelectType() {
+    public String getSelectType() {
         return selectType;
     }
 
-    public void setSelectType(int selectType) {
+    public void setSelectType(String selectType) {
         this.selectType = selectType;
     }
 }

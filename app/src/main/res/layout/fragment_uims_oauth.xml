@@ -34,21 +34,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="25dp">
-        <CheckBox
-            android:id="@+id/uims_remember_pwd"
+        android:padding="25dp"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_remember_pwd"
-            android:textSize="@dimen/small_txt_size"
-            android:layout_margin="@dimen/checkbox_margin"/>
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/uims_remember_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_remember_pwd"
+                android:textSize="@dimen/small_txt_size"
+                android:layout_margin="@dimen/checkbox_margin"/>
+            <CheckBox
+                android:id="@+id/uims_auto_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_auto_login"
+                android:textSize="@dimen/small_txt_size"
+                android:layout_margin="@dimen/checkbox_margin"
+                />
+        </LinearLayout>
         <CheckBox
-            android:id="@+id/uims_auto_login"
+            android:id="@+id/uims_outside"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_auto_login"
+            android:text="@string/label_outside"
             android:textSize="@dimen/small_txt_size"
-            android:layout_margin="@dimen/checkbox_margin"/>
+            android:layout_margin="@dimen/checkbox_margin"
+            android:visibility="gone"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_uims_login"

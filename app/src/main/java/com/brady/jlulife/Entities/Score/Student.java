@@ -4,19 +4,19 @@ package com.brady.jlulife.Entities.Score;
  * Created by brady on 15-11-19.
  */
 public class Student {
-    private int studId;
+    private String studId;
     private String name;
     private AdminClass adminClass;
-    private int admissionYear;
-    private int studStatus;
-    private int studNo;
-    private int egrade;
+    private String admissionYear;
+    private String studStatus;
+    private String studNo;
+    private String egrade;
 
-    public int getStudId() {
+    public String getStudId() {
         return studId;
     }
 
-    public void setStudId(int studId) {
+    public void setStudId(String studId) {
         this.studId = studId;
     }
 
@@ -36,35 +36,35 @@ public class Student {
         this.adminClass = adminClass;
     }
 
-    public int getAdmissionYear() {
+    public String getAdmissionYear() {
         return admissionYear;
     }
 
-    public void setAdmissionYear(int admissionYear) {
+    public void setAdmissionYear(String admissionYear) {
         this.admissionYear = admissionYear;
     }
 
-    public int getStudStatus() {
+    public String getStudStatus() {
         return studStatus;
     }
 
-    public void setStudStatus(int studStatus) {
+    public void setStudStatus(String studStatus) {
         this.studStatus = studStatus;
     }
 
-    public int getStudNo() {
+    public String getStudNo() {
         return studNo;
     }
 
-    public void setStudNo(int studNo) {
+    public void setStudNo(String studNo) {
         this.studNo = studNo;
     }
 
-    public int getEgrade() {
+    public String getEgrade() {
         return egrade;
     }
 
-    public void setEgrade(int egrade) {
+    public void setEgrade(String egrade) {
         this.egrade = egrade;
     }
 }

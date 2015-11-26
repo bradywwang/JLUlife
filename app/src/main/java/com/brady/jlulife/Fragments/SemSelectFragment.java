@@ -31,8 +31,8 @@ public class SemSelectFragment extends BaseFragment {
         instance = this;
     }
 
-    public static SemSelectFragment getInstance(){
-        if(instance==null)
+    public static SemSelectFragment getInstance() {
+        if (instance == null)
             instance = new SemSelectFragment();
         return instance;
     }
@@ -63,38 +63,40 @@ public class SemSelectFragment extends BaseFragment {
         getSemesters();
     }
 
-    public void getSemesters(){
-        uimsModel.getSemesters(new OnListinfoGetListener() {
-            @Override
-            public void onGetInfoSuccess(List list) {
-                mSemList = list;
-                SemesterAdapter adapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
-                mSpinner.setAdapter(adapter);
-            }
+    public void getSemesters() {
+        if (mSemList == null || mSemList.size() == 0) {
+            uimsModel.getSemesters(new OnListinfoGetListener() {
+                @Override
+                public void onGetInfoSuccess(List list) {
+                    mSemList = list;
+                    SemesterAdapter adapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
+                    mSpinner.setAdapter(adapter);
+                }
 
-            @Override
-            public void onGetInfoFail() {
+                @Override
+                public void onGetInfoFail() {
 
-            }
-        });
+                }
+            });
+        }
     }
 
-    public void initComponents(View view){
+    public void initComponents(View view) {
         mSpinner = (Spinner) view.findViewById(R.id.sem_sel_spinner);
         btnSync = (Button) view.findViewById(R.id.btn_sem_sync);
     }
 
-    public void syncInfo(){
+    public void syncInfo() {
         TermList term = (TermList) mSpinner.getSelectedItem();
-        if(term==null)
+        if (term == null)
             return;
         String terId = term.getTermId();
-        uimsModel.syncLessonSchedule(Integer.parseInt(terId), new OnAsyncLoadListener(){
+        uimsModel.syncLessonSchedule(Integer.parseInt(terId), new OnAsyncLoadListener() {
 
             @Override
             public void onGetInfoSuccess() {
-                Toast.makeText(mContext,"同步成功",Toast.LENGTH_SHORT).show();
-                repleceFragment(R.id.main_container,CourseListFragment.getInstance());
+                Toast.makeText(mContext, "同步成功", Toast.LENGTH_SHORT).show();
+                repleceFragment(R.id.main_container, CourseListFragment.getInstance());
             }
 
             @Override

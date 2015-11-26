@@ -5,15 +5,15 @@ package com.brady.jlulife.Entities.Score;
  */
 public class Course {
     private String englishName;
-    private int adviceHour;
+    private String adviceHour;
     private String batch;
-    private int activeStatus;
-    private int type5;
+    private String activeStatus;
+    private String type5;
     private String extCourseNo;
     private String courName;
-    private int courseId;
-    private int courType1;
-    private int adviceCredit;
+    private String courseId;
+    private String courType1;
+    private String adviceCredit;
 
     public String getEnglishName() {
         return englishName;
@@ -23,11 +23,11 @@ public class Course {
         this.englishName = englishName;
     }
 
-    public int getAdviceHour() {
+    public String getAdviceHour() {
         return adviceHour;
     }
 
-    public void setAdviceHour(int adviceHour) {
+    public void setAdviceHour(String adviceHour) {
         this.adviceHour = adviceHour;
     }
 
@@ -39,19 +39,19 @@ public class Course {
         this.batch = batch;
     }
 
-    public int getActiveStatus() {
+    public String getActiveStatus() {
         return activeStatus;
     }
 
-    public void setActiveStatus(int activeStatus) {
+    public void setActiveStatus(String activeStatus) {
         this.activeStatus = activeStatus;
     }
 
-    public int getType5() {
+    public String getType5() {
         return type5;
     }
 
-    public void setType5(int type5) {
+    public void setType5(String type5) {
         this.type5 = type5;
     }
 
@@ -71,27 +71,27 @@ public class Course {
         this.courName = courName;
     }
 
-    public int getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 
-    public int getCourType1() {
+    public String getCourType1() {
         return courType1;
     }
 
-    public void setCourType1(int courType1) {
+    public void setCourType1(String courType1) {
         this.courType1 = courType1;
     }
 
-    public int getAdviceCredit() {
+    public String getAdviceCredit() {
         return adviceCredit;
     }
 
-    public void setAdviceCredit(int adviceCredit) {
+    public void setAdviceCredit(String adviceCredit) {
         this.adviceCredit = adviceCredit;
     }
 }

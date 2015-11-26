@@ -16,11 +16,20 @@ import com.brady.jlulife.Fragments.SemSelectFragment;
 import com.brady.jlulife.Fragments.UIMSAuthFragment;
 import com.brady.jlulife.Models.UIMSModel;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.umeng.analytics.MobclickAgent;
 
 public class SlidingMenuMainActivity extends AppCompatActivity {
     private Context mContext;
     private SlidingMenu menu;
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +51,7 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar OutsideItem clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();

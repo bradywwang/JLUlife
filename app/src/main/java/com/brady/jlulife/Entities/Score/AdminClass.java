@@ -4,36 +4,36 @@ package com.brady.jlulife.Entities.Score;
  * Created by brady on 15-11-19.
  */
 public class AdminClass {
-    private int abcId;
-    private int formalStudentCnt;
-    private int graduateYear;
+    private String abcId;
+    private String formalStudentCnt;
+    private String graduateYear;
     private String classNo;
-    private int studCnt;
+    private String studCnt;
     private String className;
     private String admissionYear;
     private String campus;
 
-    public int getAbcId() {
+    public String getAbcId() {
         return abcId;
     }
 
-    public void setAbcId(int abcId) {
+    public void setAbcId(String abcId) {
         this.abcId = abcId;
     }
 
-    public int getFormalStudentCnt() {
+    public String getFormalStudentCnt() {
         return formalStudentCnt;
     }
 
-    public void setFormalStudentCnt(int formalStudentCnt) {
+    public void setFormalStudentCnt(String formalStudentCnt) {
         this.formalStudentCnt = formalStudentCnt;
     }
 
-    public int getGraduateYear() {
+    public String getGraduateYear() {
         return graduateYear;
     }
 
-    public void setGraduateYear(int graduateYear) {
+    public void setGraduateYear(String graduateYear) {
         this.graduateYear = graduateYear;
     }
 
@@ -45,11 +45,11 @@ public class AdminClass {
         this.classNo = classNo;
     }
 
-    public int getStudCnt() {
+    public String getStudCnt() {
         return studCnt;
     }
 
-    public void setStudCnt(int studCnt) {
+    public void setStudCnt(String studCnt) {
         this.studCnt = studCnt;
     }
 
