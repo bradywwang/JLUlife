@@ -41,6 +41,7 @@ public class DBManager {
         Cursor c = db.query("course",null,null,null,null,null,null);
         while (c.moveToNext()){
             courseSpec = new CourseSpec();
+            courseSpec.setId(c.getInt(c.getColumnIndex("id")));
             courseSpec.setBeginWeek(c.getInt(c.getColumnIndex("beginWeek")));
             courseSpec.setClassRoom(c.getString(c.getColumnIndex("classroom")));
             courseSpec.setCourseName(c.getString(c.getColumnIndex("coursename")));
@@ -52,6 +53,7 @@ public class DBManager {
             courseSpec.setTeacherName(c.getString(c.getColumnIndex("teachername")));
             courseSpec.setWeek(c.getInt(c.getColumnIndex("week")));
             courseSpecs.add(courseSpec);
+            Log.i("DBManager","id:query from db:"+courseSpec.getId());
         }
         c.close();
         return courseSpecs;

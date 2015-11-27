@@ -4,6 +4,7 @@ package com.brady.jlulife.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class ScoreListFragment extends BaseFragment {
         mLvScore = (ListView) view.findViewById(R.id.lv_scoreList);
     }
     public void getSemesters(){
+        Log.i("loginMethod",String.valueOf(uimsModel.getmLoginMethod()));
         uimsModel.getSemesters(new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(List list) {

@@ -11,12 +11,14 @@ import android.view.MenuItem;
 
 import com.brady.jlulife.Fragments.ClassSyncFragment;
 import com.brady.jlulife.Fragments.CourseListFragment;
+import com.brady.jlulife.Fragments.LibrarySearchFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
 import com.brady.jlulife.Fragments.SemSelectFragment;
 import com.brady.jlulife.Fragments.UIMSAuthFragment;
 import com.brady.jlulife.Models.UIMSModel;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 public class SlidingMenuMainActivity extends AppCompatActivity {
     private Context mContext;
@@ -35,6 +37,7 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
+        UmengUpdateAgent.update(this);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.main_container,new CourseListFragment());
@@ -97,4 +100,12 @@ public class SlidingMenuMainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
 
     }
+
+    /*@Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(LibrarySearchFragment.getInstance().isAdded()){
+            LibrarySearchFragment.getInstance().preformBack();
+        }
+    }*/
 }

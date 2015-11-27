@@ -77,6 +77,10 @@ public class MenuFragment extends BaseFragment {
                         }
                         closeMenu();
                         break;
+                    }case 5:{
+                        repleceFragment(R.id.main_container, LibrarySearchFragment.getInstance());
+                        closeMenu();
+                        break;
                     }
                     default:{
                         Toast.makeText(mContext,"The function is commit soon",Toast.LENGTH_SHORT).show();

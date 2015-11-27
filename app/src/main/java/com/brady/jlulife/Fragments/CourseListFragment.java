@@ -40,8 +40,13 @@ public class CourseListFragment extends BaseFragment {
     private ScrollView scrollView;
     private float x_tmp1;
     private float x_tmp2;
+    private float oldx;
+    private float oldy;
+    private float newx;
+    private float newy;
     private static CourseListFragment mfragment;
-
+    GridView head;
+    GridView courseNum;
 
     public CourseListFragment() {
         mfragment = this;
@@ -62,6 +67,7 @@ public class CourseListFragment extends BaseFragment {
         dbManager = new DBManager(getActivity());
         int currentWeek = getCurrentWeek();
         showCourses(currentWeek);
+        initScrollMethod(view);
         return view;
     }
 
@@ -70,10 +76,11 @@ public class CourseListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
         initActionBar();
+    }
+
+    private void initScrollMethod(final View view){
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-        scrollView.scrollTo(0, 0);
-        horizontalScrollView.scrollTo(0,0);
         horizontalScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -97,10 +104,7 @@ public class CourseListFragment extends BaseFragment {
                 return false;
             }
         });
-
-
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -108,25 +112,23 @@ public class CourseListFragment extends BaseFragment {
     }
 
     private int getCurrentWeek(){
-        return 0;
+        return 1;
     }
 
     private void initBaseComponents(View view){
-        view.scrollTo(0, 0);
-        GridView head = (GridView) view.findViewById(R.id.gridWeek);
+        head = (GridView) view.findViewById(R.id.gridWeek);
         String[] weeks = { "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日" };
         ArrayAdapter<String> headAdap = new ArrayAdapter<String>(getActivity(),
                 R.layout.weekstyle, weeks);
         head.setAdapter(headAdap);
 
         // 第几节课
-        GridView courseNum = (GridView) view.findViewById(R.id.gridCourseNum);
+        courseNum = (GridView) view.findViewById(R.id.gridCourseNum);
         String[] courseNums = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
                 "10", "11" };
         ArrayAdapter<String> leftAdap = new ArrayAdapter<String>(getActivity(),
                 R.layout.coursenumstyle, courseNums);
         courseNum.setAdapter(leftAdap);
-
         mCourseContent = (RelativeLayout) view.findViewById(R.id.relativeCourseContent);
 //        addCourse(new CourseSpec("毛概","f9","张三",3,3,4,1,8,false));
     }
@@ -164,10 +166,10 @@ public class CourseListFragment extends BaseFragment {
         course.setGravity(Gravity.CENTER);
         course.setWidth(courseWidth);
         course.setHeight(courseLength);
-        course.setBackgroundColor(getResources().getColor(R.color.courseColor));
-        course.setPadding(8, 8, 8, 8);
+        course.setBackgroundColor(getCourseBackground(spec.getId()));
+        course.setPadding(8, 5, 8, 5);
         course.setText(spec.toString());
-        course.setTextSize(15);
+        course.setTextSize(getResources().getDimension(R.dimen.coursespec_font_size));
         course.setTextColor(Color.WHITE);
         mCourseContent.addView(course);
     }
@@ -177,12 +179,12 @@ public class CourseListFragment extends BaseFragment {
         List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
         Log.i("size",courseSpecs.size()+"");
         for (CourseSpec spec :courseSpecs){
-            Log.i("courses","name:"+spec.getCourseName()+"begin:"+spec.getBeginWeek()+"end"+spec.getEndWeek()+"double"+spec.getIsDoubleWeek()+"single"+spec.getIsSingleWeek());
+            Log.i("courses",spec.getId()+"name:"+spec.getCourseName()+"begin:"+spec.getBeginWeek()+"end"+spec.getEndWeek()+"double"+spec.getIsDoubleWeek()+"single"+spec.getIsSingleWeek());
             if((currentWeek>=spec.getBeginWeek()&&currentWeek<=spec.getEndWeek())||(spec.getBeginWeek()==0&&spec.getEndWeek()==0)) {
                 Log.i("aaaa","name:"+spec.getCourseName()+"begin:"+spec.getBeginWeek()+"end"+spec.getEndWeek()+"double"+spec.getIsDoubleWeek()+"single"+spec.getIsSingleWeek());
                 if((spec.getIsDoubleWeek()==1&&currentWeek%2==1)||(spec.getIsSingleWeek()==1&&currentWeek%2==0))
                     continue;
-                addCourse(new CourseSpec(spec.getCourseName(), spec.getClassRoom(), spec.getTeacherName(), spec.getWeek(), spec.getStartTime(), spec.getEndTime(), spec.getBeginWeek(), spec.getEndWeek(), spec.getIsSingleWeek(), spec.getIsDoubleWeek()));
+                addCourse(spec);
             }
         }
     }
@@ -201,11 +203,55 @@ public class CourseListFragment extends BaseFragment {
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
             @Override
             public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-                Log.i("position", String.valueOf(itemPosition));
-                showCourses(itemPosition+1);
                 return true;
             }
         });
         actionBar.setSelectedNavigationItem(4);
+    }
+
+
+
+
+
+    private int getCourseBackground(int courseId){
+        int backId = courseId%8;
+        Log.i("id","id="+courseId+"backId="+backId);
+        int result = getResources().getColor(R.color.class_value_1);
+        switch (backId){
+            case 0:{
+                result = getResources().getColor(R.color.class_value_1);
+                break;
+            }
+            case 1:{
+                result = getResources().getColor(R.color.class_value_2);
+                break;
+            }
+            case 2:{
+                result = getResources().getColor(R.color.class_value_3);
+                break;
+            }
+            case 3:{
+                result = getResources().getColor(R.color.class_value_4);
+                break;
+            }
+            case 4:{
+                result = getResources().getColor(R.color.class_value_5);
+                break;
+            }
+            case 5:{
+                result = getResources().getColor(R.color.class_value_6);
+                break;
+            }
+            case 6:{
+                result = getResources().getColor(R.color.class_value_7);
+                break;
+            }
+            case 7:{
+                result = getResources().getColor(R.color.class_value_8);
+                break;
+            }
+
+        }
+        return result;
     }
 }

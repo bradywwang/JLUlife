@@ -4,6 +4,7 @@ package com.brady.jlulife.Entities;
  * Created by brady on 15-11-8.
  */
 public class CourseSpec {
+    private int id;
     private String courseName;
     private String classRoom;
     private String teacherName;
@@ -29,7 +30,7 @@ public class CourseSpec {
     }
     @Override
     public String toString() {
-        return courseName + '@'+classRoom + '@'+ teacherName ;
+        return courseName + '@'+classRoom ;
     }
 
     public String getString() {
@@ -128,5 +129,13 @@ public class CourseSpec {
     }
 
     public CourseSpec() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

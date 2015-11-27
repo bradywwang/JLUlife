@@ -21,8 +21,7 @@ public class ConstValue {
     public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";
     public static final String NEWS_SOURCE = "com.brady.jlulife.newslist";
     public static final String NEWS_SOURCE_DETAIL = "com.brady.jlulife.newsdetail";
-
-
+    public static final String LIBRARY_SEARCH_URI = "http://202.198.25.5:8080/sms/opac/search/showiphoneSearch.action";
     public static final int LESSON_QUERY = 1;
     public static final String FUNCTION_JWCX = "jwcx";
     public static final String FUNCTION_JLUNEWS = "jlunews";

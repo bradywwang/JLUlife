@@ -30,6 +30,8 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpClientConnection;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +65,7 @@ public class UIMSModel {
 
     private UIMSModel() {
         client = new AsyncHttpClient();
+        client.getHttpClient().getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
     }
 
     public static UIMSModel getInstance(Context context) {
@@ -74,10 +77,9 @@ public class UIMSModel {
         return model;
     }
 
-    public void login(int loginMethod,String uname, String pwd, final LoginListener listener) {
+    public void login(final int loginMethod,String uname, String pwd, final LoginListener listener) {
         mLoginListener = listener;
         mUId = uname;
-        mLoginMethod = loginMethod;
         String convertPwd = Utils.getMD5Str("UIMS" + uname + pwd);
         Log.i(getClass().getSimpleName(), "uname" + uname + "pwd:" + convertPwd);
         RequestParams params = new RequestParams();
@@ -116,6 +118,7 @@ public class UIMSModel {
                             listener.onLoginFailure("获取用户信息失败，请重试");
                         }
                     });
+                    mLoginMethod = loginMethod;
                     mLoginListener.onLoginSuccess();
                     isLogin = true;
                 }
@@ -126,6 +129,10 @@ public class UIMSModel {
 
     public void logout() {
 
+    }
+
+    public int getmLoginMethod() {
+        return mLoginMethod;
     }
 
     public void getSemesters(final OnListinfoGetListener listener) {

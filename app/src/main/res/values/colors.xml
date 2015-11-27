@@ -2,7 +2,6 @@
 <resources>
 
 
-    <color name="courseColor">#39D3AD</color>
     <color name="courseNot">#F2F1ED</color>
     <color name="title_background">#31CFDE</color>
 
@@ -25,6 +24,15 @@
     <color name="gray">#808080</color>
     <color name="graydeep">#696969</color>
     <color name="light_black">#A9A9A9</color>
+    <color name="class_value_1">#ffa1df</color>
+    <color name="class_value_2">#418aff</color>
+    <color name="class_value_3">#39D3AD</color>
+    <color name="class_value_4">#ced382</color>
+    <color name="class_value_5">#45bad3</color>
+    <color name="class_value_6">#96d35c</color>
+    <color name="class_value_7">#8f8e8d</color>
+    <color name="class_value_8">#b25fd3</color>
+
 
     <color name="warn">#DAA520</color>
 </resources>
