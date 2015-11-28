@@ -20,7 +20,7 @@
     <dimen name="course_week_height">20dp</dimen>
     <dimen name="course_week_item_width">70dp</dimen>
     <dimen name="course_num_width">20dp</dimen>
-    <dimen name="course_num_height">715dp</dimen>
+    <dimen name="course_num_height">735dp</dimen>
     <dimen name="course_num_item_height">65dp</dimen>
     <dimen name="score_item_padding_top_bottom">5dp</dimen>
     <dimen name="score_item_padding_left_right">10dp</dimen>

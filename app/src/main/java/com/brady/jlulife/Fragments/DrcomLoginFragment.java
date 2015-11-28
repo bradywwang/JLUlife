@@ -57,6 +57,7 @@ public class DrcomLoginFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_drcom_login, container, false);
+        setTitle("校园网登陆");
         return view;
     }
 

@@ -10,17 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.SpinnerAdapter;
 
+import com.brady.jlulife.MyHorizontalScrollView;
+import com.brady.jlulife.MyVerticalScrollView;
+import com.brady.jlulife.OnScrollListener;
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Models.db.DBManager;
@@ -36,14 +39,10 @@ public class CourseListFragment extends BaseFragment {
     private RelativeLayout mCourseContent;
     private DBManager dbManager;
     private Context mContext;
-    private HorizontalScrollView horizontalScrollView;
-    private ScrollView scrollView;
+    private MyHorizontalScrollView horizontalScrollView;
+    private MyVerticalScrollView scrollView;
     private float x_tmp1;
     private float x_tmp2;
-    private float oldx;
-    private float oldy;
-    private float newx;
-    private float newy;
     private static CourseListFragment mfragment;
     GridView head;
     GridView courseNum;
@@ -52,8 +51,8 @@ public class CourseListFragment extends BaseFragment {
         mfragment = this;
     }
 
-    public static CourseListFragment getInstance(){
-        if(mfragment==null)
+    public static CourseListFragment getInstance() {
+        if (mfragment == null)
             mfragment = new CourseListFragment();
         return mfragment;
     }
@@ -68,6 +67,7 @@ public class CourseListFragment extends BaseFragment {
         int currentWeek = getCurrentWeek();
         showCourses(currentWeek);
         initScrollMethod(view);
+        setTitle("我的课表");
         return view;
     }
 
@@ -75,12 +75,24 @@ public class CourseListFragment extends BaseFragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
-        initActionBar();
+//        initActionBar();
     }
 
-    private void initScrollMethod(final View view){
-        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
-        scrollView = (ScrollView) view.findViewById(R.id.scrollview);
+    private void initScrollMethod(final View view) {
+        horizontalScrollView = (MyHorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
+        scrollView = (MyVerticalScrollView) view.findViewById(R.id.scrollview);
+        horizontalScrollView.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void OnScrollChanged(int x, int y, int oldx, int oldy) {
+                head.scrollTo(x, 0);
+            }
+        });
+        scrollView.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void OnScrollChanged(int x, int y, int oldx, int oldy) {
+                courseNum.scrollTo(0, y);
+            }
+        });
         horizontalScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -105,34 +117,36 @@ public class CourseListFragment extends BaseFragment {
             }
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();
 
     }
 
-    private int getCurrentWeek(){
+    private int getCurrentWeek() {
         return 1;
     }
 
-    private void initBaseComponents(View view){
+    private void initBaseComponents(View view) {
         head = (GridView) view.findViewById(R.id.gridWeek);
-        String[] weeks = { "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日" };
+        String[] weeks = {"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"};
         ArrayAdapter<String> headAdap = new ArrayAdapter<String>(getActivity(),
                 R.layout.weekstyle, weeks);
         head.setAdapter(headAdap);
 
         // 第几节课
         courseNum = (GridView) view.findViewById(R.id.gridCourseNum);
-        String[] courseNums = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
-                "10", "11" };
+        String[] courseNums = {"1", "2", "3", "4", "5", "6", "7", "8", "9",
+                "10", "11"};
         ArrayAdapter<String> leftAdap = new ArrayAdapter<String>(getActivity(),
                 R.layout.coursenumstyle, courseNums);
         courseNum.setAdapter(leftAdap);
         mCourseContent = (RelativeLayout) view.findViewById(R.id.relativeCourseContent);
 //        addCourse(new CourseSpec("毛概","f9","张三",3,3,4,1,8,false));
     }
-    private void addCourse(CourseSpec spec){
+
+    private void addCourse(CourseSpec spec) {
         int leftMargin = 0;
         int topMargin = 0;
         int courseLength = 0;
@@ -174,30 +188,30 @@ public class CourseListFragment extends BaseFragment {
         mCourseContent.addView(course);
     }
 
-    public void showCourses(int currentWeek){
+    public void showCourses(int currentWeek) {
         mCourseContent.removeAllViews();
         List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
-        Log.i("size",courseSpecs.size()+"");
-        for (CourseSpec spec :courseSpecs){
-            Log.i("courses",spec.getId()+"name:"+spec.getCourseName()+"begin:"+spec.getBeginWeek()+"end"+spec.getEndWeek()+"double"+spec.getIsDoubleWeek()+"single"+spec.getIsSingleWeek());
-            if((currentWeek>=spec.getBeginWeek()&&currentWeek<=spec.getEndWeek())||(spec.getBeginWeek()==0&&spec.getEndWeek()==0)) {
-                Log.i("aaaa","name:"+spec.getCourseName()+"begin:"+spec.getBeginWeek()+"end"+spec.getEndWeek()+"double"+spec.getIsDoubleWeek()+"single"+spec.getIsSingleWeek());
-                if((spec.getIsDoubleWeek()==1&&currentWeek%2==1)||(spec.getIsSingleWeek()==1&&currentWeek%2==0))
+        Log.i("size", courseSpecs.size() + "");
+        for (CourseSpec spec : courseSpecs) {
+            Log.i("courses", spec.getId() + "name:" + spec.getCourseName() + "begin:" + spec.getBeginWeek() + "end" + spec.getEndWeek() + "double" + spec.getIsDoubleWeek() + "single" + spec.getIsSingleWeek());
+            if ((currentWeek >= spec.getBeginWeek() && currentWeek <= spec.getEndWeek()) || (spec.getBeginWeek() == 0 && spec.getEndWeek() == 0)) {
+                Log.i("aaaa", "name:" + spec.getCourseName() + "begin:" + spec.getBeginWeek() + "end" + spec.getEndWeek() + "double" + spec.getIsDoubleWeek() + "single" + spec.getIsSingleWeek());
+                if ((spec.getIsDoubleWeek() == 1 && currentWeek % 2 == 1) || (spec.getIsSingleWeek() == 1 && currentWeek % 2 == 0))
                     continue;
                 addCourse(spec);
             }
         }
     }
 
-    public void initActionBar(){
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+    public void initActionBar() {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         String[] titles = new String[18];
-        for(int i=1;i<=18;i++){
-            titles[i-1] = "第"+i+"周";
+        for (int i = 1; i <= 18; i++) {
+            titles[i - 1] = "第" + i + "周";
         }
-        SpinnerAdapter adapter = new ArrayAdapter<String>(mContext,R.layout.spinner_item,titles);
-        if(actionBar==null){
-            Log.e("err","actionbar is null");
+        SpinnerAdapter adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item, titles);
+        if (actionBar == null) {
+            Log.e("err", "actionbar is null");
         }
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
@@ -210,48 +224,51 @@ public class CourseListFragment extends BaseFragment {
     }
 
 
-
-
-
-    private int getCourseBackground(int courseId){
-        int backId = courseId%8;
-        Log.i("id","id="+courseId+"backId="+backId);
+    private int getCourseBackground(int courseId) {
+        int backId = courseId % 8;
+        Log.i("id", "id=" + courseId + "backId=" + backId);
         int result = getResources().getColor(R.color.class_value_1);
-        switch (backId){
-            case 0:{
+        switch (backId) {
+            case 0: {
                 result = getResources().getColor(R.color.class_value_1);
                 break;
             }
-            case 1:{
+            case 1: {
                 result = getResources().getColor(R.color.class_value_2);
                 break;
             }
-            case 2:{
+            case 2: {
                 result = getResources().getColor(R.color.class_value_3);
                 break;
             }
-            case 3:{
+            case 3: {
                 result = getResources().getColor(R.color.class_value_4);
                 break;
             }
-            case 4:{
+            case 4: {
                 result = getResources().getColor(R.color.class_value_5);
                 break;
             }
-            case 5:{
+            case 5: {
                 result = getResources().getColor(R.color.class_value_6);
                 break;
             }
-            case 6:{
+            case 6: {
                 result = getResources().getColor(R.color.class_value_7);
                 break;
             }
-            case 7:{
+            case 7: {
                 result = getResources().getColor(R.color.class_value_8);
                 break;
             }
 
         }
         return result;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_course, menu);
+
     }
 }

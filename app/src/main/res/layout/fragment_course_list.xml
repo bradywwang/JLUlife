@@ -4,61 +4,56 @@
     tools:context="com.brady.jlulife.Fragments.CourseListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <com.brady.jlulife.MyVerticalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollview">
-        <HorizontalScrollView
+        <com.brady.jlulife.MyHorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/horizon_scrollview">
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/linearLayout_gridtableLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <GridView
-                        android:layout_marginLeft="@dimen/course_num_width"
-                        android:id="@+id/gridWeek"
-                        android:layout_width="@dimen/course_week_width"
-                        android:layout_height="wrap_content"
-                        android:background="#B5B2B5"
-                        android:columnWidth="@dimen/course_week_width"
-                        android:gravity="center"
-                        android:horizontalSpacing="@dimen/spacing"
-                        android:numColumns="7"
-                         >
-                    </GridView>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <GridView
-                        android:layout_marginTop="@dimen/course_week_height"
-                        android:id="@+id/gridCourseNum"
-                        android:layout_width="@dimen/course_num_width"
-                        android:layout_height="@dimen/course_num_height"
-                        android:background="#B5B2B5"
-                        android:columnWidth="@dimen/course_num_width"
-                        android:gravity="center"
-                        android:verticalSpacing="@dimen/spacing"
-                        android:numColumns="1">
-                    </GridView>
-                </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/relativeCourseContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_width="@dimen/course_week_width"
+                    android:layout_height="@dimen/course_num_height" >
                 </RelativeLayout>
-            </FrameLayout>
-        </HorizontalScrollView>
-    </ScrollView>
+        </com.brady.jlulife.MyHorizontalScrollView>
+    </com.brady.jlulife.MyVerticalScrollView>
+    <LinearLayout
+        android:id="@+id/linearLayout_gridtableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
+        <GridView
+            android:layout_marginLeft="@dimen/course_num_width"
+            android:id="@+id/gridWeek"
+            android:layout_width="@dimen/course_week_width"
+            android:layout_height="wrap_content"
+            android:background="#B5B2B5"
+            android:columnWidth="@dimen/course_week_width"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/spacing"
+            android:numColumns="7"
+            >
+        </GridView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <GridView
+            android:paddingTop="@dimen/course_week_height"
+            android:id="@+id/gridCourseNum"
+            android:layout_width="@dimen/course_num_width"
+            android:layout_height="@dimen/course_num_height"
+            android:background="#B5B2B5"
+            android:columnWidth="@dimen/course_num_width"
+            android:gravity="center"
+            android:verticalSpacing="@dimen/spacing"
+            android:numColumns="1">
+        </GridView>
+    </LinearLayout>
 </FrameLayout>

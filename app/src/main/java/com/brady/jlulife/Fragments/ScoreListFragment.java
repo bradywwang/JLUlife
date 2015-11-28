@@ -49,6 +49,7 @@ public class ScoreListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setTitle("我的成绩");
         return inflater.inflate(R.layout.fragment_score_list, container, false);
     }
 

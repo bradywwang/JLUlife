@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -37,6 +39,7 @@ public class LibrarySearchFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setTitle("图书馆");
         return inflater.inflate(R.layout.fragment_library_search, container, false);
     }
 
@@ -61,7 +64,11 @@ public class LibrarySearchFragment extends BaseFragment {
             }
         });
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_library, menu);
 
+    }
     public void preformBack() {
         webView.goBack();
     }

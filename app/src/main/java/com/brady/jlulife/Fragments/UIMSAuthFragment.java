@@ -67,6 +67,7 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setTitle("教务登陆");
         return inflater.inflate(R.layout.fragment_uims_oauth, container, false);
     }
 

@@ -40,7 +40,7 @@
     <string name="title_activity_news">校内通知</string>
     <string name="action_update">更新课表</string>
     <string name="label_update_lesson_select">请选择需要同步的学期</string>
-
+    <string name="action_library_myhome">我的账号</string>
 
     <string name="title_activity_course">CourseActivity</string>
 

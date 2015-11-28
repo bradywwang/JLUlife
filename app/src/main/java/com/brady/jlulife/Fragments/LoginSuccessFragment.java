@@ -30,6 +30,7 @@ public class LoginSuccessFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setTitle("登陆成功");
         return inflater.inflate(R.layout.fragment_login_success, container, false);
     }
 

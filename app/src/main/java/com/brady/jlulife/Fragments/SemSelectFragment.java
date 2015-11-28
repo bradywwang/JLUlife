@@ -45,6 +45,7 @@ public class SemSelectFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setTitle("学期选择");
         return inflater.inflate(R.layout.fragment_sem_select, container, false);
     }
 
