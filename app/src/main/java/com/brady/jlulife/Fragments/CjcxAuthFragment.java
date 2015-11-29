@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.R;
 
 /**
@@ -30,7 +31,7 @@ public class CjcxAuthFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-        repleceFragment(R.id.main_container,ScoreListFragment.getInstance());
+        FragmentControler.addFragment(this,R.id.main_container, FragmentControler.TAG_SCORE_LIST);
     }
 
     @Override

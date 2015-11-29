@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
 import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
@@ -23,8 +24,10 @@ public class LoginSuccessFragment extends BaseFragment {
     TextView timeUsed;
     Button btnLogout;
     ProgressDialog mProgressDialog;
+    LoginSuccessFragment mFragment;
 
     public LoginSuccessFragment() {
+        mFragment = this;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class LoginSuccessFragment extends BaseFragment {
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("logout", true);
                         fragment.setArguments(bundle);
-                        repleceFragment(fragment);
+                        FragmentControler.addFragment(mFragment,bundle,R.id.main_container,FragmentControler.TAG_DRCOM_LOGIN);
                         mProgressDialog.dismiss();
                     }
                 });

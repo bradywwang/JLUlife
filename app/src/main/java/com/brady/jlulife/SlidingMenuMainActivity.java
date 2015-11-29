@@ -2,18 +2,24 @@ package com.brady.jlulife;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.brady.jlulife.Fragments.ClassSyncFragment;
 import com.brady.jlulife.Fragments.CourseListFragment;
@@ -22,9 +28,13 @@ import com.brady.jlulife.Fragments.MenuFragment;
 import com.brady.jlulife.Fragments.SemSelectFragment;
 import com.brady.jlulife.Fragments.UIMSAuthFragment;
 import com.brady.jlulife.Models.UIMSModel;
+import com.brady.jlulife.Utils.ConstValue;
+import com.brady.jlulife.Utils.Utils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
+
+import java.util.Date;
 
 public class SlidingMenuMainActivity extends ActionBarActivity {
     private Context mContext;
@@ -65,17 +75,11 @@ public class SlidingMenuMainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upgrade) {
             if(UIMSModel.getInstance(this).isLoginIn()){
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.main_container, SemSelectFragment.getInstance());
-                transaction.commit();
+                FragmentControler.addFragment(getSupportFragmentManager(), R.id.main_container, FragmentControler.TAG_SEM_SELECT);
             }else {
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.main_container, ClassSyncFragment.getInstance());
-                transaction.commit();
-                menu.showContent();
+                FragmentControler.addFragment(getSupportFragmentManager(), R.id.main_container, FragmentControler.TAG_CLASS_SYNC);
             }
+            menu.showContent();
             return true;
         }
         if (id == 16908332) {
@@ -86,7 +90,33 @@ public class SlidingMenuMainActivity extends ActionBarActivity {
             }
             return true;
         }
+
+        if (id == R.id.action_update_week) {
+            final EditText editText = new EditText(this);
+            new AlertDialog.Builder(this)
+                    .setTitle("设置当前周(请输入数字1-20)")
+                    .setView(editText).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        SharedPreferences sf = getSharedPreferences(ConstValue.SHARED_COURSE_INFO, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sf.edit();
+//                        long numOfDay = (date.getTime() - new Date().getTime())/86400000;
+                        int currentWeek = Integer.parseInt(editText.getText().toString());
+                        editor.putInt("savedweek", currentWeek);
+                        editor.putLong("savedtime", Utils.getFirstDayOfWeek(new Date()).getTime());
+                        editor.commit();
+                        Toast.makeText(mContext,"更新成功,重新启动应用生效",Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(mContext,"请输入1-20的数字",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            })
+                    .setNegativeButton("取消", null)
+                    .show();
+        }
         return super.onOptionsItemSelected(item);
+
     }
     private void initSlidingMenu(){
         menu = new SlidingMenu(mContext);
@@ -122,11 +152,12 @@ public class SlidingMenuMainActivity extends ActionBarActivity {
         actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
 
     }
-    /*@Override
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if(LibrarySearchFragment.getInstance().isAdded()){
             LibrarySearchFragment.getInstance().preformBack();
+        }else {
+            super.onBackPressed();
         }
-    }*/
+    }
 }

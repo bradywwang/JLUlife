@@ -1,5 +1,6 @@
 package com.brady.jlulife.Fragments;
 
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.R;
 
 /**
@@ -20,6 +21,6 @@ public class ClassSyncFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-            repleceFragment(R.id.main_container,new SemSelectFragment());
+        FragmentControler.addFragment(this, R.id.main_container, FragmentControler.TAG_SEM_SELECT);
     }
 }

@@ -34,6 +34,7 @@ public class ScoreListFragment extends BaseFragment {
     private List mSemList;
     private List mScoreList;
     private ScoreAdapter mAdapter;
+    private SemesterAdapter semesterAdapter;
     private static ScoreListFragment instance;
 
     public ScoreListFragment() {
@@ -61,10 +62,12 @@ public class ScoreListFragment extends BaseFragment {
         initComponents(view);
         mScoreList = new ArrayList();
         mAdapter = new ScoreAdapter(mContext,R.layout.item_cjcx,mScoreList);
-        mLvScore.setAdapter(mAdapter);
         if(mSemList==null||mSemList.size()==0) {
             getSemesters();
+        }else{
+            mSpinner.setAdapter(semesterAdapter);
         }
+        mLvScore.setAdapter(mAdapter);
         mBtnQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,13 +82,13 @@ public class ScoreListFragment extends BaseFragment {
         mLvScore = (ListView) view.findViewById(R.id.lv_scoreList);
     }
     public void getSemesters(){
-        Log.i("loginMethod",String.valueOf(uimsModel.getmLoginMethod()));
+        Log.i("loginMethod", String.valueOf(uimsModel.getmLoginMethod()));
         uimsModel.getSemesters(new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(List list) {
                 mSemList = list;
-                SemesterAdapter adapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
-                mSpinner.setAdapter(adapter);
+                semesterAdapter  = new SemesterAdapter(mContext, R.layout.spinner_item, list);
+                mSpinner.setAdapter(semesterAdapter);
             }
 
             @Override

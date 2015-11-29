@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by brady on 15-9-19.
@@ -39,4 +42,11 @@ public class Utils {
         return md5StrBuff.toString();
     }
 
+    public static Date getFirstDayOfWeek(Date date) {
+        Calendar c = new GregorianCalendar();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.setTime(date);
+        c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek()); // Monday
+        return c.getTime();
+    }
 }

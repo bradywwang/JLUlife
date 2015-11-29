@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.Fragments.News.JLUNewsListFragment;
 import com.brady.jlulife.Fragments.News.JWNewsListFragment;
 import com.brady.jlulife.Fragments.News.NewsListFragment;
@@ -25,8 +26,10 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 public class MenuFragment extends BaseFragment {
     private ListView listView;
     private Context mContext;
+    private MenuFragment mFragment;
 
     public MenuFragment() {
+        mFragment = this;
     }
 
     @Override
@@ -50,35 +53,35 @@ public class MenuFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:{
-                        repleceFragment(R.id.main_container,CourseListFragment.getInstance());
+                        FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_COURSE_LIST);
                         closeMenu();
                         break;
                     }
                     case 1:{
-                        repleceFragment(R.id.main_container, DrcomLoginFragment.getInstance());
+                        FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_DRCOM_LOGIN);
                         closeMenu();
                         break;
                     }
                     case 2:{
-                        repleceFragment(R.id.main_container, JLUNewsListFragment.getInstance());
+                        FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_JLU_NEWS_LIST);
                         closeMenu();
                         break;
                     }
                     case 3:{
-                        repleceFragment(R.id.main_container, JWNewsListFragment.getInstance());
+                        FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_JW_NEWS_LIST);
                         closeMenu();
                         break;
                     }
                     case 4:{
                         if(UIMSModel.getInstance(mContext).isLoginIn()){
-                            repleceFragment(R.id.main_container, ScoreListFragment.getInstance());
+                            FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_SCORE_LIST);
                         }else {
-                            repleceFragment(R.id.main_container, CjcxAuthFragment.getInstance());
+                            FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_CJCX_AUTH);
                         }
                         closeMenu();
                         break;
                     }case 5:{
-                        repleceFragment(R.id.main_container, LibrarySearchFragment.getInstance());
+                        FragmentControler.addFragment(mFragment, R.id.main_container, FragmentControler.TAG_LIBRARY_SEARCH);
                         closeMenu();
                         break;
                     }

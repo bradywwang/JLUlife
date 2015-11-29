@@ -2,6 +2,7 @@ package com.brady.jlulife.Fragments;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -28,7 +31,9 @@ import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.R;
+import com.brady.jlulife.Utils.ConstValue;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,7 +69,7 @@ public class CourseListFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         initBaseComponents(view);
         dbManager = new DBManager(getActivity());
-        int currentWeek = getCurrentWeek();
+        long currentWeek = getCurrentWeek();
         showCourses(currentWeek);
         initScrollMethod(view);
         setTitle("我的课表");
@@ -121,11 +126,21 @@ public class CourseListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
-    private int getCurrentWeek() {
-        return 1;
+
+
+    private long getCurrentWeek() {
+        SharedPreferences sf = getActivity().getSharedPreferences(ConstValue.SHARED_COURSE_INFO, Context.MODE_PRIVATE);
+        int savedWeek = sf.getInt("savedweek", 0);
+        long savedDate  = sf.getLong("savedtime", 0);
+        long numOfDay = (new Date().getTime()-savedDate)/86400000;
+        long weekPassed =  (numOfDay/7);
+        Log.i("aaaaaaa","savedweek"+savedWeek+"savedtime"+savedDate+"numofDay"+numOfDay+"weekPassed"+weekPassed);
+        if(savedDate==0||savedWeek==0)
+            return 1;
+        else
+            return savedWeek+weekPassed;
     }
 
     private void initBaseComponents(View view) {
@@ -188,7 +203,7 @@ public class CourseListFragment extends BaseFragment {
         mCourseContent.addView(course);
     }
 
-    public void showCourses(int currentWeek) {
+    public void showCourses(long currentWeek) {
         mCourseContent.removeAllViews();
         List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
         Log.i("size", courseSpecs.size() + "");
@@ -269,6 +284,7 @@ public class CourseListFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_course, menu);
-
+        MenuItem item= menu.findItem(R.id.action_week);
+        item.setTitle("第"+getCurrentWeek()+"周");
     }
 }

@@ -35,11 +35,17 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     AsyncHttpClient client;
     UIMSModel uimsModel;
     Context mContext;
+    private boolean isFirstShown;
     private SharedPreferences sf;
     private static final String SAVED_NAME  = "saved_name";
     private static final String SAVED_PWD  = "saved_password";
     private static final String IS_AUTO_LOGIN = "is_auto_login";
     private static final String IS_SAVE_PWD = "is_auto_login";
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -61,7 +67,7 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        isFirstShown = true;
     }
 
     @Override
@@ -139,9 +145,11 @@ public abstract class UIMSAuthFragment extends BaseFragment {
         metpwd.setText(pwd);
         mcboxAutoLogin.setChecked(isAutoLogin);
         mcboxRemember.setChecked(isSavedPwd);
-        if(isAutoLogin){
+        /*if(isAutoLogin&&isFirstShown){
             btnLogin.performClick();
-        }
+            isFirstShown = false;
+            Log.e("ttttt","auto login"+this);
+        }*/
     }
     public abstract void showNextPage();
 

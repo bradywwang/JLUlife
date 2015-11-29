@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.SlidingMenuMainActivity;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.R;
@@ -104,7 +105,8 @@ public class DrcomLoginFragment extends BaseFragment {
 
                     @Override
                     public void clientLoginSuccess(boolean paramBoolean) {
-                        repleceFragment(new LoginSuccessFragment());
+                        FragmentControler.addFragment(mfragment, R.id.main_container, FragmentControler.TAG_LOGIN_SUCCESS);
+
                         mProgressDialog.dismiss();
                     }
                 });

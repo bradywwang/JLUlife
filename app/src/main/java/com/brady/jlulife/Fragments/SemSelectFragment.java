@@ -3,6 +3,7 @@ package com.brady.jlulife.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.brady.jlulife.Adapters.SemesterAdapter;
 import com.brady.jlulife.Entities.TermList;
+import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Models.UIMSModel;
@@ -25,6 +27,7 @@ public class SemSelectFragment extends BaseFragment {
     private List mSemList;
     private Spinner mSpinner;
     private Button btnSync;
+    SemesterAdapter adapter;
     private static SemSelectFragment instance;
 
     public SemSelectFragment() {
@@ -70,7 +73,7 @@ public class SemSelectFragment extends BaseFragment {
                 @Override
                 public void onGetInfoSuccess(List list) {
                     mSemList = list;
-                    SemesterAdapter adapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
+                    adapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
                     mSpinner.setAdapter(adapter);
                 }
 
@@ -79,6 +82,9 @@ public class SemSelectFragment extends BaseFragment {
 
                 }
             });
+        }else {
+            mSpinner.setAdapter(adapter);
+            Log.i("test","else"+mSemList.size());
         }
     }
 
@@ -97,7 +103,7 @@ public class SemSelectFragment extends BaseFragment {
             @Override
             public void onGetInfoSuccess() {
                 Toast.makeText(mContext, "同步成功", Toast.LENGTH_SHORT).show();
-                repleceFragment(R.id.main_container, CourseListFragment.getInstance());
+                FragmentControler.addFragment(instance, R.id.main_container, FragmentControler.TAG_COURSE_LIST);
             }
 
             @Override

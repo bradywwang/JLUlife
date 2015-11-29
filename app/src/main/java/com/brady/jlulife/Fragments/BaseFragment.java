@@ -20,7 +20,7 @@ public class BaseFragment extends Fragment{
         setHasOptionsMenu(true);
     }
 
-    public void repleceFragment(Fragment fragment){
+    /*public void repleceFragment(Fragment fragment){
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(((ViewGroup)(getView().getParent())).getId(),fragment);
@@ -41,7 +41,7 @@ public class BaseFragment extends Fragment{
         transaction.add(((ViewGroup) (getView().getParent())).getId(), desFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
+    }*/
 
     public void setTitle (String title){
         getActivity().setTitle(title);
