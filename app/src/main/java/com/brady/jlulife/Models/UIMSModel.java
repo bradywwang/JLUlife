@@ -241,6 +241,7 @@ public class UIMSModel {
             TeachClassMaster master = value.getTeachClassMaster();
             for(LessonSchedules schedule:master.getLessonSchedules()){
                 CourseSpec spec = new CourseSpec();
+                spec.setCourseId(master.getLessonSegment().getLssgId());
                 spec.setBeginWeek(schedule.getTimeBlock().getBeginWeek());
                 spec.setEndWeek(schedule.getTimeBlock().getEndWeek());
                 spec.setClassRoom(schedule.getClassroom().getFullName());

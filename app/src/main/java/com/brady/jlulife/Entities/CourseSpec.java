@@ -8,6 +8,7 @@ public class CourseSpec {
     private String courseName;
     private String classRoom;
     private String teacherName;
+    private int courseId;
     private int week;
     private int startTime;
     private int endTime;
@@ -16,18 +17,15 @@ public class CourseSpec {
     private int isSingleWeek;
     private int isDoubleWeek;
 
-    public CourseSpec(String courseName, String classRoom, String teacherName, int week, int startTime, int endTime, int beginWeek, int endWeek, int isSingleWeek, int isDoubleWeek) {
-        this.courseName = courseName;
-        this.classRoom = classRoom;
-        this.teacherName = teacherName;
-        this.week = week;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.beginWeek = beginWeek;
-        this.endWeek = endWeek;
-        this.isSingleWeek = isSingleWeek;
-        this.isDoubleWeek = isDoubleWeek;
+
+    public int getCourseId() {
+        return courseId;
     }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public String toString() {
         return courseName + '@'+classRoom ;

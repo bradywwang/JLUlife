@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
@@ -186,16 +187,22 @@ public class CourseListFragment extends BaseFragment {
         // 课程长度=课程节数*(课程高度+1px的间隔)-1个像素
         courseLength = (spec.getEndTime() - spec.getStartTime() + 1)
                 * (courseHeight + spacing) - spacing;
-        Button course = new Button(getActivity());
         RelativeLayout.LayoutParams marginParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         marginParams.setMargins(leftMargin, topMargin, 0, 0);
+        marginParams.width = courseWidth;
+        marginParams.height = courseLength;
+
+
+
+
+        Button course = new Button(getActivity());
+
         course.setLayoutParams(marginParams);
         course.setGravity(Gravity.CENTER);
-        course.setWidth(courseWidth);
-        course.setHeight(courseLength);
-        course.setBackgroundColor(getCourseBackground(spec.getId()));
+        Log.e("width",courseWidth+"");
+        course.setBackgroundColor(getCourseBackground(spec.getCourseId()));
         course.setPadding(8, 5, 8, 5);
         course.setText(spec.toString());
         course.setTextSize(getResources().getDimension(R.dimen.coursespec_font_size));

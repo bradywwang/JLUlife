@@ -27,8 +27,8 @@ public class DBManager {
         db.beginTransaction();
         try{
             for(CourseSpec c: courseSpecList){
-                db.execSQL("INSERT INTO course VALUES(null,?,?,?,?,?,?,?,?,?,?)",
-                        new Object[]{c.getCourseName(),c.getClassRoom(),c.getTeacherName(),c.getWeek(),c.getStartTime(),c.getEndTime(),c.getBeginWeek(),c.getEndWeek(),c.getIsSingleWeek(),c.getIsDoubleWeek()});
+                db.execSQL("INSERT INTO course VALUES(null,?,?,?,?,?,?,?,?,?,?,?)",
+                        new Object[]{c.getCourseId(),c.getCourseName(),c.getClassRoom(),c.getTeacherName(),c.getWeek(),c.getStartTime(),c.getEndTime(),c.getBeginWeek(),c.getEndWeek(),c.getIsSingleWeek(),c.getIsDoubleWeek()});
             }
             db.setTransactionSuccessful();
         }finally {
@@ -42,6 +42,7 @@ public class DBManager {
         while (c.moveToNext()){
             courseSpec = new CourseSpec();
             courseSpec.setId(c.getInt(c.getColumnIndex("id")));
+            courseSpec.setCourseId(c.getInt(c.getColumnIndex("courseid")));
             courseSpec.setBeginWeek(c.getInt(c.getColumnIndex("beginWeek")));
             courseSpec.setClassRoom(c.getString(c.getColumnIndex("classroom")));
             courseSpec.setCourseName(c.getString(c.getColumnIndex("coursename")));

@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS course");
-        db.execSQL("CREATE TABLE course (id INTEGER PRIMARY KEY AUTOINCREMENT , coursename varchar,classroom varchar,teachername varchar,week INTEGER,startTime INTEGER, endTime INTEGER, beginWeek INTEGER, endWeek INTEGER, isSingleWeek INTEGER, isDoubleWeek INTEGER)");
+        db.execSQL("CREATE TABLE course (id INTEGER PRIMARY KEY AUTOINCREMENT , courseid varchar, coursename varchar,classroom varchar,teachername varchar,week INTEGER,startTime INTEGER, endTime INTEGER, beginWeek INTEGER, endWeek INTEGER, isSingleWeek INTEGER, isDoubleWeek INTEGER)");
     }
 
     @Override
