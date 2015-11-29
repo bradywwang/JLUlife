@@ -4,6 +4,7 @@
     android:layout_height="@dimen/course_num_item_height"
     android:background="#EFEBE7"
     android:gravity="center"
+    android:textColor="@color/graydeep"
     android:textSize="17sp" >
 
 </TextView>

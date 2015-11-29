@@ -1,6 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.brady.jlulife.SlidingMenuMainActivity">
-    <item android:id="@+id/action_upgrade" android:title="@string/action_update"
-        android:orderInCategory="100" app:showAsAction="always" />
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.brady.jlulife.SlidingMenuMainActivity">
+    <item
+        android:id="@+id/action_week"
+        android:orderInCategory="100"
+        android:title="第1周"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_upgrade"
+        android:orderInCategory="100"
+        android:title="@string/action_update"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_course"
+        android:orderInCategory="100"
+        android:title="添加课程"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_update_week"
+        android:orderInCategory="100"
+        android:title="更新当前周"
+        app:showAsAction="never" />
 </menu>
