@@ -59,6 +59,7 @@ public abstract class UIMSAuthFragment extends BaseFragment {
                 String uname = metuname.getText().toString();
                 String pwd = metpwd.getText().toString();
                 loginOauth(uname, pwd);
+                Log.e(getClass().getSimpleName(), "point 4");
             }
         });
         Loadinfo();
@@ -90,12 +91,16 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     }
 
     public void loginOauth(String uname,String pwd){
+        Log.e(getClass().getSimpleName(),"point 3");
+
         if(uimsModel!=null) {
             if(mLoginOutside.isChecked()){
+                Log.e(getClass().getSimpleName(),"point 6");
                 uimsModel.login(UIMSModel.LOGIN_CJCX_MODE, uname, pwd, new LoginListener() {
                     @Override
                     public void onLoginSuccess() {
                         showNextPage();
+                        Log.e(getClass().getSimpleName(),"point 1");
                     }
 
                     @Override
@@ -104,10 +109,12 @@ public abstract class UIMSAuthFragment extends BaseFragment {
                     }
                 });
             }else {
+                Log.e(getClass().getSimpleName(),"point 7");
                 uimsModel.login(UIMSModel.LOGIN_NORMAL_MODE, uname, pwd, new LoginListener() {
                     @Override
                     public void onLoginSuccess() {
                         showNextPage();
+                        Log.e(getClass().getSimpleName(), "point 2");
                     }
 
                     @Override

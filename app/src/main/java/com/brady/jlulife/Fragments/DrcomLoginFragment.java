@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.brady.jlulife.FragmentControler;
-import com.brady.jlulife.SlidingMenuMainActivity;
+import com.brady.jlulife.Activities.LoginSuccessActivity;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Jni;
@@ -105,8 +106,12 @@ public class DrcomLoginFragment extends BaseFragment {
 
                     @Override
                     public void clientLoginSuccess(boolean paramBoolean) {
-                        FragmentControler.addFragment(mfragment, R.id.main_container, FragmentControler.TAG_LOGIN_SUCCESS);
-
+//                        startNewActivity(LoginSuccessActivity.class);
+//                        FragmentControler.addFragment(mfragment, R.id.main_container, FragmentControler.TAG_LOGIN_SUCCESS);
+                        FragmentManager manager= getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.replace(R.id.main_container,LoginSuccessFragment.getInstance());
+                        transaction.commit();
                         mProgressDialog.dismiss();
                     }
                 });

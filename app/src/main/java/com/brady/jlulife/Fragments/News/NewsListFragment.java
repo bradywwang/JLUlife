@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.brady.jlulife.Adapters.NewsAdapter;
 import com.brady.jlulife.Fragments.BaseFragment;
@@ -35,6 +36,7 @@ public abstract class NewsListFragment extends BaseFragment {
     NewsAdapter mAdapter = null;
     List mList = null;
     int mPageNum = 1;
+    TextView mTextView;
     View progressBar;
 /*    private static NewsListFragment mFragment;
 
@@ -64,6 +66,7 @@ public abstract class NewsListFragment extends BaseFragment {
         if(mList.size()==0) {
             LoadInfo();
         }
+        mTextView = (TextView) view.findViewById(R.id.label_loading);
     }
 
     @Override
@@ -100,7 +103,7 @@ public abstract class NewsListFragment extends BaseFragment {
     protected abstract void LoadInfo();
 
     protected void showNewsList(List list){
-
+        mTextView.setVisibility(View.GONE);
         if (mPageNum == 1) {
             mList = list;
             mAdapter.setNewsList(list);

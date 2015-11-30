@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.brady.jlulife.FragmentControler;
+import com.brady.jlulife.Activities.DrcomLoginActivity;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
 import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
@@ -25,6 +25,13 @@ public class LoginSuccessFragment extends BaseFragment {
     Button btnLogout;
     ProgressDialog mProgressDialog;
     LoginSuccessFragment mFragment;
+    private static LoginSuccessFragment instance;
+    public static LoginSuccessFragment getInstance(){
+        if(instance == null){
+            instance = new LoginSuccessFragment();
+        }
+        return instance;
+    }
 
     public LoginSuccessFragment() {
         mFragment = this;
@@ -68,11 +75,12 @@ public class LoginSuccessFragment extends BaseFragment {
 
                     @Override
                     public void clientLogoutSuccess(boolean paramBoolean) {
-                        DrcomLoginFragment fragment = new DrcomLoginFragment();
+  /*                      DrcomLoginFragment fragment = new DrcomLoginFragment();
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("logout", true);
-                        fragment.setArguments(bundle);
-                        FragmentControler.addFragment(mFragment,bundle,R.id.main_container,FragmentControler.TAG_DRCOM_LOGIN);
+                        fragment.setArguments(bundle);*/
+                        startNewActivity(DrcomLoginActivity.class);
+//                        FragmentControler.addFragment(mFragment,bundle,R.id.main_container,FragmentControler.TAG_DRCOM_LOGIN);
                         mProgressDialog.dismiss();
                     }
                 });

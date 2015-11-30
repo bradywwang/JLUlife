@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.brady.jlulife.Adapters.ScoreAdapter;
 import com.brady.jlulife.Adapters.SemesterAdapter;
@@ -108,6 +109,7 @@ public class ScoreListFragment extends BaseFragment {
                 mScoreList.removeAll(mScoreList);
                 mScoreList.addAll(list);
                 mAdapter.notifyDataSetChanged();
+                Toast.makeText(mContext, "共查询到"+list.size()+"条记录", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onGetInfoFail() {

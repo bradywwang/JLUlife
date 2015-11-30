@@ -11,10 +11,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_laucher"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
-
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
@@ -33,15 +32,37 @@
             android:value="test" />
 
         <activity
-            android:name=".SlidingMenuMainActivity"
+            android:name=".Activities.SlidingMenuMainActivity"
             android:label="@string/app_name"
-            android:theme="@style/CustomActionBarTheme">
+            android:theme="@style/CustomActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activities.UIMSAuthActivity"
+            android:label="@string/title_activity_uimsauth" >
+        </activity>
+        <activity
+            android:name=".Activities.SemSelectActivity"
+            android:label="@string/title_activity_sem_select" >
+        </activity>
+        <activity android:name=".Activities.CJCXAuthActivity"
+            android:label="教务登陆" >
+
+        </activity>
+        <activity android:name=".Activities.JLUNewsListActivity"
+            android:label="校内通知"/>
+        <activity android:name=".Activities.JWNewsListActivity"
+            android:label="教务通知"/>
+        <activity android:name=".Activities.LibrarySearchActivity"
+            android:label="图书馆"/>
+        <activity android:name=".Activities.DrcomLoginActivity"
+            android:label="校园网登陆"/>
+        <activity android:name=".Activities.ScoreListActivity"
+            android:label="成绩查询"/>
     </application>
 
 </manifest>

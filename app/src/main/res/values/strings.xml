@@ -46,4 +46,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_sem_select">SemSelectActivity</string>
+    <string name="title_activity_uimsauth">UIMSAuthActivity</string>
 </resources>

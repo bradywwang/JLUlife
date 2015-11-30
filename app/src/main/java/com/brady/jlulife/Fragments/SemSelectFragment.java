@@ -2,7 +2,6 @@ package com.brady.jlulife.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.brady.jlulife.Adapters.SemesterAdapter;
 import com.brady.jlulife.Entities.TermList;
-import com.brady.jlulife.FragmentControler;
 import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Models.UIMSModel;
@@ -48,7 +46,6 @@ public class SemSelectFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setTitle("学期选择");
         return inflater.inflate(R.layout.fragment_sem_select, container, false);
     }
 
@@ -103,7 +100,7 @@ public class SemSelectFragment extends BaseFragment {
             @Override
             public void onGetInfoSuccess() {
                 Toast.makeText(mContext, "同步成功", Toast.LENGTH_SHORT).show();
-                FragmentControler.addFragment(instance, R.id.main_container, FragmentControler.TAG_COURSE_LIST);
+                getActivity().finish();
             }
 
             @Override

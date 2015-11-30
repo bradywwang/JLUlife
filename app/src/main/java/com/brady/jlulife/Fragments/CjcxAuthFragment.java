@@ -1,11 +1,13 @@
 package com.brady.jlulife.Fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import com.brady.jlulife.FragmentControler;
+import com.brady.jlulife.Activities.ScoreListActivity;
 import com.brady.jlulife.R;
 
 /**
@@ -31,7 +33,12 @@ public class CjcxAuthFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-        FragmentControler.addFragment(this,R.id.main_container, FragmentControler.TAG_SCORE_LIST);
+//        startNewActivity(ScoreListActivity.class);
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_container,ScoreListFragment.getInstance());
+        transaction.commit();
+//        FragmentControler.addFragment(this,R.id.main_container, FragmentControler.TAG_SCORE_LIST);
     }
 
     @Override

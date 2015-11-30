@@ -4,7 +4,9 @@
     <style name="CustomActionBarTheme" parent="AppTheme.Base.NoActionBar"></style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
+<!--
         <item name="android:windowNoTitle">true</item>
+-->
         <!-- Actionbar color -->
         <item name="colorPrimary">#2196f3</item>
         <!--Status bar color-->

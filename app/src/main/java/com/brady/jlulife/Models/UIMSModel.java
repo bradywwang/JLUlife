@@ -78,7 +78,7 @@ public class UIMSModel {
     }
 
     public void login(final int loginMethod,String uname, String pwd, final LoginListener listener) {
-        mLoginListener = listener;
+//        mLoginListener = listener;
         mUId = uname;
         String convertPwd = Utils.getMD5Str("UIMS" + uname + pwd);
         Log.i(getClass().getSimpleName(), "uname" + uname + "pwd:" + convertPwd);
@@ -119,7 +119,7 @@ public class UIMSModel {
                         }
                     });
                     mLoginMethod = loginMethod;
-                    mLoginListener.onLoginSuccess();
+//                    mLoginListener.onLoginSuccess();
                     isLogin = true;
                 }
             }

@@ -69,6 +69,10 @@ public class LibrarySearchFragment extends BaseFragment {
         inflater.inflate(R.menu.menu_library, menu);
 
     }
+
+    public boolean canGoBack(){
+        return webView.canGoBack();
+    }
     public void preformBack() {
         webView.goBack();
     }

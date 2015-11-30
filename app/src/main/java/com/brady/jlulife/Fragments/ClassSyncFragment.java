@@ -1,6 +1,11 @@
 package com.brady.jlulife.Fragments;
 
-import com.brady.jlulife.FragmentControler;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+
+import com.brady.jlulife.Activities.SemSelectActivity;
 import com.brady.jlulife.R;
 
 /**
@@ -21,6 +26,9 @@ public class ClassSyncFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-        FragmentControler.addFragment(this, R.id.main_container, FragmentControler.TAG_SEM_SELECT);
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_container,SemSelectFragment.getInstance());
+        transaction.commit();
     }
 }

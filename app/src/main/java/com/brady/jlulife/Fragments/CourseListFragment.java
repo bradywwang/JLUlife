@@ -17,10 +17,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
@@ -28,7 +26,7 @@ import android.widget.SpinnerAdapter;
 import com.brady.jlulife.MyHorizontalScrollView;
 import com.brady.jlulife.MyVerticalScrollView;
 import com.brady.jlulife.OnScrollListener;
-import com.brady.jlulife.SlidingMenuMainActivity;
+import com.brady.jlulife.Activities.SlidingMenuMainActivity;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.R;
@@ -120,6 +118,12 @@ public class CourseListFragment extends BaseFragment {
                     }
                 }
                 return false;
+            }
+        });
+        courseNum.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
             }
         });
     }
