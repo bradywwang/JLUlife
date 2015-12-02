@@ -33,12 +33,10 @@ public class CjcxAuthFragment extends UIMSAuthFragment {
 
     @Override
     public void showNextPage() {
-//        startNewActivity(ScoreListActivity.class);
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.main_container,ScoreListFragment.getInstance());
         transaction.commit();
-//        FragmentControler.addFragment(this,R.id.main_container, FragmentControler.TAG_SCORE_LIST);
     }
 
     @Override

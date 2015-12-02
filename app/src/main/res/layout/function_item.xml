@@ -2,7 +2,7 @@
     android:id="@+id/fun_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:textColor="@color/black"
+    android:textSize="20dp"
+    android:textColor="@color/white"
     android:padding="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android" />

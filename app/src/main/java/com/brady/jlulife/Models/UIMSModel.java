@@ -52,7 +52,7 @@ public class UIMSModel {
     private LoginListener mLoginListener;
     private int mStudId = 0;
     private String mStudName;
-    List<LessonValue> lessonList =null;
+    List<LessonValue> lessonList = null;
     private static DBManager dbManager;
     private static Context sContext;
     private OnAsyncLoadListener mSyncListener;
@@ -77,7 +77,7 @@ public class UIMSModel {
         return model;
     }
 
-    public void login(final int loginMethod,String uname, String pwd, final LoginListener listener) {
+    public void login(final int loginMethod, String uname, String pwd, final LoginListener listener) {
 //        mLoginListener = listener;
         mUId = uname;
         String convertPwd = Utils.getMD5Str("UIMS" + uname + pwd);
@@ -86,12 +86,14 @@ public class UIMSModel {
         params.put("j_username", uname);
         params.put("j_password", convertPwd);
         String loginURI = "";
-        switch (loginMethod){
-            case LOGIN_NORMAL_MODE:
-            {
+        switch (loginMethod) {
+            case LOGIN_NORMAL_MODE: {
+                Log.e("ttt", "normal");
                 loginURI = ConstValue.SECURITY_CHECK;
                 break;
-            }case LOGIN_CJCX_MODE:{
+            }
+            case LOGIN_CJCX_MODE: {
+                Log.e("ttt", "cjcx");
                 loginURI = ConstValue.CJCX_AUTH_URI;
             }
         }
@@ -106,8 +108,12 @@ public class UIMSModel {
             public void onSuccess(int i, Header[] headers, String s) {
                 if (s.contains("error_message")) {
                     processErrMsg(s);
+                } else if (loginMethod == LOGIN_CJCX_MODE) {
+                    listener.onLoginSuccess();
+                    mLoginMethod = loginMethod;
+                    isLogin = true;
                 } else {
-                    getCurrentInfo(new OnAsyncLoadListener(){
+                    getCurrentInfo(new OnAsyncLoadListener() {
                         @Override
                         public void onGetInfoSuccess() {
                             listener.onLoginSuccess();
@@ -119,7 +125,6 @@ public class UIMSModel {
                         }
                     });
                     mLoginMethod = loginMethod;
-//                    mLoginListener.onLoginSuccess();
                     isLogin = true;
                 }
             }
@@ -151,12 +156,12 @@ public class UIMSModel {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        switch (mLoginMethod){
-            case LOGIN_NORMAL_MODE:
-            {
+        switch (mLoginMethod) {
+            case LOGIN_NORMAL_MODE: {
                 resourceURI = ConstValue.RESOURCES_URI;
                 break;
-            }case LOGIN_CJCX_MODE:{
+            }
+            case LOGIN_CJCX_MODE: {
                 resourceURI = ConstValue.CJCX_RESOURCES_URI;
             }
         }
@@ -167,15 +172,17 @@ public class UIMSModel {
                 super.onSuccess(statusCode, headers, response);
                 ArrayList<TermList> list = null;
                 Log.i(getClass().getSimpleName(), response.toString());
-                switch (mLoginMethod){
-                    case LOGIN_NORMAL_MODE:
-                    {
-                        ResponseBody body = JSON.parseObject(response.toString(),ResponseBody.class);
-                        list = JSON.parseObject(body.getValue(),new TypeReference<ArrayList<TermList>>(){});
+                switch (mLoginMethod) {
+                    case LOGIN_NORMAL_MODE: {
+                        ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
+                        list = JSON.parseObject(body.getValue(), new TypeReference<ArrayList<TermList>>() {
+                        });
                         break;
-                    }case LOGIN_CJCX_MODE:{
-                        OutSideResult body = JSON.parseObject(response.toString(),OutSideResult.class);
-                        list = JSON.parseObject(body.getItems(),new TypeReference<ArrayList<TermList>>(){});
+                    }
+                    case LOGIN_CJCX_MODE: {
+                        OutSideResult body = JSON.parseObject(response.toString(), OutSideResult.class);
+                        list = JSON.parseObject(body.getItems(), new TypeReference<ArrayList<TermList>>() {
+                        });
                     }
                 }
                 listener.onGetInfoSuccess(list);
@@ -188,7 +195,8 @@ public class UIMSModel {
             }
         });
     }
-    public void syncLessonSchedule(int semesterId, final OnAsyncLoadListener listener){
+
+    public void syncLessonSchedule(int semesterId, final OnAsyncLoadListener listener) {
         mSyncListener = listener;
         StringEntity entity = null;
         RequestBody body = new RequestBody();
@@ -200,7 +208,7 @@ public class UIMSModel {
         body.setTag("teachClassStud@schedule");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body",JSON.toJSONString(body));
+            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -233,13 +241,13 @@ public class UIMSModel {
         });
     }
 
-    public void saveCoursesToDb(){
+    public void saveCoursesToDb() {
         dbManager.deleteAllItems();
-        List<CourseSpec> specs= new ArrayList<CourseSpec>();
-        for(LessonValue value:lessonList){
-            Log.i("result",value.toString());
+        List<CourseSpec> specs = new ArrayList<CourseSpec>();
+        for (LessonValue value : lessonList) {
+            Log.i("result", value.toString());
             TeachClassMaster master = value.getTeachClassMaster();
-            for(LessonSchedules schedule:master.getLessonSchedules()){
+            for (LessonSchedules schedule : master.getLessonSchedules()) {
                 CourseSpec spec = new CourseSpec();
                 spec.setCourseId(master.getLessonSegment().getLssgId());
                 spec.setBeginWeek(schedule.getTimeBlock().getBeginWeek());
@@ -249,45 +257,46 @@ public class UIMSModel {
                 spec.setWeek(schedule.getTimeBlock().getDayOfWeek());
                 StringBuilder builder = new StringBuilder();
                 boolean isBegin = true;
-                for (LessonTeachers teacher:master.getLessonTeachers()){
-                    if(!isBegin){
+                for (LessonTeachers teacher : master.getLessonTeachers()) {
+                    if (!isBegin) {
                         builder.append(",");
                         isBegin = false;
                     }
                     builder.append(teacher.getTeacher().getName());
                 }
                 String blockName = schedule.getTimeBlock().getName();
-                Log.i("blockname",spec.getCourseName()+blockName);
+                Log.i("blockname", spec.getCourseName() + blockName);
                 String[] times = blockName.split("节");
-                if(times.length==2||times.length==1){
+                if (times.length == 2 || times.length == 1) {
                     String[] times2 = times[0].split("第");
-                    if(times2.length ==2){
+                    if (times2.length == 2) {
                         String[] timeFinal = times2[1].split(",");
                         spec.setStartTime(Integer.parseInt(timeFinal[0]));
                         spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length - 1]));
                     }
                 }
-                    Log.e("blockName",spec.getCourseName()+spec.getStartTime()+""+spec.getEndTime());
+                Log.e("blockName", spec.getCourseName() + spec.getStartTime() + "" + spec.getEndTime());
                 spec.setTeacherName(builder.toString());
-                if(blockName.contains("单周")){
+                if (blockName.contains("单周")) {
                     spec.setIsSingleWeek(1);
-                }else {
+                } else {
                     spec.setIsSingleWeek(0);
                 }
-                if(blockName.contains("双周")){
+                if (blockName.contains("双周")) {
                     spec.setIsDoubleWeek(1);
-                }else {
+                } else {
                     spec.setIsDoubleWeek(0);
                 }
                 specs.add(spec);
             }
         }
-        for(CourseSpec spec:specs){
-            Log.i("result",spec.toString());
+        for (CourseSpec spec : specs) {
+            Log.i("result", spec.toString());
         }
         dbManager.addAllCourses(specs);
         mSyncListener.onGetInfoSuccess();
     }
+
     public void getCurrentInfo(final OnAsyncLoadListener listener) {
         client.get(ConstValue.CURRENT_INFO, new JsonHttpResponseHandler() {
             @Override
@@ -311,18 +320,19 @@ public class UIMSModel {
         });
     }
 
-    public void queryScore(int termId,final  OnListinfoGetListener listener){
-        switch (mLoginMethod){
-            case LOGIN_CJCX_MODE:{
-                queryScoresOutside(termId,listener);
+    public void queryScore(int termId, final OnListinfoGetListener listener) {
+        switch (mLoginMethod) {
+            case LOGIN_CJCX_MODE: {
+                queryScoresOutside(termId, listener);
                 break;
-            }case LOGIN_NORMAL_MODE:{
-                queryScoreInSchool(termId,listener);
+            }
+            case LOGIN_NORMAL_MODE: {
+                queryScoreInSchool(termId, listener);
             }
         }
     }
 
-    public void queryScoreInSchool(int termId, final OnListinfoGetListener listener){
+    public void queryScoreInSchool(int termId, final OnListinfoGetListener listener) {
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
@@ -334,7 +344,7 @@ public class UIMSModel {
         body.setTag("archiveScore@queryCourseScore");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body",JSON.toJSONString(body));
+            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -369,7 +379,7 @@ public class UIMSModel {
 
     }
 
-    public void queryScoresOutside(int termId, final OnListinfoGetListener listener){
+    public void queryScoresOutside(int termId, final OnListinfoGetListener listener) {
         StringEntity entity = null;
         RequestBody body = new RequestBody();
         ScheduleRequestSpec spec = new ScheduleRequestSpec();
@@ -379,7 +389,7 @@ public class UIMSModel {
         body.setTag("lessonSelectResult@oldStudScore");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body",JSON.toJSONString(body));
+            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -422,15 +432,17 @@ public class UIMSModel {
     }
 
 
-    private void handleErrMsg(JSONObject response){
+    private void handleErrMsg(JSONObject response) {
 
     }
-    public boolean isLoginIn(){
+
+    public boolean isLoginIn() {
         return isLogin;
     }
-    private List<OutsideItem> translateItem(List<ScoreValue> list){
+
+    private List<OutsideItem> translateItem(List<ScoreValue> list) {
         List<OutsideItem> items = new ArrayList<OutsideItem>();
-        for(ScoreValue scoreValue:list){
+        for (ScoreValue scoreValue : list) {
             OutsideItem item = new OutsideItem();
             item.setCj(scoreValue.getScore());
             item.setCredit(scoreValue.getCredit());

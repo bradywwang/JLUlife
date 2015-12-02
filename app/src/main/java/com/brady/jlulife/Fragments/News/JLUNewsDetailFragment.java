@@ -13,10 +13,11 @@ public class JLUNewsDetailFragment extends NewsDetailFragment{
             @Override
             public void onGetInfoSuccess(Object object) {
                 showNewsDetail(object);
+                hideDialog();
             }
             @Override
             public void onGetInfoFail() {
-
+                hideDialog();
             }
         });
         scrollView.onRefreshComplete();

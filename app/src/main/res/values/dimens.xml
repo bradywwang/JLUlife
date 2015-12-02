@@ -14,7 +14,7 @@
     <dimen name="btn_margintop">25dp</dimen>
     <dimen name="large_font_size">40sp</dimen>
     <dimen name="mid_font_size">25sp</dimen>
-    <dimen name="coursespec_font_size">5sp</dimen>
+    <dimen name="coursespec_font_size">5dp</dimen>
     <dimen name="simple_btn_margin">5dp</dimen>
     <dimen name="course_week_width">490dp</dimen>
     <dimen name="course_week_height">20dp</dimen>

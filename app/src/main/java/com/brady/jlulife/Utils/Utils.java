@@ -1,8 +1,12 @@
 package com.brady.jlulife.Utils;
 
+import android.graphics.Bitmap;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +18,23 @@ import java.util.GregorianCalendar;
  * Created by brady on 15-9-19.
  */
 public class Utils {
+    public static byte[] Bitmap2Bytes(Bitmap bmp,boolean needRecycle) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
+        if (needRecycle) {
+            bmp.recycle();
+        }
+
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public static String getMD5Str(String str)  {
         StringBuffer md5StrBuff = new StringBuffer();
         try {

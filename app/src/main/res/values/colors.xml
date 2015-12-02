@@ -3,7 +3,6 @@
 
 
     <color name="courseNot">#F2F1ED</color>
-    <color name="title_background">#31CFDE</color>
 
     <!-- 边框颜色 -->
     <color name="border_color">#B5B2B5</color>
@@ -24,15 +23,20 @@
     <color name="gray">#808080</color>
     <color name="graydeep">#696969</color>
     <color name="light_black">#A9A9A9</color>
-    <color name="class_value_1">#ffa1df</color>
-    <color name="class_value_2">#418aff</color>
-    <color name="class_value_3">#39D3AD</color>
-    <color name="class_value_4">#ced382</color>
-    <color name="class_value_5">#45bad3</color>
-    <color name="class_value_6">#96d35c</color>
-    <color name="class_value_7">#8f8e8d</color>
-    <color name="class_value_8">#b25fd3</color>
 
+
+    <color name="class_value_1">#69F0AE</color>
+    <color name="class_value_2">#F48FB1</color>
+    <color name="class_value_3">#CE93D8</color>
+    <color name="class_value_4">#FF8A65</color>
+    <color name="class_value_5">#9FA8DA</color>
+    <color name="class_value_6">#42A5F5</color>
+    <color name="class_value_7">#42A5F5</color>
+    <color name="class_value_8">#80DEEA</color>
+    <color name="class_value_9">#E6EE9C</color>
+
+    <color name="news_title_background">#BDBDBD</color>
+    <color name="news_sub_title_background">#EEEEEE</color>
 
     <color name="warn">#DAA520</color>
 </resources>

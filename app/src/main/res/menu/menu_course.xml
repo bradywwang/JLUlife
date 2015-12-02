@@ -17,9 +17,4 @@
         android:orderInCategory="100"
         android:title="添加课程"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_update_week"
-        android:orderInCategory="100"
-        android:title="更新当前周"
-        app:showAsAction="never" />
 </menu>

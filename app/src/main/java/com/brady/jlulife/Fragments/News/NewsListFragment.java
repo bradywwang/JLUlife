@@ -64,6 +64,7 @@ public abstract class NewsListFragment extends BaseFragment {
         initRefeshView(view);
         Bundle bundle = getArguments();
         if(mList.size()==0) {
+            showDialog();
             LoadInfo();
         }
         mTextView = (TextView) view.findViewById(R.id.label_loading);
@@ -78,7 +79,7 @@ public abstract class NewsListFragment extends BaseFragment {
     private void initRefeshView(View view){
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.news_listview);
         mList = new ArrayList();
-        mAdapter = new NewsAdapter(getActivity(), R.layout.item_news, R.layout.item_news, mList);
+        mAdapter = new NewsAdapter(getActivity(), R.layout.item_news, mList);
         refreshListView.setAdapter(mAdapter);
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         refreshListView.getLoadingLayoutProxy(false,true).setPullLabel(getString(R.string.pull_to_load));

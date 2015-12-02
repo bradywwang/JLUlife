@@ -27,11 +27,12 @@ public class JLUNewsListFragment extends NewsListFragment{
             @Override
             public void onGetInfoSuccess(final List list) {
                 showNewsList(list);
+                hideDialog();
             }
 
             @Override
             public void onGetInfoFail() {
-
+                hideDialog();
             }
         });
         refreshListView.onRefreshComplete();

@@ -31,6 +31,8 @@
     <string name="label_gpoint">绩点:</string>
     <string name="label_scorepoint">学分:</string>
     <string name="label_isreselect">重修:</string>
+    <string name="copyright">吉林大学IBM俱乐部移动开发组</string>
+    <string name="share_wx">分享到朋友圈</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment"> blank fragment</string>
@@ -41,10 +43,35 @@
     <string name="action_update">更新课表</string>
     <string name="label_update_lesson_select">请选择需要同步的学期</string>
     <string name="action_library_myhome">我的账号</string>
-
+    <string name="app_describe">　　JLU life是一款面向吉林大学学生的App,提供课表查询、展示，成绩查询，校内通知、教务通知查看，图书馆书目查询、借阅信息管理等集多功能为一身的app。由于时间有限，很多功能并没有得到完善，系统也存在诸多Bug，希望大家能够帮助我们能够将它不断完善改进。作为一个即将毕业滚蛋的大四党，也希望能够尽自己的所能更多的帮助到同学们，为同学们的学习、生活提供便利。</string>
     <string name="title_activity_course">CourseActivity</string>
-
+    <string name="share_text">JLU life,更方便的登陆校园网,查课表,差成绩,校内通知,不用连校园网也能看,有了它,再也不用课程格子,Drcom了,妈妈再也不用担心我在吉大的学习了</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_sem_select">SemSelectActivity</string>
     <string name="title_activity_uimsauth">UIMSAuthActivity</string>
+    <string name="title_activity_about">关于JLU Life</string>
+    <string name="loading">加载中...</string>
+
+    <string-array name="weeks">
+        <item>第1周</item>
+        <item>第2周</item>
+        <item>第3周</item>
+        <item>第4周</item>
+        <item>第5周</item>
+        <item>第6周</item>
+        <item>第7周</item>
+        <item>第8周</item>
+        <item>第9周</item>
+        <item>第10周</item>
+        <item>第11周</item>
+        <item>第12周</item>
+        <item>第13周</item>
+        <item>第14周</item>
+        <item>第15周</item>
+        <item>第16周</item>
+        <item>第17周</item>
+        <item>第18周</item>
+        <item>第19周</item>
+        <item>第20周</item>
+    </string-array>
 </resources>

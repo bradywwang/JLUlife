@@ -34,6 +34,8 @@ import com.brady.jlulife.Utils.ConstValue;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,8 +138,13 @@ public class CourseListFragment extends BaseFragment {
 
 
     private long getCurrentWeek() {
-        SharedPreferences sf = getActivity().getSharedPreferences(ConstValue.SHARED_COURSE_INFO, Context.MODE_PRIVATE);
-        int savedWeek = sf.getInt("savedweek", 0);
+        SharedPreferences sf = getActivity().getSharedPreferences("com.brady.jlulife_preferences",Context.MODE_PRIVATE);
+        String week = sf.getString("currentweek", "");
+        String regEx="[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(week);
+        int savedWeek = Integer.parseInt(m.replaceAll("").trim());
+        Log.e("week","week = "+week);
         long savedDate  = sf.getLong("savedtime", 0);
         long numOfDay = (new Date().getTime()-savedDate)/86400000;
         long weekPassed =  (numOfDay/7);
@@ -197,15 +204,10 @@ public class CourseListFragment extends BaseFragment {
         marginParams.setMargins(leftMargin, topMargin, 0, 0);
         marginParams.width = courseWidth;
         marginParams.height = courseLength;
-
-
-
-
         Button course = new Button(getActivity());
-
         course.setLayoutParams(marginParams);
         course.setGravity(Gravity.CENTER);
-        Log.e("width",courseWidth+"");
+        Log.e("width", courseWidth + "");
         course.setBackgroundColor(getCourseBackground(spec.getCourseId()));
         course.setPadding(8, 5, 8, 5);
         course.setText(spec.toString());
@@ -285,6 +287,10 @@ public class CourseListFragment extends BaseFragment {
             }
             case 7: {
                 result = getResources().getColor(R.color.class_value_8);
+                break;
+            }
+            case 8: {
+                result = getResources().getColor(R.color.class_value_9);
                 break;
             }
 

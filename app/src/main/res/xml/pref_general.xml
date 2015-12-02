@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="课表">
+        <ListPreference
+            android:key="currentweek"
+            android:entries="@array/weeks"
+            android:entryValues="@array/weeks"
+            android:title="设置当前周">
+        </ListPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="关于">
+        <Preference
+            android:key="about"
+            android:title="关于JLU Life" />
+        <Preference
+            android:key="check_update"
+            android:summary="版本0.0.1"
+            android:title="检查更新" />
+        <Preference
+            android:key="contact_us"
+            android:title="联系我们" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -91,40 +91,38 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     }
 
     public void loginOauth(String uname,String pwd){
-        Log.e(getClass().getSimpleName(),"point 3");
-
+        showDialog();
         if(uimsModel!=null) {
             if(mLoginOutside.isChecked()){
-                Log.e(getClass().getSimpleName(),"point 6");
                 uimsModel.login(UIMSModel.LOGIN_CJCX_MODE, uname, pwd, new LoginListener() {
                     @Override
                     public void onLoginSuccess() {
+                        hideDialog();
                         showNextPage();
-                        Log.e(getClass().getSimpleName(),"point 1");
                     }
 
                     @Override
                     public void onLoginFailure(String failReason) {
+                        hideDialog();
                         Toast.makeText(mContext, failReason, Toast.LENGTH_SHORT).show();
                     }
                 });
             }else {
-                Log.e(getClass().getSimpleName(),"point 7");
                 uimsModel.login(UIMSModel.LOGIN_NORMAL_MODE, uname, pwd, new LoginListener() {
                     @Override
                     public void onLoginSuccess() {
+                        hideDialog();
                         showNextPage();
-                        Log.e(getClass().getSimpleName(), "point 2");
                     }
 
                     @Override
                     public void onLoginFailure(String failReason) {
+                        hideDialog();
                         Toast.makeText(mContext, failReason, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }else {
-            Log.i(getClass().getSimpleName(),"null 1");
         }
     }
 

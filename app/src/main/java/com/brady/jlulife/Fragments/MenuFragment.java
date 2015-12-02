@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.brady.jlulife.Activities.JLUNewsListActivity;
 import com.brady.jlulife.Activities.JWNewsListActivity;
 import com.brady.jlulife.Activities.LibrarySearchActivity;
 import com.brady.jlulife.Activities.ScoreListActivity;
+import com.brady.jlulife.Activities.SettingActivity;
 import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.Activities.SlidingMenuMainActivity;
 import com.brady.jlulife.R;
@@ -28,6 +30,7 @@ public class MenuFragment extends BaseFragment {
     private ListView listView;
     private Context mContext;
     private MenuFragment mFragment;
+    private LinearLayout mSettingLayout;
 
     public MenuFragment() {
         mFragment = this;
@@ -45,9 +48,16 @@ public class MenuFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
         String[] strings = new String[]{
-                "我的课表","校园网登陆","校内通知","教务通知","成绩查询","图书馆","吉大就业"
+                "我的课表","校园网登陆","校内通知","教务通知","成绩查询","图书馆"
         };
         listView = (ListView) view.findViewById(R.id.lvfunction);
+        mSettingLayout = (LinearLayout) view.findViewById(R.id.setting_layout);
+        mSettingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNewActivity(SettingActivity.class);
+            }
+        });
         listView.setAdapter(new ArrayAdapter<String>(mContext,R.layout.function_item,strings));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

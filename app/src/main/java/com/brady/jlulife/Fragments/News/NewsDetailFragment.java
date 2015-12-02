@@ -50,6 +50,7 @@ public abstract class NewsDetailFragment extends BaseFragment {
         action = bundle.getString("action");
         href = bundle.getString("href");
         initScrollView(view);
+        showDialog();
         loadInfo();
     }
     private void initComponents(View view){

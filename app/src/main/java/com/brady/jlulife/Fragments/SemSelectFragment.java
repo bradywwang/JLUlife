@@ -95,17 +95,18 @@ public class SemSelectFragment extends BaseFragment {
         if (term == null)
             return;
         String terId = term.getTermId();
+        showDialog();
         uimsModel.syncLessonSchedule(Integer.parseInt(terId), new OnAsyncLoadListener() {
-
             @Override
             public void onGetInfoSuccess() {
+                hideDialog();
                 Toast.makeText(mContext, "同步成功", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
 
             @Override
             public void onGetInfoFail() {
-
+                hideDialog();
             }
         });
 

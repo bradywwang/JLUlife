@@ -43,26 +43,53 @@
         </activity>
         <activity
             android:name=".Activities.UIMSAuthActivity"
-            android:label="@string/title_activity_uimsauth" >
-        </activity>
+            android:label="@string/title_activity_uimsauth"
+            android:parentActivityName=".Activities.ScoreListActivity" />
         <activity
             android:name=".Activities.SemSelectActivity"
-            android:label="@string/title_activity_sem_select" >
+            android:label="@string/title_activity_sem_select"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.CJCXAuthActivity"
+            android:label="教务登陆"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.JLUNewsListActivity"
+            android:label="校内通知"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.JWNewsListActivity"
+            android:label="教务通知"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.LibrarySearchActivity"
+            android:label="图书馆"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.DrcomLoginActivity"
+            android:label="校园网登陆"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.ScoreListActivity"
+            android:label="成绩查询"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.SettingActivity"
+            android:label="系统设置"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.AboutActivity"
+            android:label="@string/title_activity_about" >
         </activity>
-        <activity android:name=".Activities.CJCXAuthActivity"
-            android:label="教务登陆" >
-
-        </activity>
-        <activity android:name=".Activities.JLUNewsListActivity"
-            android:label="校内通知"/>
-        <activity android:name=".Activities.JWNewsListActivity"
-            android:label="教务通知"/>
-        <activity android:name=".Activities.LibrarySearchActivity"
-            android:label="图书馆"/>
-        <activity android:name=".Activities.DrcomLoginActivity"
-            android:label="校园网登陆"/>
-        <activity android:name=".Activities.ScoreListActivity"
-            android:label="成绩查询"/>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.umeng.fb.ConversationActivity"/>
+        <activity android:name=".Activities.ContactActivity"/>
     </application>
 
 </manifest>

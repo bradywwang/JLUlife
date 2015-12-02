@@ -23,8 +23,8 @@ public class NewsAdapter extends ArrayAdapter<NewsBaseInfo> {
     private int resourceId;
 
 
-    public NewsAdapter(Context context, int resource, int textViewResourceId, List<NewsBaseInfo> objects) {
-        super(context, resource, textViewResourceId, objects);
+    public NewsAdapter(Context context, int resource, List<NewsBaseInfo> objects) {
+        super(context, resource, objects);
         newsList = objects;
         mcontext = context;
         resourceId = resource;

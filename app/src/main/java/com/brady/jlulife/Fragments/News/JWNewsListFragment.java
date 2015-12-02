@@ -31,12 +31,13 @@ public class JWNewsListFragment extends NewsListFragment {
         JWNewsModel.getInstance().getNewsList(mPageNum, new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(final List list) {
+                hideDialog();
                 showNewsList(list);
             }
 
             @Override
             public void onGetInfoFail() {
-
+                hideDialog();
             }
         });
         refreshListView.onRefreshComplete();

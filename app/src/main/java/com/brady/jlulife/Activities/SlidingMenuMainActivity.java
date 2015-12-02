@@ -78,7 +78,7 @@ public class SlidingMenuMainActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upgrade) {
-            if(UIMSModel.getInstance(this).isLoginIn()){
+            if(UIMSModel.getInstance(this).isLoginIn()&&UIMSModel.getInstance(mContext).getmLoginMethod()==UIMSModel.LOGIN_NORMAL_MODE){
 //                FragmentControler.addFragment(getSupportFragmentManager(), R.id.main_container, FragmentControler.TAG_SEM_SELECT);
                 Intent intent = new Intent(mContext,SemSelectActivity.class);
                 startActivity(intent);
@@ -98,7 +98,7 @@ public class SlidingMenuMainActivity extends BaseActivity {
             return true;
         }
 
-        if (id == R.id.action_update_week) {
+        /*if (id == R.id.action_update_week) {
             final EditText editText = new EditText(this);
             new AlertDialog.Builder(this)
                     .setTitle("设置当前周(请输入数字1-20)")
@@ -121,7 +121,7 @@ public class SlidingMenuMainActivity extends BaseActivity {
             })
                     .setNegativeButton("取消", null)
                     .show();
-        }
+        }*/
         return super.onOptionsItemSelected(item);
 
     }
@@ -147,4 +147,5 @@ public class SlidingMenuMainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
 
     }
+
 }

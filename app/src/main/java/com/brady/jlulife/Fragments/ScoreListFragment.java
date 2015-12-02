@@ -103,9 +103,11 @@ public class ScoreListFragment extends BaseFragment {
         if (term == null)
             return;
         String terId = term.getTermId();
+        showDialog();
         uimsModel.queryScore(Integer.parseInt(terId), new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(List list) {
+                hideDialog();
                 mScoreList.removeAll(mScoreList);
                 mScoreList.addAll(list);
                 mAdapter.notifyDataSetChanged();
@@ -113,7 +115,7 @@ public class ScoreListFragment extends BaseFragment {
             }
             @Override
             public void onGetInfoFail() {
-
+                hideDialog();
             }
         });
     }
