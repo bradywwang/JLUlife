@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -31,6 +32,7 @@ import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
+import com.brady.jlulife.Utils.Utils;
 
 import java.util.Date;
 import java.util.List;
@@ -69,11 +71,7 @@ public class CourseListFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         initBaseComponents(view);
-        dbManager = new DBManager(getActivity());
-        long currentWeek = getCurrentWeek();
-        showCourses(currentWeek);
-        initScrollMethod(view);
-        setTitle("我的课表");
+        refreshClassView(view);
         return view;
     }
 
@@ -84,6 +82,15 @@ public class CourseListFragment extends BaseFragment {
 //        initActionBar();
     }
 
+    private void refreshClassView(View view){
+        dbManager = new DBManager(getActivity());
+        long currentWeek = getCurrentWeek();
+        showCourses(currentWeek);
+        initScrollMethod(view);
+        getActivity().invalidateOptionsMenu();
+        getActivity().getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+        setTitle("我的课表");
+    }
     private void initScrollMethod(final View view) {
         horizontalScrollView = (MyHorizontalScrollView) view.findViewById(R.id.horizon_scrollview);
         scrollView = (MyVerticalScrollView) view.findViewById(R.id.scrollview);
@@ -132,6 +139,7 @@ public class CourseListFragment extends BaseFragment {
 
     @Override
     public void onResume() {
+        refreshClassView(getView());
         super.onResume();
     }
 
@@ -140,15 +148,20 @@ public class CourseListFragment extends BaseFragment {
     private long getCurrentWeek() {
         SharedPreferences sf = getActivity().getSharedPreferences("com.brady.jlulife_preferences",Context.MODE_PRIVATE);
         String week = sf.getString("currentweek", "");
+        if(week.equals("")) {
+            SharedPreferences.Editor editor = sf.edit();
+            editor.putString("currentweek","第1周");
+            editor.putLong("savedtime", Utils.getFirstDayOfWeek(new Date()).getTime());
+            editor.commit();
+            return 1;
+        }
         String regEx="[^0-9]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(week);
         int savedWeek = Integer.parseInt(m.replaceAll("").trim());
-        Log.e("week","week = "+week);
         long savedDate  = sf.getLong("savedtime", 0);
         long numOfDay = (new Date().getTime()-savedDate)/86400000;
         long weekPassed =  (numOfDay/7);
-        Log.i("aaaaaaa","savedweek"+savedWeek+"savedtime"+savedDate+"numofDay"+numOfDay+"weekPassed"+weekPassed);
         if(savedDate==0||savedWeek==0)
             return 1;
         else
@@ -207,7 +220,6 @@ public class CourseListFragment extends BaseFragment {
         Button course = new Button(getActivity());
         course.setLayoutParams(marginParams);
         course.setGravity(Gravity.CENTER);
-        Log.e("width", courseWidth + "");
         course.setBackgroundColor(getCourseBackground(spec.getCourseId()));
         course.setPadding(8, 5, 8, 5);
         course.setText(spec.toString());
@@ -219,11 +231,8 @@ public class CourseListFragment extends BaseFragment {
     public void showCourses(long currentWeek) {
         mCourseContent.removeAllViews();
         List<CourseSpec> courseSpecs = dbManager.queryAllCourses();
-        Log.i("size", courseSpecs.size() + "");
         for (CourseSpec spec : courseSpecs) {
-            Log.i("courses", spec.getId() + "name:" + spec.getCourseName() + "begin:" + spec.getBeginWeek() + "end" + spec.getEndWeek() + "double" + spec.getIsDoubleWeek() + "single" + spec.getIsSingleWeek());
             if ((currentWeek >= spec.getBeginWeek() && currentWeek <= spec.getEndWeek()) || (spec.getBeginWeek() == 0 && spec.getEndWeek() == 0)) {
-                Log.i("aaaa", "name:" + spec.getCourseName() + "begin:" + spec.getBeginWeek() + "end" + spec.getEndWeek() + "double" + spec.getIsDoubleWeek() + "single" + spec.getIsSingleWeek());
                 if ((spec.getIsDoubleWeek() == 1 && currentWeek % 2 == 1) || (spec.getIsSingleWeek() == 1 && currentWeek % 2 == 0))
                     continue;
                 addCourse(spec);
@@ -231,30 +240,9 @@ public class CourseListFragment extends BaseFragment {
         }
     }
 
-    public void initActionBar() {
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        String[] titles = new String[18];
-        for (int i = 1; i <= 18; i++) {
-            titles[i - 1] = "第" + i + "周";
-        }
-        SpinnerAdapter adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item, titles);
-        if (actionBar == null) {
-            Log.e("err", "actionbar is null");
-        }
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
-            @Override
-            public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-                return true;
-            }
-        });
-        actionBar.setSelectedNavigationItem(4);
-    }
-
 
     private int getCourseBackground(int courseId) {
         int backId = courseId % 8;
-        Log.i("id", "id=" + courseId + "backId=" + backId);
         int result = getResources().getColor(R.color.class_value_1);
         switch (backId) {
             case 0: {
@@ -299,9 +287,14 @@ public class CourseListFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_course, menu);
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
         MenuItem item= menu.findItem(R.id.action_week);
         item.setTitle("第"+getCurrentWeek()+"周");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_course, menu);
     }
 }

@@ -92,6 +92,8 @@ public class DrcomLoginFragment extends BaseFragment {
                 management.clientLogin(metUname.getText().toString(), metUpwd.getText().toString(), new OnclientLoginListener() {
                     @Override
                     public void clientLoginFail(int paramInt) {
+                        if(getActivity()==null)
+                            return;
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(management.getErrorStringByCode(paramInt));
                         builder.setPositiveButton(R.string.conform, new DialogInterface.OnClickListener() {

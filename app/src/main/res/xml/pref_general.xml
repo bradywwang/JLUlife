@@ -6,6 +6,7 @@
             android:key="currentweek"
             android:entries="@array/weeks"
             android:entryValues="@array/weeks"
+            android:summary="设置后重新启动生效"
             android:title="设置当前周">
         </ListPreference>
 

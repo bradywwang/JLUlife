@@ -97,31 +97,6 @@ public class SlidingMenuMainActivity extends BaseActivity {
             }
             return true;
         }
-
-        /*if (id == R.id.action_update_week) {
-            final EditText editText = new EditText(this);
-            new AlertDialog.Builder(this)
-                    .setTitle("设置当前周(请输入数字1-20)")
-                    .setView(editText).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    try {
-                        SharedPreferences sf = getSharedPreferences(ConstValue.SHARED_COURSE_INFO, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sf.edit();
-//                        long numOfDay = (date.getTime() - new Date().getTime())/86400000;
-                        int currentWeek = Integer.parseInt(editText.getText().toString());
-                        editor.putInt("savedweek", currentWeek);
-                        editor.putLong("savedtime", Utils.getFirstDayOfWeek(new Date()).getTime());
-                        editor.commit();
-                        Toast.makeText(mContext,"更新成功,重新启动应用生效",Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Toast.makeText(mContext,"请输入1-20的数字",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            })
-                    .setNegativeButton("取消", null)
-                    .show();
-        }*/
         return super.onOptionsItemSelected(item);
 
     }
@@ -132,7 +107,7 @@ public class SlidingMenuMainActivity extends BaseActivity {
         menu.setShadowWidth(200);
         menu.setBehindOffset(500);
         menu.setFadeDegree(0.5f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.menu_container);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

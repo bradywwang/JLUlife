@@ -107,7 +107,7 @@ public class UIMSModel {
             @Override
             public void onSuccess(int i, Header[] headers, String s) {
                 if (s.contains("error_message")) {
-                    processErrMsg(s);
+                    processErrMsg(s,listener);
                 } else if (loginMethod == LOGIN_CJCX_MODE) {
                     listener.onLoginSuccess();
                     mLoginMethod = loginMethod;
@@ -422,12 +422,12 @@ public class UIMSModel {
         });
     }
 
-    private void processErrMsg(String s) {
+    private void processErrMsg(String s,LoginListener listener) {
         Document doc = Jsoup.parse(s);
         Element element = doc.getElementById("error_message");
         String txt = element.text();
         client.removeAllHeaders();
-        mLoginListener.onLoginFailure(txt);
+        listener.onLoginFailure(txt);
         Log.i("errMsg", txt);
     }
 
