@@ -54,6 +54,8 @@
     <string name="hint_course_name">请输入课程名称</string>
     <string name="hint_teacher_name">请输入授课教师名称</string>
     <string name="hint_course_place">请输入上课地点</string>
+    <string name="tv_help_library_login">图书馆账号为一卡通号码，默认登陆密码为1234</string>
+    <string name="tv_help_uims_login">用户名为教学号，新生默认密码为身份证后六位</string>
 
 
     <string-array name="weeks">

@@ -45,10 +45,12 @@ public class SlidingMenuMainActivity extends BaseActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +69,9 @@ public class SlidingMenuMainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(menu.isMenuShowing()){
+        if (menu.isMenuShowing()) {
             menu.showContent();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -89,34 +91,35 @@ public class SlidingMenuMainActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upgrade) {
-            if(UIMSModel.getInstance(this).isLoginIn()&&UIMSModel.getInstance(mContext).getmLoginMethod()==UIMSModel.LOGIN_NORMAL_MODE){
+            if (UIMSModel.getInstance(this).isLoginIn() && UIMSModel.getInstance(mContext).getmLoginMethod() == UIMSModel.LOGIN_NORMAL_MODE) {
 //                FragmentControler.addFragment(getSupportFragmentManager(), R.id.main_container, FragmentControler.TAG_SEM_SELECT);
-                Intent intent = new Intent(mContext,SemSelectActivity.class);
+                Intent intent = new Intent(mContext, SemSelectActivity.class);
                 startActivity(intent);
-            }else {
-                Intent intent = new Intent(mContext,UIMSAuthActivity.class);
+            } else {
+                Intent intent = new Intent(mContext, UIMSAuthActivity.class);
                 startActivity(intent);
             }
             menu.showContent();
             return true;
         }
         if (id == 16908332) {
-            if(menu.isMenuShowing()){
+            if (menu.isMenuShowing()) {
                 menu.showContent();
-            }else {
+            } else {
                 menu.showMenu();
             }
             return true;
         }
         if (id == R.id.action_add_course) {
-            Intent intent = new Intent(this,EditCourseActivity.class);
+            Intent intent = new Intent(this, EditCourseActivity.class);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
 
     }
-    private void initSlidingMenu(){
+
+    private void initSlidingMenu() {
         menu = new SlidingMenu(mContext);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
@@ -127,10 +130,11 @@ public class SlidingMenuMainActivity extends BaseActivity {
         menu.setMenu(R.layout.menu_container);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.menu_container,new MenuFragment());
+        transaction.replace(R.id.menu_container, new MenuFragment());
         transaction.commit();
     }
-    public SlidingMenu getMenu(){
+
+    public SlidingMenu getMenu() {
         return menu;
     }
 
@@ -138,7 +142,6 @@ public class SlidingMenuMainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
 
     }
-
 
 
 }

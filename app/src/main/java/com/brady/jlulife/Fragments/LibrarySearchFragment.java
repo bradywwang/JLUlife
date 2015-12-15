@@ -1,6 +1,7 @@
 package com.brady.jlulife.Fragments;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.KeyEvent;
@@ -39,7 +40,6 @@ public class LibrarySearchFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        setTitle("图书馆");
         return inflater.inflate(R.layout.fragment_library_search, container, false);
     }
 
@@ -51,6 +51,18 @@ public class LibrarySearchFragment extends BaseFragment {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.loadUrl(ConstValue.LIBRARY_SEARCH_URI);
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                showDialog();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                hideDialog();
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
@@ -64,15 +76,16 @@ public class LibrarySearchFragment extends BaseFragment {
             }
         });
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_library, menu);
-
     }
 
-    public boolean canGoBack(){
+    public boolean canGoBack() {
         return webView.canGoBack();
     }
+
     public void preformBack() {
         webView.goBack();
     }

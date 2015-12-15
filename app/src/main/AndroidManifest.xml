@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.brady.jlulife" >
+    package="com.brady.jlulife">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,16 +13,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_laucher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:theme="@style/CustomActionBarTheme">
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
+            android:process=":DownloadingService"></service>
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -34,12 +32,8 @@
         <activity
             android:name=".Activities.SlidingMenuMainActivity"
             android:label="@string/app_name"
-            android:theme="@style/CustomActionBarTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/CustomActionBarTheme">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.UIMSAuthActivity"
@@ -80,22 +74,36 @@
         <activity
             android:name=".Activities.AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".Activities.ScoreListActivity">
-        </activity>
+            android:parentActivityName=".Activities.ScoreListActivity"></activity>
         <activity
             android:name=".Activities.EditCourseActivity"
             android:label="编辑课表"
-            android:parentActivityName=".Activities.ScoreListActivity">
-        </activity>
+            android:parentActivityName=".Activities.ScoreListActivity"></activity>
+        <activity
+            android:name=".Activities.MyLibraryAccountActivity"
+            android:label="我的帐号"
+            android:parentActivityName=".Activities.ScoreListActivity"></activity>
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.umeng.fb.ConversationActivity" />
+        <activity android:name=".Activities.ContactActivity" />
         <activity
-            android:name="com.umeng.fb.ConversationActivity"/>
-        <activity android:name=".Activities.ContactActivity"/>
+            android:name=".Activities.LibraryDetailActivity"
+            android:label="借书详情"
+            android:parentActivityName=".Activities.ScoreListActivity" />
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

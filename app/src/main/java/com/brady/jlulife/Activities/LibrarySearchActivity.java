@@ -1,7 +1,9 @@
 package com.brady.jlulife.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 
 import com.brady.jlulife.Fragments.DrcomLoginFragment;
 import com.brady.jlulife.Fragments.LibrarySearchFragment;
@@ -27,5 +29,17 @@ public class LibrarySearchActivity extends BaseActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_library_myhome) {
+            Intent intent = new Intent(this,MyLibraryAccountActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -13,6 +13,7 @@ public class ConstValue {
     public static final String CJCX_RESOURCES_URI = "http://cjcx.jlu.edu.cn/score/action/service_res.php";
     public static final String SHARED_DRCOM_INFO  = "com.brady.jlulife.drcom.sharedinfo";
     public static final String SHARED_UIMS_INFO  = "com.brady.jlulife.uims.sharedinfo";
+    public static final String SHARED_LIBRARY_INFO  = "com.brady.jlulife.library.sharedinfo";
     public static final String SHARED_COURSE_INFO  = "com.brady.jlulife.course.sharedinfo";
     public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
     public static final String JWC_HOST = "http://jwc.jlu.edu.cn/";
@@ -22,7 +23,8 @@ public class ConstValue {
     public static final String BAIDU_API_WEATHER_LIST = "http://apis.baidu.com/apistore/weatherservice/citylist";
     public static final String BAIDU_API_WEATHER_CITY_ID = "101060101";
     public static final String BAIDU_API_WEATHER_DETAIL_BY_ID = "http://apis.baidu.com/apistore/weatherservice/cityid";
-
+    public static final String LIBRARY_ACCOUNT_WEB = "http://mc.m.5read.com/irdUser/login/opac/opacLogin.jspx";
+//    public static final String LIBRARY_ACCOUNT_WEB = "http://m.5read.com/920";
     public static final String JWC_SOURCE  = "com.brady.jlulife.jwclist";
     public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";
     public static final String NEWS_SOURCE = "com.brady.jlulife.newslist";

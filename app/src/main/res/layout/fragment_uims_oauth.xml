@@ -65,6 +65,13 @@
             android:layout_margin="@dimen/checkbox_margin"
             android:visibility="gone"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tv_login_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#838383"
+        android:gravity="center"
+        android:textSize="@dimen/small_txt_size"/>
     <Button
         android:id="@+id/btn_uims_login"
         android:layout_marginTop="@dimen/btn_margintop"
