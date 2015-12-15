@@ -133,7 +133,7 @@ public class UIMSModel {
     }
 
     public void logout() {
-
+        isLogin = false;
     }
 
     public int getmLoginMethod() {

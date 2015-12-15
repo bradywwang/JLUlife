@@ -1,6 +1,7 @@
 package com.brady.jlulife.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.Activities.SlidingMenuMainActivity;
 import com.brady.jlulife.Models.WeatherModel;
 import com.brady.jlulife.R;
+import com.brady.jlulife.Utils.ConstValue;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -41,6 +43,7 @@ public class MenuFragment extends BaseFragment {
     private TextView tvWeather;
     private TextView tvLowTem;
     private TextView tvHighTem;
+    private SharedPreferences sf;
 
     public MenuFragment() {
         mFragment = this;
@@ -57,8 +60,10 @@ public class MenuFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity().getApplicationContext();
+        sf = getActivity().getSharedPreferences(ConstValue.SHARED_WEATHER_INFO,Context.MODE_PRIVATE);
         initConments(view);
         initWeather();
+        syncWeather();
     }
 
     private void closeMenu(boolean isShowAnim) {
@@ -68,7 +73,17 @@ public class MenuFragment extends BaseFragment {
         }
     }
 
-    private void initWeather() {
+    private void initWeather(){
+        String weather = sf.getString("weather","");
+        String lowTemp = sf.getString("lowtemp","");
+        String highTemp = sf.getString("hightemp","");
+        tvWeather.setText(weather);
+        tvLowTem.setText(lowTemp);
+        tvHighTem.setText(highTemp);
+        ivWeather.setImageDrawable(getResources().getDrawable(getWeatherIcon(weather)));
+    }
+
+    private void syncWeather() {
         WeatherModel.getInstance(mContext).getWeatherDetail(new OnObjectGetListener() {
             @Override
             public void onGetInfoSuccess(Object object) {
@@ -77,7 +92,13 @@ public class MenuFragment extends BaseFragment {
                 tvLowTem.setText(data.getL_tmp());
                 tvHighTem.setText(data.getH_tmp());
                 ivWeather.setImageDrawable(getResources().getDrawable(getWeatherIcon(data.getWeather())));
+                SharedPreferences.Editor editor = sf.edit();
+                editor.putString("weather", data.getWeather());
+                editor.putString("lowtemp", data.getL_tmp());
+                editor.putString("hightemp", data.getH_tmp());
+                editor.commit();
             }
+
             @Override
             public void onGetInfoFail() {
 
@@ -165,4 +186,5 @@ public class MenuFragment extends BaseFragment {
             return R.mipmap.sunny;
         }
     }
+
 }

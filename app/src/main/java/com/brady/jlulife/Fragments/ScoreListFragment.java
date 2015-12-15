@@ -2,10 +2,14 @@ package com.brady.jlulife.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,12 +17,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.brady.jlulife.Activities.CJCXAuthActivity;
 import com.brady.jlulife.Adapters.ScoreAdapter;
 import com.brady.jlulife.Adapters.SemesterAdapter;
 import com.brady.jlulife.Entities.TermList;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.R;
+import com.brady.jlulife.Utils.ConstValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +94,7 @@ public class ScoreListFragment extends BaseFragment {
             @Override
             public void onGetInfoSuccess(List list) {
                 mSemList = list;
-                semesterAdapter  = new SemesterAdapter(mContext, R.layout.spinner_item, list);
+                semesterAdapter = new SemesterAdapter(mContext, R.layout.spinner_item, list);
                 mSpinner.setAdapter(semesterAdapter);
             }
 
@@ -111,8 +117,9 @@ public class ScoreListFragment extends BaseFragment {
                 mScoreList.removeAll(mScoreList);
                 mScoreList.addAll(list);
                 mAdapter.notifyDataSetChanged();
-                Toast.makeText(mContext, "共查询到"+list.size()+"条记录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "共查询到" + list.size() + "条记录", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onGetInfoFail() {
                 hideDialog();
@@ -120,4 +127,24 @@ public class ScoreListFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_courselist, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_logout){
+            Log.i("gets","logout");
+            logout();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void logout(){
+        UIMSModel.getInstance(mContext).logout();
+        Intent intent = new Intent(mContext,CJCXAuthActivity.class);
+        intent.setAction(ConstValue.UIMS_LOGOUT);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,7 +155,8 @@ public abstract class UIMSAuthFragment extends BaseFragment {
         metpwd.setText(pwd);
         mcboxAutoLogin.setChecked(isAutoLogin);
         mcboxRemember.setChecked(isSavedPwd);
-        if(isAutoLogin){
+        String action = getActivity().getIntent().getAction();
+        if(TextUtils.isEmpty(action)&&isAutoLogin){
             btnLogin.performClick();
         }
     }

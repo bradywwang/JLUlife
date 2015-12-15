@@ -11,7 +11,7 @@ import com.brady.jlulife.Fragments.ClassSyncFragment;
 import com.brady.jlulife.R;
 
 public class UIMSAuthActivity extends BaseActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

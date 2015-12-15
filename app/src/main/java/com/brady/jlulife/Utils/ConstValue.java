@@ -14,6 +14,7 @@ public class ConstValue {
     public static final String SHARED_DRCOM_INFO  = "com.brady.jlulife.drcom.sharedinfo";
     public static final String SHARED_UIMS_INFO  = "com.brady.jlulife.uims.sharedinfo";
     public static final String SHARED_LIBRARY_INFO  = "com.brady.jlulife.library.sharedinfo";
+    public static final String SHARED_WEATHER_INFO  = "com.brady.jlulife.weather.sharedinfo";
     public static final String SHARED_COURSE_INFO  = "com.brady.jlulife.course.sharedinfo";
     public static final String JWC_BASIC_INFO  = "http://jwc.jlu.edu.cn/?file=info&act=list&id=28";
     public static final String JWC_HOST = "http://jwc.jlu.edu.cn/";
@@ -33,4 +34,5 @@ public class ConstValue {
     public static final int LESSON_QUERY = 1;
     public static final String FUNCTION_JWCX = "jwcx";
     public static final String FUNCTION_JLUNEWS = "jlunews";
+    public static final String UIMS_LOGOUT = "uims_logout";
 }
