@@ -19,6 +19,9 @@ public class ConstValue {
     public static final String NEWS_HOST = "http://m.app3.jlu.edu.cn/GetNoticeList.php";
     public static final String NEWS_MORE = "http://m.app3.jlu.edu.cn/GetConMore.php";
     public static final String NEWS_DOWNLOAD = "http://m.app3.jlu.edu.cn/GetFileDown.php";
+    public static final String BAIDU_API_WEATHER_LIST = "http://apis.baidu.com/apistore/weatherservice/citylist";
+    public static final String BAIDU_API_WEATHER_CITY_ID = "101060101";
+    public static final String BAIDU_API_WEATHER_DETAIL_BY_ID = "http://apis.baidu.com/apistore/weatherservice/cityid";
 
     public static final String JWC_SOURCE  = "com.brady.jlulife.jwclist";
     public static final String JWC_DETAIL_SOURCE = "com.brady.jlulife.jwcdetaillist";

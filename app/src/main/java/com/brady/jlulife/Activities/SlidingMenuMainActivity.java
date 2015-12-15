@@ -25,6 +25,7 @@ import com.brady.jlulife.Fragments.CourseListFragment;
 import com.brady.jlulife.Fragments.LibrarySearchFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
 import com.brady.jlulife.Models.UIMSModel;
+import com.brady.jlulife.Models.WeatherModel;
 import com.brady.jlulife.R;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.Utils.Utils;
@@ -51,8 +52,8 @@ public class SlidingMenuMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         UmengUpdateAgent.update(this);
-
         initSlidingMenu();
+        initWeather();
     }
 
     @Override
@@ -61,6 +62,15 @@ public class SlidingMenuMainActivity extends BaseActivity {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.main_container, new CourseListFragment());
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(menu.isMenuShowing()){
+            menu.showContent();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -97,6 +107,11 @@ public class SlidingMenuMainActivity extends BaseActivity {
             }
             return true;
         }
+        if (id == R.id.action_add_course) {
+            Intent intent = new Intent(this,EditCourseActivity.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
 
     }
@@ -121,6 +136,10 @@ public class SlidingMenuMainActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 
+    }
+
+    private void initWeather(){
+        WeatherModel.getInstance(mContext).getWeatherDetail();
     }
 
 }

@@ -2,6 +2,7 @@ package com.brady.jlulife.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.SpinnerAdapter;
 
+import com.brady.jlulife.Activities.EditCourseActivity;
 import com.brady.jlulife.MyHorizontalScrollView;
 import com.brady.jlulife.MyVerticalScrollView;
 import com.brady.jlulife.OnScrollListener;
@@ -186,7 +188,7 @@ public class CourseListFragment extends BaseFragment {
 //        addCourse(new CourseSpec("毛概","f9","张三",3,3,4,1,8,false));
     }
 
-    private void addCourse(CourseSpec spec) {
+    private void addCourse(final CourseSpec spec) {
         int leftMargin = 0;
         int topMargin = 0;
         int courseLength = 0;
@@ -202,7 +204,7 @@ public class CourseListFragment extends BaseFragment {
         int courseNum_width = (int) (getResources()
                 .getDimension(R.dimen.course_num_width));
         // 行(列)间距
-        int spacing = (int) (getResources().getDimension(R.dimen.spacing));
+        final int spacing = (int) (getResources().getDimension(R.dimen.spacing));
         // 算出左边距=左边有几节课*（课程宽度+1px的间隔）+左侧编号宽度
         leftMargin = (spec.getWeek() - 1) * (courseWidth + spacing) + courseNum_width;
         // 上边距=上边有几节课*（课程高度+1px的间隔）+顶部星期的宽度
@@ -220,11 +222,25 @@ public class CourseListFragment extends BaseFragment {
         Button course = new Button(getActivity());
         course.setLayoutParams(marginParams);
         course.setGravity(Gravity.CENTER);
-        course.setBackgroundColor(getCourseBackground(spec.getCourseId()));
+        int courseId = spec.getCourseId();
+        if(courseId == 0) {
+            course.setBackgroundColor(getCourseBackground(spec.getId()));
+        }
+        else {
+            course.setBackgroundColor(getCourseBackground(courseId));
+        }
         course.setPadding(8, 5, 8, 5);
         course.setText(spec.toString());
         course.setTextSize(getResources().getDimension(R.dimen.coursespec_font_size));
         course.setTextColor(Color.WHITE);
+        course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditCourseActivity.class);
+                intent.putExtra(EditCourseActivity.EXTRA_COURSEID,spec.getId());
+                startActivity(intent);
+            }
+        });
         mCourseContent.addView(course);
     }
 
@@ -242,7 +258,8 @@ public class CourseListFragment extends BaseFragment {
 
 
     private int getCourseBackground(int courseId) {
-        int backId = courseId % 8;
+        int backId = courseId % 7;
+        Log.e("test","backId:"+backId+"courseId"+courseId);
         int result = getResources().getColor(R.color.class_value_1);
         switch (backId) {
             case 0: {
