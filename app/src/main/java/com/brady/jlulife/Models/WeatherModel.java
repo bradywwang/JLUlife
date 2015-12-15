@@ -3,18 +3,18 @@ package com.brady.jlulife.Models;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.brady.jlulife.Entities.Weather.WeatherData;
+import com.brady.jlulife.Entities.Weather.WeatherInfo;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
-
-import org.apache.commons.codec.Decoder;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
@@ -58,17 +58,23 @@ public class WeatherModel {
 
         });
     }
-    public void getWeatherDetail(){
+    public void getWeatherDetail(final OnObjectGetListener listener){
         String cityId =ConstValue.BAIDU_API_WEATHER_CITY_ID;
         String querystring = URLEncoder.encode("http://apis.baidu.com/apistore/weatherservice/cityid?cityid=101060101");
         Header header = new BasicHeader("apikey","46700072a5005c1812bb88c6fd98a6aa");
         client.get(sContext, querystring, new Header[]{header}, new RequestParams(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                String parseString = "";
                 try {
-                    Log.e("query string",new String(bytes,"GBK"));
+                    parseString = new String(bytes,"gbk");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
+                }
+                WeatherInfo weatherInfo = JSON.parseObject(parseString, WeatherInfo.class);
+                if(weatherInfo!=null&&weatherInfo.getErrNum()!=-1){
+                    WeatherData data = weatherInfo.getRetData();
+                    listener.onGetInfoSuccess(data);
                 }
             }
 

@@ -21,9 +21,11 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.brady.jlulife.Entities.Weather.WeatherData;
 import com.brady.jlulife.Fragments.CourseListFragment;
 import com.brady.jlulife.Fragments.LibrarySearchFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
+import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.Models.UIMSModel;
 import com.brady.jlulife.Models.WeatherModel;
 import com.brady.jlulife.R;
@@ -53,7 +55,6 @@ public class SlidingMenuMainActivity extends BaseActivity {
         mContext = getApplicationContext();
         UmengUpdateAgent.update(this);
         initSlidingMenu();
-        initWeather();
     }
 
     @Override
@@ -138,8 +139,6 @@ public class SlidingMenuMainActivity extends BaseActivity {
 
     }
 
-    private void initWeather(){
-        WeatherModel.getInstance(mContext).getWeatherDetail();
-    }
+
 
 }
