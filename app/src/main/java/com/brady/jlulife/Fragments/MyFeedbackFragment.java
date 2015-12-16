@@ -3,9 +3,7 @@ package com.brady.jlulife.Fragments;
 import android.os.Bundle;
 import android.view.View;
 
-import com.brady.jlulife.R;
 import com.umeng.fb.fragment.FeedbackFragment;
-import com.umeng.fb.util.Log;
 
 /**
  * Created by brady on 15-12-2.

@@ -1,16 +1,10 @@
 package com.brady.jlulife.Fragments.News;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.JWNewsModel;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Models.NewsModel;
-import com.brady.jlulife.R;
 
 import java.util.List;
 

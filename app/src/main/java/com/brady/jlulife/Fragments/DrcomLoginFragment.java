@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,8 +127,6 @@ public class DrcomLoginFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Jni authinfo = new Jni();
-                Log.i(getClass().getSimpleName(), "time:" + authinfo.getFluxStatus());
-                Log.i(getClass().getSimpleName(), "flow:" + authinfo.getTimeStatus());
             }
         });
         boolean isAutoLogin = sharedPreferences.getBoolean(IS_AUTO_LOGIN, false);

@@ -7,9 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.brady.jlulife.Fragments.DrcomLoginFragment;
 import com.brady.jlulife.Fragments.LoginSuccessFragment;
-import com.brady.jlulife.Fragments.ScoreListFragment;
 import com.brady.jlulife.R;
-import com.brady.jlulife.Utils.NetNeedLoginCheckUtil;
 import com.brady.jlulife.Utils.Utils;
 
 /**

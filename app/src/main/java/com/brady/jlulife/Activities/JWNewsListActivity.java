@@ -3,7 +3,6 @@ package com.brady.jlulife.Activities;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.brady.jlulife.Fragments.DrcomLoginFragment;
 import com.brady.jlulife.Fragments.News.JWNewsListFragment;
 import com.brady.jlulife.R;
 

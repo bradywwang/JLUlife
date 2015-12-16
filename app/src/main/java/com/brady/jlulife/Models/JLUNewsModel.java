@@ -7,7 +7,6 @@ import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Models.Listener.OnObjectGetListener;
-import com.brady.jlulife.Models.NewsModel;
 import com.brady.jlulife.Utils.ConstValue;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -201,7 +200,6 @@ public class JLUNewsModel extends NewsModel {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.i("news Mobile", "success");
                 Message msg = new Message();
                 msg.what = MSG_GET_NEWSLIST_SUCCESS;
                 msg.obj = list;

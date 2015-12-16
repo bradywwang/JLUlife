@@ -2,7 +2,6 @@ package com.brady.jlulife.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +80,6 @@ public class SemSelectFragment extends BaseFragment {
             });
         }else {
             mSpinner.setAdapter(adapter);
-            Log.i("test","else"+mSemList.size());
         }
     }
 

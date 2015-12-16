@@ -1,21 +1,14 @@
 package com.brady.jlulife.Utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
-import com.brady.jlulife.Fragments.LoginSuccessFragment;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

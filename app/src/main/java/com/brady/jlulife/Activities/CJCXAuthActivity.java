@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.brady.jlulife.Fragments.CjcxAuthFragment;
-import com.brady.jlulife.Fragments.DrcomLoginFragment;
 import com.brady.jlulife.R;
 
 /**

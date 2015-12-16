@@ -3,7 +3,6 @@ package com.brady.jlulife.Fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ public class LibraryAccountFragment extends BaseFragment {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 showDialog();
-                Log.i(getClass().getSimpleName(), "start");
             }
 
             @Override
@@ -100,7 +98,6 @@ public class LibraryAccountFragment extends BaseFragment {
         if(arguments!=null){
             uname = arguments.getString("uname");
             pwd = arguments.getString("pwd");
-            Log.i(getClass().getSimpleName(),"uname="+uname+pwd);
         }
         synCookies(mContext,ConstValue.LIBRARY_ACCOUNT_WEB);
         String postData = "backurl=/cmpt/opac/opacLink.jspx?backurl=http%3A%2F%2F202.198.25.5%3A8080%2Fsms%2Fopac%" +
@@ -113,7 +110,6 @@ public class LibraryAccountFragment extends BaseFragment {
         CookieManager cookieManager = CookieManager.getInstance();
         String newCookie = cookieManager.getCookie(url);
         if(newCookie != null){
-            Log.d("oldCookie", newCookie);
         }
         cookieManager.setAcceptCookie(true);
         cookieManager.removeSessionCookie();
@@ -133,7 +129,6 @@ public class LibraryAccountFragment extends BaseFragment {
         CookieSyncManager.getInstance().sync();
         newCookie = cookieManager.getCookie(url);
         if(newCookie != null){
-            Log.d("yncCookie.newCookie", newCookie);
         }
     }
 }

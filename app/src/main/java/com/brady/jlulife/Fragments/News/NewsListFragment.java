@@ -1,25 +1,20 @@
 package com.brady.jlulife.Fragments.News;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.brady.jlulife.Adapters.NewsAdapter;
 import com.brady.jlulife.Fragments.BaseFragment;
-import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
-import com.brady.jlulife.Entities.NewsBaseInfo;
-import com.brady.jlulife.Models.NewsModel;
 import com.brady.jlulife.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -37,18 +32,6 @@ public abstract class NewsListFragment extends BaseFragment {
     List mList = null;
     int mPageNum = 1;
     TextView mTextView;
-    View progressBar;
-/*    private static NewsListFragment mFragment;
-
-    public NewsListFragment() {
-        mFragment = this;
-    }
-
-    public static NewsListFragment getInstance(){
-        if(mFragment==null||mFragment.isAdded())
-            mFragment = new NewsListFragment();
-        return mFragment;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +45,6 @@ public abstract class NewsListFragment extends BaseFragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRefeshView(view);
-        Bundle bundle = getArguments();
         if(mList.size()==0) {
             showDialog();
             LoadInfo();

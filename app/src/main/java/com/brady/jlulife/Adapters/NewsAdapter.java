@@ -11,7 +11,6 @@ import com.brady.jlulife.Entities.NewsBaseInfo;
 import com.brady.jlulife.R;
 import com.brady.jlulife.ViewHolders.JWCViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

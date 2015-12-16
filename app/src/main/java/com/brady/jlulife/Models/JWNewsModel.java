@@ -1,7 +1,6 @@
 package com.brady.jlulife.Models;
 
 import android.os.Message;
-import android.util.Log;
 
 import com.brady.jlulife.Entities.News;
 import com.brady.jlulife.Entities.NewsBaseInfo;
@@ -81,14 +80,9 @@ public class JWNewsModel extends NewsModel{
                 String contentText = builder.toString();
 //                String cont = elements.html();
 //                String contentText = cont.replace("\n","</p>");
-                Log.i("title", title);
-                Log.i("info",info);
-                Log.i("content",contentText);
                 String[] arr = info.split(" 发表于");
                 String dep = arr[0];
                 String date = arr[1].substring(0,19);
-                Log.i("dep",dep);
-                Log.i("date", date);
                 mNews.setTitle(title);
                 mNews.setContent(contentText);
                 mNews.setSubmitDepartment(dep);
@@ -133,10 +127,6 @@ public class JWNewsModel extends NewsModel{
                     String href = ele0.attr("href");
                     String date = ele.getElementsByClass("right").text();
                     String dep = eles1.get(1).text();
-                    Log.i("title:", title);
-                    Log.i("href:", href);
-                    Log.i("date:", date);
-                    Log.i("dep:", dep);
                     baseInfo.setTitle(title);
                     baseInfo.setDate(date);
                     baseInfo.setDep(dep);

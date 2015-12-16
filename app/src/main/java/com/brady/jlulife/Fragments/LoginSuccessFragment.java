@@ -1,17 +1,14 @@
 package com.brady.jlulife.Fragments;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.brady.jlulife.Activities.DrcomLoginActivity;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Tool.DrCOMWSManagement;
 import com.drcom.Android.DrCOMWS.listener.OnclientLogoutListener;
@@ -54,7 +51,6 @@ public class LoginSuccessFragment extends BaseFragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(getClass().getSimpleName(), "is clicked");
                 showDialog();
                 management.clientLogout(new OnclientLogoutListener() {
                     @Override

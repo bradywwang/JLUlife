@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import com.brady.jlulife.Activities.ScoreListActivity;
 import com.brady.jlulife.R;
 
 /**

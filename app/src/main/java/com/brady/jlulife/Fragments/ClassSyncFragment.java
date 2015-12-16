@@ -1,11 +1,8 @@
 package com.brady.jlulife.Fragments;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
-import com.brady.jlulife.Activities.SemSelectActivity;
 import com.brady.jlulife.R;
 
 /**

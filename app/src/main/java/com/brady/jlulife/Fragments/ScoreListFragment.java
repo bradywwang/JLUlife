@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -89,7 +88,6 @@ public class ScoreListFragment extends BaseFragment {
         mLvScore = (ListView) view.findViewById(R.id.lv_scoreList);
     }
     public void getSemesters(){
-        Log.i("loginMethod", String.valueOf(uimsModel.getmLoginMethod()));
         uimsModel.getSemesters(new OnListinfoGetListener() {
             @Override
             public void onGetInfoSuccess(List list) {
@@ -135,7 +133,6 @@ public class ScoreListFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_logout){
-            Log.i("gets","logout");
             logout();
         }
         return super.onOptionsItemSelected(item);

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.brady.jlulife.Entities.Score.OutSchoolScore.OutsideItem;
 import com.brady.jlulife.R;
 
-
 import java.util.List;
 
 /**

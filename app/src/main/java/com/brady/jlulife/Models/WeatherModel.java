@@ -2,7 +2,6 @@ package com.brady.jlulife.Models;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.brady.jlulife.Entities.Weather.WeatherData;
@@ -44,11 +43,11 @@ public class WeatherModel {
         client.get(sContext, quaryParm, new Header[]{header}, new RequestParams(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                try {
+                /*try {
                     Log.e("query string",new String(bytes,"GBK"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
 
             @Override
@@ -74,7 +73,6 @@ public class WeatherModel {
                     e.printStackTrace();
                 }
                 if(!(TextUtils.isEmpty(parseString))&&(parseString.contains(""))&&checkIsLogin(parseString)) {
-                    Log.e("parseString",parseString);
                     weatherInfo = JSON.parseObject(parseString, WeatherInfo.class);
                     if (weatherInfo != null && weatherInfo.getErrNum() != -1) {
                         WeatherData data = weatherInfo.getRetData();

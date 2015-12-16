@@ -58,7 +58,6 @@ public class DBManager {
             courseSpec.setTeacherName(c.getString(c.getColumnIndex("teachername")));
             courseSpec.setWeek(c.getInt(c.getColumnIndex("week")));
             courseSpecs.add(courseSpec);
-            Log.i("DBManager", "id:query from db:" + courseSpec.getId());
         }
         c.close();
         return courseSpecs;
@@ -129,7 +128,6 @@ public class DBManager {
             values.put("endTime", c.getEndTime());
             values.put("week", c.getWeek());
             int i =db.update("course", values, "id=?", new String[]{String.valueOf(courseId)});
-            Log.e("test","更新了"+i+"行");
             db.setTransactionSuccessful();
         }finally {
             db.endTransaction();

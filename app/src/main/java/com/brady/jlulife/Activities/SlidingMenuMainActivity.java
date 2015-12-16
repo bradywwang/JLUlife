@@ -1,41 +1,19 @@
 package com.brady.jlulife.Activities;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.brady.jlulife.Entities.Weather.WeatherData;
 import com.brady.jlulife.Fragments.CourseListFragment;
-import com.brady.jlulife.Fragments.LibrarySearchFragment;
 import com.brady.jlulife.Fragments.MenuFragment;
-import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 import com.brady.jlulife.Models.UIMSModel;
-import com.brady.jlulife.Models.WeatherModel;
 import com.brady.jlulife.R;
-import com.brady.jlulife.Utils.ConstValue;
-import com.brady.jlulife.Utils.Utils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
-
-import java.util.Date;
 
 public class SlidingMenuMainActivity extends BaseActivity {
     private Context mContext;

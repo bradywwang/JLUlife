@@ -1,6 +1,5 @@
 package com.brady.jlulife.Fragments.News;
 
-import com.brady.jlulife.Models.JLUNewsModel;
 import com.brady.jlulife.Models.JWNewsModel;
 import com.brady.jlulife.Models.Listener.OnObjectGetListener;
 

@@ -1,15 +1,9 @@
 package com.brady.jlulife.Models;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.brady.jlulife.Entities.Score.OutSchoolScore.OutSideResult;
-import com.brady.jlulife.Entities.Score.OutSchoolScore.OutsideItem;
-import com.brady.jlulife.Entities.Score.ScoreValue;
-import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
-import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Entities.CourseSpec;
 import com.brady.jlulife.Entities.LessonSchedule.LessonSchedules;
 import com.brady.jlulife.Entities.LessonSchedule.LessonTeachers;
@@ -18,19 +12,22 @@ import com.brady.jlulife.Entities.LessonSchedule.ScheduleRequestSpec;
 import com.brady.jlulife.Entities.LessonSchedule.TeachClassMaster;
 import com.brady.jlulife.Entities.RequestBody;
 import com.brady.jlulife.Entities.ResponseBody;
+import com.brady.jlulife.Entities.Score.OutSchoolScore.OutSideResult;
+import com.brady.jlulife.Entities.Score.OutSchoolScore.OutsideItem;
+import com.brady.jlulife.Entities.Score.ScoreValue;
 import com.brady.jlulife.Entities.TermList;
 import com.brady.jlulife.Models.Listener.LoginListener;
+import com.brady.jlulife.Models.Listener.OnAsyncLoadListener;
+import com.brady.jlulife.Models.Listener.OnListinfoGetListener;
 import com.brady.jlulife.Models.db.DBManager;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.Utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.HttpClientConnection;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
@@ -81,26 +78,22 @@ public class UIMSModel {
 //        mLoginListener = listener;
         mUId = uname;
         String convertPwd = Utils.getMD5Str("UIMS" + uname + pwd);
-        Log.i(getClass().getSimpleName(), "uname" + uname + "pwd:" + convertPwd);
         RequestParams params = new RequestParams();
         params.put("j_username", uname);
         params.put("j_password", convertPwd);
         String loginURI = "";
         switch (loginMethod) {
             case LOGIN_NORMAL_MODE: {
-                Log.e("ttt", "normal");
                 loginURI = ConstValue.SECURITY_CHECK;
                 break;
             }
             case LOGIN_CJCX_MODE: {
-                Log.e("ttt", "cjcx");
                 loginURI = ConstValue.CJCX_AUTH_URI;
             }
         }
         client.post(loginURI, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
-                Log.i(getClass().getSimpleName(), "login failure");
                 listener.onLoginFailure("网络连接失败,请检查网络配置");
             }
 
@@ -150,7 +143,6 @@ public class UIMSModel {
         body.setTag("teachingTerm");
         body.setType("search");
         body.setParams(new Object());
-        Log.i(getClass().getSimpleName(), JSON.toJSONString(body));
         try {
             entity = new StringEntity(JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
@@ -171,7 +163,6 @@ public class UIMSModel {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ArrayList<TermList> list = null;
-                Log.i(getClass().getSimpleName(), response.toString());
                 switch (mLoginMethod) {
                     case LOGIN_NORMAL_MODE: {
                         ResponseBody body = JSON.parseObject(response.toString(), ResponseBody.class);
@@ -208,7 +199,6 @@ public class UIMSModel {
         body.setTag("teachClassStud@schedule");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -230,7 +220,6 @@ public class UIMSModel {
                     e.printStackTrace();
                     mSyncListener.onGetInfoFail();
                 }
-                Log.i(getClass().getSimpleName(), response.toString());
             }
 
             @Override
@@ -245,7 +234,6 @@ public class UIMSModel {
         dbManager.deleteAllItems();
         List<CourseSpec> specs = new ArrayList<CourseSpec>();
         for (LessonValue value : lessonList) {
-            Log.i("result", value.toString());
             TeachClassMaster master = value.getTeachClassMaster();
             for (LessonSchedules schedule : master.getLessonSchedules()) {
                 CourseSpec spec = new CourseSpec();
@@ -265,7 +253,6 @@ public class UIMSModel {
                     builder.append(teacher.getTeacher().getName());
                 }
                 String blockName = schedule.getTimeBlock().getName();
-                Log.i("blockname", spec.getCourseName() + blockName);
                 String[] times = blockName.split("节");
                 if (times.length == 2 || times.length == 1) {
                     String[] times2 = times[0].split("第");
@@ -275,7 +262,6 @@ public class UIMSModel {
                         spec.setEndTime(Integer.parseInt(timeFinal[timeFinal.length - 1]));
                     }
                 }
-                Log.e("blockName", spec.getCourseName() + spec.getStartTime() + "" + spec.getEndTime());
                 spec.setTeacherName(builder.toString());
                 if (blockName.contains("单周")) {
                     spec.setIsSingleWeek(1);
@@ -289,9 +275,6 @@ public class UIMSModel {
                 }
                 specs.add(spec);
             }
-        }
-        for (CourseSpec spec : specs) {
-            Log.i("result", spec.toString());
         }
         dbManager.addAllCourses(specs);
         mSyncListener.onGetInfoSuccess();
@@ -344,7 +327,6 @@ public class UIMSModel {
         body.setTag("archiveScore@queryCourseScore");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -367,7 +349,6 @@ public class UIMSModel {
                     e.printStackTrace();
                     listener.onGetInfoFail();
                 }
-                Log.i(getClass().getSimpleName(), response.toString());
             }
 
             @Override
@@ -389,7 +370,6 @@ public class UIMSModel {
         body.setTag("lessonSelectResult@oldStudScore");
         try {
             entity = new StringEntity(JSON.toJSONString(body));
-            Log.i("body", JSON.toJSONString(body));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -411,7 +391,6 @@ public class UIMSModel {
                     e.printStackTrace();
                     listener.onGetInfoFail();
                 }
-                Log.i(getClass().getSimpleName(), response.toString());
             }
 
             @Override
@@ -428,7 +407,6 @@ public class UIMSModel {
         String txt = element.text();
         client.removeAllHeaders();
         listener.onLoginFailure(txt);
-        Log.i("errMsg", txt);
     }
 
 
