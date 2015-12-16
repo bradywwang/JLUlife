@@ -1,5 +1,6 @@
 package com.brady.jlulife.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +13,6 @@ import com.brady.jlulife.R;
  * Created by brady on 15-11-30.
  */
 public abstract class BaseActivity extends AppCompatActivity{
-/*    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initActionBar();
-    }*/
 
     public void initActionBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -38,4 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     public abstract void initFragment();
+
+
 }

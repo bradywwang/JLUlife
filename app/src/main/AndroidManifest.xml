@@ -84,6 +84,10 @@
             android:label="我的帐号"
             android:parentActivityName=".Activities.ScoreListActivity"></activity>
         <activity
+            android:name=".Activities.DrComLoginSuccessActivity"
+            android:label="登陆成功"
+            android:parentActivityName=".Activities.ScoreListActivity"></activity>
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"

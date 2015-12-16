@@ -1,8 +1,14 @@
 package com.brady.jlulife.Utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.brady.jlulife.Fragments.LoginSuccessFragment;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,5 +108,28 @@ public class Utils {
             start = end;
         }
         return buffer.toString();
+    }
+
+    public static void checkislogin(final LoginStateListener listener){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://www.baidu.com", null, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
+                listener.needLogin();
+            }
+
+            @Override
+            public void onSuccess(int i, Header[] headers, String s) {
+                if(s.contains("jlu.edu.cn")){
+                    listener.needLogin();
+                }else {
+                    listener.isLogin();
+                }
+            }
+        });
+    }
+    public interface LoginStateListener{
+        public void isLogin();
+        public void needLogin();
     }
 }

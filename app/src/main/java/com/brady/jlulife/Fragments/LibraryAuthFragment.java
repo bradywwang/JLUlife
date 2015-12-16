@@ -116,12 +116,8 @@ public class LibraryAuthFragment extends BaseFragment {
         if (mcboxRemember.isChecked()) {
             editor.putString(SAVED_PWD, metpwd.getText().toString());
         }
-        if (mcboxAutoLogin.isChecked()) {
-            editor.putBoolean(IS_AUTO_LOGIN, true);
-        }
-        if (mcboxRemember.isChecked()) {
-            editor.putBoolean(IS_SAVE_PWD, true);
-        }
+        editor.putBoolean(IS_AUTO_LOGIN, mcboxAutoLogin.isChecked());
+        editor.putBoolean(IS_SAVE_PWD, mcboxRemember.isChecked());
         editor.commit();
     }
 
@@ -134,7 +130,7 @@ public class LibraryAuthFragment extends BaseFragment {
         metpwd.setText(pwd);
         mcboxAutoLogin.setChecked(isAutoLogin);
         mcboxRemember.setChecked(isSavedPwd);
-        if(isAutoLogin){
+        if (isAutoLogin) {
             btnLogin.performClick();
         }
     }

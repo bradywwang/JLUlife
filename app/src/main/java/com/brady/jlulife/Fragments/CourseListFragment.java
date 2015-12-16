@@ -259,7 +259,6 @@ public class CourseListFragment extends BaseFragment {
 
     private int getCourseBackground(int courseId) {
         int backId = courseId % 7;
-        Log.e("test","backId:"+backId+"courseId"+courseId);
         int result = getResources().getColor(R.color.class_value_1);
         switch (backId) {
             case 0: {

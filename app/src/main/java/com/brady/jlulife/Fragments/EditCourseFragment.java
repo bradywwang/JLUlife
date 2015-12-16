@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -37,6 +38,8 @@ public class EditCourseFragment extends BaseFragment {
     private Context mContext;
     private DBManager dbManager;
     private CourseSpec mCourseSpec;
+    private CheckBox mCboxSingleWeek;
+    private CheckBox mCboxDoubleWeek;
 
     public static EditCourseFragment getInstance() {
         if (instance == null) {
@@ -92,6 +95,10 @@ public class EditCourseFragment extends BaseFragment {
                 updateCourse();
             }
         });
+        mCboxSingleWeek = (CheckBox) view.findViewById(R.id.cbox_single_week);
+        mCboxDoubleWeek = (CheckBox) view.findViewById(R.id.cbox_double_week);
+        mCboxDoubleWeek.setChecked(true);
+        mCboxSingleWeek.setChecked(true);
     }
 
     private void initSpinners() {
@@ -116,6 +123,13 @@ public class EditCourseFragment extends BaseFragment {
             spinnerEndWeek.setSelection(spec.getEndWeek() - 1);
             spinnerStartTime.setSelection(spec.getStartTime() - 1);
             spinnerEndTime.setSelection(spec.getEndTime() - 1);
+            if(spec.getIsDoubleWeek()==spec.getIsSingleWeek()){
+                mCboxSingleWeek.setChecked(true);
+                mCboxDoubleWeek.setChecked(true);
+            }else {
+                mCboxSingleWeek.setChecked(spec.getIsSingleWeek() == 1);
+                mCboxDoubleWeek.setChecked(spec.getIsDoubleWeek() == 1);
+            }
         } else {
             btnUpdateCourse.setVisibility(View.GONE);
             btnDelCourse.setVisibility(View.GONE);
@@ -170,6 +184,14 @@ public class EditCourseFragment extends BaseFragment {
         spec.setStartTime(spinnerStartTime.getSelectedItemPosition() + 1);
         spec.setTeacherName(etTeacherName.getText().toString());
         spec.setWeek(spinnerWeek.getSelectedItemPosition() + 1);
+        if(mCboxSingleWeek.isChecked()==mCboxDoubleWeek.isChecked());
+        else if(mCboxSingleWeek.isChecked()){
+            spec.setIsSingleWeek(1);
+            spec.setIsDoubleWeek(0);
+        }else if(mCboxDoubleWeek.isChecked()){
+            spec.setIsSingleWeek(0);
+            spec.setIsDoubleWeek(1);
+        }
         return spec;
     }
 

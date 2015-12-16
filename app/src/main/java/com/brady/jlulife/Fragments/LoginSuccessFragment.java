@@ -23,7 +23,7 @@ public class LoginSuccessFragment extends BaseFragment {
     TextView flowused;
     TextView timeUsed;
     Button btnLogout;
-    ProgressDialog mProgressDialog;
+//    ProgressDialog mProgressDialog;
     LoginSuccessFragment mFragment;
     private static LoginSuccessFragment instance;
     public static LoginSuccessFragment getInstance(){
@@ -51,37 +51,36 @@ public class LoginSuccessFragment extends BaseFragment {
         final DrCOMWSManagement management = new DrCOMWSManagement(getActivity());
         flowused.setText(management.getFlowStatus());
         timeUsed.setText(management.getTimeStatus());
-        mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setMessage("注销中,请稍后");
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(getClass().getSimpleName(), "is clicked");
-                mProgressDialog.show();
+                showDialog();
                 management.clientLogout(new OnclientLogoutListener() {
                     @Override
                     public void clientLogoutFail(int paramInt) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage("注销失败");
-                        builder.setPositiveButton(R.string.conform, new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                btnLogout.performClick();
+                            }
+                        });
+                        builder.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         });
-                        mProgressDialog.dismiss();
+                        hideDialog();
                         builder.show();
                     }
 
                     @Override
                     public void clientLogoutSuccess(boolean paramBoolean) {
-  /*                      DrcomLoginFragment fragment = new DrcomLoginFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("logout", true);
-                        fragment.setArguments(bundle);*/
-                        startNewActivity(DrcomLoginActivity.class);
-//                        FragmentControler.addFragment(mFragment,bundle,R.id.main_container,FragmentControler.TAG_DRCOM_LOGIN);
-                        mProgressDialog.dismiss();
+                        hideDialog();
+                        getActivity().finish();
                     }
                 });
             }

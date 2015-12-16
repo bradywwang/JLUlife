@@ -186,5 +186,4 @@ public class MenuFragment extends BaseFragment {
             return R.mipmap.sunny;
         }
     }
-
 }

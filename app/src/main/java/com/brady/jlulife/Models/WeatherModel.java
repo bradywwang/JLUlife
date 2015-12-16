@@ -1,6 +1,7 @@
 package com.brady.jlulife.Models;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -66,15 +67,19 @@ public class WeatherModel {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String parseString = "";
+                WeatherInfo weatherInfo = null;
                 try {
                     parseString = new String(bytes,"gbk");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                WeatherInfo weatherInfo = JSON.parseObject(parseString, WeatherInfo.class);
-                if(weatherInfo!=null&&weatherInfo.getErrNum()!=-1){
-                    WeatherData data = weatherInfo.getRetData();
-                    listener.onGetInfoSuccess(data);
+                if(!(TextUtils.isEmpty(parseString))&&(parseString.contains(""))&&checkIsLogin(parseString)) {
+                    Log.e("parseString",parseString);
+                    weatherInfo = JSON.parseObject(parseString, WeatherInfo.class);
+                    if (weatherInfo != null && weatherInfo.getErrNum() != -1) {
+                        WeatherData data = weatherInfo.getRetData();
+                        listener.onGetInfoSuccess(data);
+                    }
                 }
             }
 
@@ -85,5 +90,13 @@ public class WeatherModel {
 
 
         });
+    }
+    private boolean checkIsLogin(String s){
+        if(s.contains("retData")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

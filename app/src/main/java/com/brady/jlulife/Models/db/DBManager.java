@@ -118,6 +118,8 @@ public class DBManager {
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
+            values.put("isSingleWeek",c.getIsSingleWeek());
+            values.put("isDoubleWeek",c.getIsDoubleWeek());
             values.put("coursename",c.getCourseName());
             values.put("teachername",c.getTeacherName());
             values.put("classroom",c.getClassRoom());

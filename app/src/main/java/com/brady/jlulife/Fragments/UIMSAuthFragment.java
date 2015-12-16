@@ -44,6 +44,7 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     private static final String SAVED_PWD  = "saved_password";
     private static final String IS_AUTO_LOGIN = "is_auto_login";
     private static final String IS_SAVE_PWD = "is_saved_pwd";
+    private static final String IS_LOGIN_OUTSIDE = "is_login_outside";
 
     @Override
     public void onAttach(Context context) {
@@ -131,17 +132,16 @@ public abstract class UIMSAuthFragment extends BaseFragment {
         }
     }
 
-    private void saveInfo(){
+    private void saveInfo() {
         SharedPreferences.Editor editor = sf.edit();
-        editor.putString(SAVED_NAME,metuname.getText().toString());
-        if (mcboxRemember.isChecked()){
-            editor.putString(SAVED_PWD,metpwd.getText().toString());
+        editor.putString(SAVED_NAME, metuname.getText().toString());
+        if (mcboxRemember.isChecked()) {
+            editor.putString(SAVED_PWD, metpwd.getText().toString());
         }
-        if (mcboxAutoLogin.isChecked()){
-            editor.putBoolean(IS_AUTO_LOGIN, true);
-        }
-        if (mcboxRemember.isChecked()){
-            editor.putBoolean(IS_SAVE_PWD, true);
+        editor.putBoolean(IS_AUTO_LOGIN, mcboxAutoLogin.isChecked());
+        editor.putBoolean(IS_SAVE_PWD, mcboxRemember.isChecked());
+        if(mLoginOutside.getVisibility()==View.VISIBLE){
+            editor.putBoolean(IS_LOGIN_OUTSIDE,mLoginOutside.isChecked());
         }
         editor.commit();
     }
@@ -149,12 +149,16 @@ public abstract class UIMSAuthFragment extends BaseFragment {
     private void Loadinfo(){
         Boolean isAutoLogin = sf.getBoolean(IS_AUTO_LOGIN,false);
         Boolean isSavedPwd = sf.getBoolean(IS_SAVE_PWD,false);
+        Boolean isLoginOutside = sf.getBoolean(IS_LOGIN_OUTSIDE,false);
         String uName = sf.getString(SAVED_NAME,"");
         String pwd = sf.getString(SAVED_PWD,"");
         metuname.setText(uName);
         metpwd.setText(pwd);
         mcboxAutoLogin.setChecked(isAutoLogin);
         mcboxRemember.setChecked(isSavedPwd);
+        if(mLoginOutside.getVisibility()==View.VISIBLE){
+            mLoginOutside.setChecked(isLoginOutside);
+        }
         String action = getActivity().getIntent().getAction();
         if(TextUtils.isEmpty(action)&&isAutoLogin){
             btnLogin.performClick();

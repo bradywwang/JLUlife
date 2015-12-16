@@ -3,10 +3,7 @@ package com.brady.jlulife.Fragments;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.brady.jlulife.Activities.LoginSuccessActivity;
+import com.brady.jlulife.Activities.DrComLoginSuccessActivity;
 import com.brady.jlulife.Utils.ConstValue;
 import com.brady.jlulife.R;
 import com.drcom.Android.DrCOMWS.Jni;
@@ -41,7 +38,7 @@ public class DrcomLoginFragment extends BaseFragment {
     CheckBox cbRememberPwd;
     CheckBox cbautoLogin;
     Button btnLogin;
-    ProgressDialog mProgressDialog;
+//    ProgressDialog mProgressDialog;
     DrCOMWSManagement management;
     static DrcomLoginFragment mfragment;
 
@@ -76,7 +73,7 @@ public class DrcomLoginFragment extends BaseFragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgressDialog = ProgressDialog.show(getContext(), "", "登陆中，请稍后");
+//                mProgressDialog = ProgressDialog.show(getContext(), "", "登陆中，请稍后");
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(SAVED_NAME, metUname.getText().toString());
                 editor.putBoolean(IS_SAVED_PASSWORD,cbRememberPwd.isChecked());
@@ -87,8 +84,7 @@ public class DrcomLoginFragment extends BaseFragment {
                     editor.putString(SAVED_PWD,"");
                 }
                 editor.commit();
-                mProgressDialog.setCanceledOnTouchOutside(true);
-                mProgressDialog.show();
+                showDialog();
                 management.clientLogin(metUname.getText().toString(), metUpwd.getText().toString(), new OnclientLoginListener() {
                     @Override
                     public void clientLoginFail(int paramInt) {
@@ -96,25 +92,26 @@ public class DrcomLoginFragment extends BaseFragment {
                             return;
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(management.getErrorStringByCode(paramInt));
-                        builder.setPositiveButton(R.string.conform, new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                btnLogin.performClick();
+                            }
+                        });
+                        builder.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         });
                         builder.show();
-                        mProgressDialog.dismiss();
+                        hideDialog();
                     }
 
                     @Override
                     public void clientLoginSuccess(boolean paramBoolean) {
-//                        startNewActivity(LoginSuccessActivity.class);
-//                        FragmentControler.addFragment(mfragment, R.id.main_container, FragmentControler.TAG_LOGIN_SUCCESS);
-                        FragmentManager manager= getFragmentManager();
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.main_container,LoginSuccessFragment.getInstance());
-                        transaction.commit();
-                        mProgressDialog.dismiss();
+                        startNewActivity(DrComLoginSuccessActivity.class);
+                        hideDialog();
                     }
                 });
             }
